@@ -29,4 +29,21 @@ router.get('/orders', async (req, res) => {
 
 })
 
+router.get('/orders/ready', async (req, res) => {
+
+    let results = []
+    results = await Order.findAll({where: {status: 'r'}, include: Product})
+
+    if(results.length === 0){
+
+        res.status(404).json("No se encontraron resultados")
+
+    } else{
+
+        res.status(200).json(results)
+
+    }
+
+})
+
 module.exports = router;
