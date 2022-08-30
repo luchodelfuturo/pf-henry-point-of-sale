@@ -14,16 +14,16 @@ const router = Router();
 
 router.get('/orders', async (req, res) => {
 
-    let aux = []
-    aux = await Order.findAll({include: Product})
+    let results = []
+    results = await Order.findAll({include: Product})
 
-    if(aux.length === 0){
+    if(results.length === 0){
 
         res.status(404).json("No se encontraron resultados")
 
     } else{
 
-        res.status(200).json(aux)
+        res.status(200).json(results)
 
     }
 
