@@ -46,4 +46,8 @@ router.get('/orders/ready', async (req, res) => {
 
 })
 
+const productRoute = require("./products");
+
+router.use("/products", productRoute);
+
 module.exports = router;
