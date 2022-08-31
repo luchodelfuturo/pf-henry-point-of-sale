@@ -13,65 +13,53 @@ function Orders() {
     });
   }, []);
 
+  const [time, setTime] = useState("");
+  setTimeout(() => {
+    setInterval(() => {
+      setTime(new Date().toLocaleTimeString());
+    }, 1000);
+  });
   return (
     <div className="Container">
-      <FilterSort />
+      <h1>{new Date().toLocaleTimeString()}</h1>
       {data.length < 1 ? (
-        <h4>There are not orders !</h4>
+        <div id="empty">
+          <h4>There are not orders !</h4>
+          <button
+            className="button"
+            onClick={() => {
+              window.location.reload();
+            }}
+          >
+            Refresh
+          </button>
+        </div>
       ) : (
-        data.jsonRecipes.results.map((o) => {
+        <FilterSort /> &&
+        data.map((o) => {
           return (
-            <div key={o.id} className="Card">
-              <p id="orderNumber">order number</p>
-              <p id="date">date</p>
+            <div key={o.orderNumber} className="Card">
+              <p id="orderNumber">#{o.orderNumber}</p>
+              <p id="date">{o.date}</p>
               <ul id="time">
                 <b>time:</b>
-                <li>init</li>
-                <li>ended</li>
+                <li>init:{o.timeInit}</li>
               </ul>
-              <h4>{o.products.map((p) => p.name + " ")}</h4>
+              {/* <h4>{o.products.map((p) => p.name + " ")}</h4> */}
+              <p id="comments"> comments</p>
               <label for="status" id="status">
                 status:
               </label>
               <select name="status" id="status">
-                <option value="waiting">waiting</option>
-                <option value="pending">pending</option>
-                <option value="ready">ready</option>
+                <option value="p">pending</option>
+                <option value="d">doing</option>
+                <option value="r">ready</option>
               </select>
-              <p id="comments"> comments</p>
               <p id="amount">Amount</p>
             </div>
           );
         })
       )}
-
-      {/* <div className="Card">
-        <h4>OrderExample</h4>
-        <p id="orderNumber">order number</p>
-        <p id="date">date</p>
-        <ul id="time">
-          <b>time:</b>
-          <li>init</li>
-          <li>ended</li>
-        </ul>
-        <h6>Products</h6>
-        <ul>
-          <li>product1</li>
-          <li>product2</li>
-          <li>product3</li>
-        </ul>
-        <label for="status" id="status">
-          status:
-        </label>
-        <select name="status" id="status">
-          <option value="waiting">waiting</option>
-          <option value="pending">pending</option>
-          <option value="ready">ready</option>
-        </select>
-        <p id="comments">comments</p>
-        <p id="amount">Amount</p>
-      </div>
-    <Nav />*/}
     </div>
   );
 }
