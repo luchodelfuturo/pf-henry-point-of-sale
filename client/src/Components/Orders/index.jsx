@@ -30,7 +30,14 @@ function Orders() {
                 <li>ended</li>
               </ul>
               <h4>{o.products.map((p) => p.name + " ")}</h4>
-              <p id="status">status</p>
+              <label for="status" id="status">
+                status:
+              </label>
+              <select name="status" id="status">
+                <option value="waiting">waiting</option>
+                <option value="pending">pending</option>
+                <option value="ready">ready</option>
+              </select>
               <p id="comments"> comments</p>
               <p id="amount">Amount</p>
             </div>
