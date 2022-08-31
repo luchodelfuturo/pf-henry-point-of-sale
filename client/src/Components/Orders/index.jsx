@@ -21,7 +21,7 @@ function Orders() {
   });
   return (
     <div className="Container">
-      <h1>{new Date().toLocaleTimeString()}</h1>
+      <h1>{time}</h1>
       {data.length < 1 ? (
         <div id="empty">
           <h4>There are not orders !</h4>
