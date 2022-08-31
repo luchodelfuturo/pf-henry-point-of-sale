@@ -1,0 +1,46 @@
+ .Container{
+  display: grid;
+  grid-template-columns: repeat(400, 1fr);
+  height: 90vh;
+} 
+
+.Card{
+    /* display: table; */
+   
+    margin-left: 30vw;
+    margin-top: 15vh;
+    height: 60vh;
+    width: 40vw;
+color: red;
+border: solid 2px black;
+border-radius: 20px;
+background-color: grey;
+
+}
+#orderNumber{
+  margin-left: 250px;
+   /* margin-top: -50px; */
+   color:red;
+}
+#date {
+    margin-left: -330px;
+    margin-top: -40px 
+}
+#time {
+    margin-left: -370px;
+    margin-top: -20px 
+}/* 
+#amount{
+    margin-left: 250px;
+    margin-top: -40px;
+}
+#status {
+    margin-right: 250px;
+    margin-bottom: -120px;
+}
+#comments {
+    margin-top: 100px; */
+/* } */
+li {
+    list-style: none;
+}
