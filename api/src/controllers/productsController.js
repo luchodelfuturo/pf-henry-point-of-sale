@@ -8,7 +8,9 @@ export const productsController = async (req, res) => {
         console.log(error);
     }
 };
+ 
 
+//asd
 
 // router.get("/products", async (req, res) => {
 //   let allProducts = [];
