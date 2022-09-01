@@ -54,10 +54,10 @@ background-color: grey; */
   animation-fill-mode: forwards; */
 
 }
-#title {
+/* #title { */
     /* margin-top: -18vh; */
     /* position: static; */
-}
+/* } */
 #orderNumber{
   /* margin-left: 250px; */
    color:red;
@@ -70,15 +70,15 @@ background-color: grey; */
     margin-right: -50px;
     margin-top: -23px 
 }
-#amount{
+/* #amount{ */
     /* margin-left: 250px;
     margin-top: -40px; */
-} 
-#status {
+/* }  */
+/* #status { */
     /* margin-right: 250px;
     margin-bottom: -120px; */
     
-}
+/* } */
 /* #comments {
     padding-top: 20px;
     background-color: aliceblue;
