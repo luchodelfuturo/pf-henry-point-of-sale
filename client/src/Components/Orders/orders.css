@@ -3,12 +3,10 @@
   grid-template-columns: repeat(400, 1fr);
   height: 90vh;
   font-size: xx-small; 
-
   align-items: center;
   background-color: #586875;
   color: #f4f7f7;
   margin: 0;
-  
 } 
 
 #empty {

@@ -1,8 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import states from "./slices/statesSlice";
+import orders from "./slices/ordersSlice";
+import products from "./slices/productsSlice";
 
 export default configureStore({
   reducer: {
-    states: states,
+    orders: orders,
+    products: products,
   },
 });

@@ -3,17 +3,17 @@ import "./orders.css";
 import { useEffect } from "react";
 import FilterSort from "../Buttons/filter&sort";
 import { useDispatch, useSelector } from "react-redux";
-import { getOrdersAction } from "../../redux/actions/actions";
+import { getOrdersAction } from "../../redux/actions/ordersActions";
 
 function Orders() {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
-  const { states } = useSelector((state) => state);
+  const { orders } = useSelector((state) => state.orders);
 
   useEffect(() => {
     dispatch(getOrdersAction());
-    if (states.orders.length) setLoading(false);
-  }, [dispatch, states.orders.length]);
+    if (orders.length) setLoading(false);
+  }, [dispatch, orders.length]);
 
   const [time, setTime] = useState("");
   setTimeout(() => {
@@ -39,7 +39,7 @@ function Orders() {
       ) : (
         <>
           <FilterSort />{" "}
-          {states.orders.map((o) => {
+          {orders.map((o) => {
             return (
               <div key={o.orderNumber} className="Card">
                 <p id="orderNumber">#{o.orderNumber}</p>
