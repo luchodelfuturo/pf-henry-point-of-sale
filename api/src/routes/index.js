@@ -34,6 +34,7 @@ router.get("/orders/ready", async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
 // router.get("/products", async (req, res) => {
 //   let allProducts = [];
 //   try {
@@ -134,6 +135,13 @@ router.get("/products", async (req, res) => {
 
   res.status(200).json(products);
 });
+=======
+const productsRoute = require ('./productsRoute.js');
+const categoryRoute = require ('./categoryRoute.js');
+
+router.use('/products', productsRoute);
+router.use('/category', categoryRoute);
+>>>>>>> develop
 
 router.post("/orders", async (req, res) => {
   try {

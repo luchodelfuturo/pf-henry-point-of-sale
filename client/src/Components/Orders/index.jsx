@@ -1,77 +1,70 @@
 import React, { useState } from "react";
 import "./orders.css";
-import axios from "axios";
 import { useEffect } from "react";
 import FilterSort from "../Buttons/filter&sort";
+import { useDispatch, useSelector } from "react-redux";
+import { getOrdersAction } from "../../redux/actions/ordersActions";
 
 function Orders() {
-  const [data, setData] = useState("");
-  useEffect(() => {
-    // momentaneamente uso axios acá hasta definir si usar redux toolkit
-    axios.get(`http://localhost:3001/orders/`).then((res) => {
-      setData(res.data);
-    });
-  }, []);
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
+  const { orders } = useSelector((state) => state.orders);
 
+  useEffect(() => {
+    dispatch(getOrdersAction());
+    if (orders.length) setLoading(false);
+  }, [dispatch, orders.length]);
+
+  const [time, setTime] = useState("");
+  setTimeout(() => {
+    setInterval(() => {
+      setTime(new Date().toLocaleTimeString());
+    }, 1000);
+  });
   return (
     <div className="Container">
-      <FilterSort />
-      {data.length < 1 ? (
-        <h4>There are not orders !</h4>
+      <h1>{time}</h1>
+      {loading ? (
+        <div id="empty">
+          <h2>There are not orders !</h2>
+          <button
+            className="button"
+            onClick={() => {
+              window.location.reload();
+            }}
+          >
+            Refresh
+          </button>
+        </div>
       ) : (
-        data.jsonRecipes.results.map((o) => {
-          return (
-            <div key={o.id} className="Card">
-              <p id="orderNumber">order number</p>
-              <p id="date">date</p>
-              <ul id="time">
-                <b>time:</b>
-                <li>init</li>
-                <li>ended</li>
-              </ul>
-              <h4>{o.products.map((p) => p.name + " ")}</h4>
-              <label for="status" id="status">
-                status:
-              </label>
-              <select name="status" id="status">
-                <option value="waiting">waiting</option>
-                <option value="pending">pending</option>
-                <option value="ready">ready</option>
-              </select>
-              <p id="comments"> comments</p>
-              <p id="amount">Amount</p>
-            </div>
-          );
-        })
+        <>
+          <FilterSort />{" "}
+          {orders.map((o) => {
+            return (
+              <div key={o.orderNumber} className="Card">
+                <p id="orderNumber">#{o.orderNumber}</p>
+                <p id="date">{o.date}</p>
+                <ul id="time">
+                  <b>time:</b>
+                  <li>init:{o.timeInit}</li>
+                </ul>
+                <h4 id="title">Order:</h4>
+                <p>Product1</p>
+                <p>Cantidad</p>
+                <p> 1</p>
+                {o.comments && <p id="comments">{o.comments}</p>}
+                <label id="status">status:</label>
+                <select name="status" id="status">
+                  <option value="p">pending</option>
+                  <option value="d">doing</option>
+                  <option value="r">ready</option>
+                </select>
+                <p id="amount">Amount</p>
+              </div>
+            );
+          })}
+        </>
       )}
-
-      {/* <div className="Card">
-        <h4>OrderExample</h4>
-        <p id="orderNumber">order number</p>
-        <p id="date">date</p>
-        <ul id="time">
-          <b>time:</b>
-          <li>init</li>
-          <li>ended</li>
-        </ul>
-        <h6>Products</h6>
-        <ul>
-          <li>product1</li>
-          <li>product2</li>
-          <li>product3</li>
-        </ul>
-        <label for="status" id="status">
-          status:
-        </label>
-        <select name="status" id="status">
-          <option value="waiting">waiting</option>
-          <option value="pending">pending</option>
-          <option value="ready">ready</option>
-        </select>
-        <p id="comments">comments</p>
-        <p id="amount">Amount</p>
-      </div>
-    <Nav />*/}
     </div>
   );
 }

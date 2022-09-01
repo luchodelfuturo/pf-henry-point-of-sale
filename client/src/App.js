@@ -3,7 +3,10 @@ import { Route } from "react-router-dom";
 import Kitchen from "./Components/Kitchen";
 import Store from "./Components/Store";
 import AdminProducts from "./Components/AdminProducts/AdminProducts";
+<<<<<<< HEAD
 import { StoreProvider } from "./GlobalStates/StoreContext";
+=======
+>>>>>>> develop
 
 function App() {
   return (
