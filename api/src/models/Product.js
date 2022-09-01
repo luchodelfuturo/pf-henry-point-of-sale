@@ -8,18 +8,17 @@ module.exports = (sequelize) => {
             defaultValue: DataTypes.UUIDV4,
             allowNull: false,
             primaryKey: true
-          },
+        },
         name: {
             type: DataTypes.STRING(50),
-            allowNull: false,
-        },
-        category: {
-            type: DataTypes.STRING,
             allowNull: false,
         },
         price: {
             type: DataTypes.FLOAT,
             allowNull: false,
+        },
+        idcategory: {
+            type: DataTypes.FLOAT,
         },
         image:{
             type: DataTypes.STRING,
@@ -33,5 +32,8 @@ module.exports = (sequelize) => {
             allowNull: false,
             defaultValue: true
         }
+    },
+    {
+        timestamps: false,
     }); 
 }

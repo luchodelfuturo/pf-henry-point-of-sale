@@ -1,3 +1,6 @@
+
+//ESTO ESTA AL PEDO, ERA DE PUREBA, NO LE DEN BOLA
+
 const products = [
     {
         name: 'Bacon Cheese Burger',

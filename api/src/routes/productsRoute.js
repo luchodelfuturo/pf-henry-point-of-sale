@@ -1,10 +1,28 @@
 const { Router } = require('express');
-import {productsController} from '../controllers/productsController.js'
+const router = Router();
+const { Product, Category} = require("../db.js");
 
-const productRouter = Router();
+router.get('/', async (req, res) => {
+    let allProducts = [];
+    try {
+      allProducts = await Product.findAll({ include: Category });
+      res.json(allProducts.length > 0 ? allProducts : "No hay productos");
+    } catch (error) {
+      res.status(404).json(error);
+    }
+});
 
-productRouter.get('/products', productsController)
+router.post('/add', async (req, res) => {
+  try {
+    const newProduct = new Product(req.body);
+    await newProduct.save();
+    res.status(200).json({ message: "Product succefully created" });
+  } catch (error) {
+    res.status(404).json({ message: "Cant create product" });
+  }
+});
 
-productRouter.post()
 
-export default productRouter;
+
+module.exports = router;
+

@@ -34,10 +34,11 @@ router.get("/orders/ready", async (req, res) => {
   }
 });
 
+const productsRoute = require ('./productsRoute.js');
+const categoryRoute = require ('./categoryRoute.js');
 
-const productRoute = require("./products");
-
-router.use("/products", productRoute);
+router.use('/products', productsRoute);
+router.use('/category', categoryRoute);
 
 router.post("/orders", async (req, res) => {
   try {

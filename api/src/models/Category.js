@@ -1,4 +1,5 @@
 const { DataTypes } = require('sequelize');
+
 // Exportamos una funcion que define el modelo
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
@@ -10,5 +11,8 @@ module.exports = (sequelize) => {
         section: {
             type: DataTypes.ENUM('counter','kitchen')
         }
+    },   
+    {
+        timestamps: false,
     });
 }
