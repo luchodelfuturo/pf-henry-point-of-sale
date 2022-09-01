@@ -34,15 +34,10 @@ router.get("/orders/ready", async (req, res) => {
   }
 });
 
-router.get("/products", async (req, res) => {
-  let allProducts = [];
-  try {
-    allProducts = await Product.findAll({ include: Category });
-    res.json(allProducts.length > 0 ? allProducts : "No hay productos");
-  } catch (error) {
-    res.status(404).json(error);
-  }
-});
+
+const productRoute = require("./products");
+
+router.use("/products", productRoute);
 
 router.post("/orders", async (req, res) => {
   try {

@@ -8,3 +8,14 @@ export const productsController = async (req, res) => {
         console.log(error);
     }
 };
+
+
+// router.get("/products", async (req, res) => {
+//   let allProducts = [];
+//   try {
+//     allProducts = await Product.findAll({ include: Category });
+//     res.json(allProducts.length > 0 ? allProducts : "No hay productos");
+//   } catch (error) {
+//     res.status(404).json(error);
+//   }
+// });
