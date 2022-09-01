@@ -6,6 +6,7 @@ function FilterSort() {
       <select name="sort" id="sort">
         <option value="">Sort By</option>
         <option value="time">time</option>
+        <option value="time">order number</option>
       </select>
 
       <select name="filter" id="filter">

@@ -1,17 +1,19 @@
 import React, { useState } from "react";
 import "./orders.css";
-import axios from "axios";
 import { useEffect } from "react";
 import FilterSort from "../Buttons/filter&sort";
+import { useDispatch, useSelector } from "react-redux";
+import { getOrdersAction } from "../../redux/actions/actions";
 
 function Orders() {
-  const [data, setData] = useState("");
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
+  const { states } = useSelector((state) => state);
+
   useEffect(() => {
-    // momentaneamente uso axios acá hasta definir si usar redux toolkit
-    axios.get(`http://localhost:3001/orders/`).then((res) => {
-      setData(res.data);
-    });
-  }, []);
+    dispatch(getOrdersAction());
+    if (states.orders.length) setLoading(false);
+  }, [dispatch, states.orders.length]);
 
   const [time, setTime] = useState("");
   setTimeout(() => {
@@ -22,9 +24,9 @@ function Orders() {
   return (
     <div className="Container">
       <h1>{time}</h1>
-      {data.length < 1 ? (
+      {loading ? (
         <div id="empty">
-          <h4>There are not orders !</h4>
+          <h2>There are not orders !</h2>
           <button
             className="button"
             onClick={() => {
@@ -35,30 +37,33 @@ function Orders() {
           </button>
         </div>
       ) : (
-        <FilterSort /> &&
-        data.map((o) => {
-          return (
-            <div key={o.orderNumber} className="Card">
-              <p id="orderNumber">#{o.orderNumber}</p>
-              <p id="date">{o.date}</p>
-              <ul id="time">
-                <b>time:</b>
-                <li>init:{o.timeInit}</li>
-              </ul>
-              {/* <h4>{o.products.map((p) => p.name + " ")}</h4> */}
-              <p id="comments"> comments</p>
-              <label for="status" id="status">
-                status:
-              </label>
-              <select name="status" id="status">
-                <option value="p">pending</option>
-                <option value="d">doing</option>
-                <option value="r">ready</option>
-              </select>
-              <p id="amount">Amount</p>
-            </div>
-          );
-        })
+        <>
+          <FilterSort />{" "}
+          {states.orders.map((o) => {
+            return (
+              <div key={o.orderNumber} className="Card">
+                <p id="orderNumber">#{o.orderNumber}</p>
+                <p id="date">{o.date}</p>
+                <ul id="time">
+                  <b>time:</b>
+                  <li>init:{o.timeInit}</li>
+                </ul>
+                <h4 id="title">Order:</h4>
+                <p>Product1</p>
+                <p>Cantidad</p>
+                <p> 1</p>
+                {o.comments && <p id="comments">{o.comments}</p>}
+                <label id="status">status:</label>
+                <select name="status" id="status">
+                  <option value="p">pending</option>
+                  <option value="d">doing</option>
+                  <option value="r">ready</option>
+                </select>
+                <p id="amount">Amount</p>
+              </div>
+            );
+          })}
+        </>
       )}
     </div>
   );
