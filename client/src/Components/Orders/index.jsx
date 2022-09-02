@@ -63,7 +63,7 @@ function Orders() {
                     </ul>
                     <h4 id="title">Order:</h4>
                     <p>{o.products.map((p) => p.name)}</p>
-                    <p>Cantidad</p>
+                    <p>Cantidad:</p>
                     <p> 1</p>
                     {o.comments && <p id="comments">{o.comments}</p>}
                     <label id="status">status:</label>
