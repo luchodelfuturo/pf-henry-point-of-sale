@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { getProducts } from '../../redux/actions/productsActions';
+import { searchProducts } from '../../redux/actions/productsActions';
 function SearchBar() {
     const[product, setProduct] = useState("");
     const dispatch = useDispatch()
 
     const handleOnSubmit = (e) =>{
         e.preventDefault();
-        dispatch(getProducts(product))
+        dispatch(searchProducts(product))
         setProduct("")
     }
     const handleOnChange = (e) => {

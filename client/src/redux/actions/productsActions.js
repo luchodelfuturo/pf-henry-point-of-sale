@@ -12,4 +12,4 @@ export const searchProducts = (name) => (dispatch) => {
   axios.get(`http://localhost:3001/products?name${name}`)
   .then((res) => dispatch(getAllProducts(res.data.products)))
   .catch((e) => console.log(e));
-}
+};
