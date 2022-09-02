@@ -34,7 +34,6 @@ router.get("/orders/ready", async (req, res) => {
   }
 });
 
-
 // router.get("/products", async (req, res) => {
 //   let allProducts = [];
 //   try {
@@ -136,12 +135,100 @@ router.get("/orders/ready", async (req, res) => {
 //   res.status(200).json(products);
 // });
 
-const productsRoute = require ('./productsRoute.js');
-const categoryRoute = require ('./categoryRoute.js');
+const productsRoute = require("./productsRoute.js");
+const categoryRoute = require("./categoryRoute.js");
 
-router.use('/products', productsRoute);
-router.use('/category', categoryRoute);
+//router.use('/products', productsRoute);
+router.use("/category", categoryRoute);
 
+router.get("/products", async (req, res) => {
+  console.log("entro a products");
+  const products = [
+    {
+      id: 1,
+      name: "Bacon Cheese Burger",
+      price: 1500,
+      image: "./images/Bacon-Cheese-Burger.png",
+      description: "Bacon Cheese Burger",
+      active: true,
+      idcategory: "1",
+    },
+    {
+      id: 2,
+      name: "Bacon Cheese Burger",
+      price: 1500,
+      image: "./images/Bacon-Cheese-Burger.png",
+      description: "Bacon Cheese Burger",
+      active: true,
+      idcategory: 2,
+    },
+    {
+      id: 3,
+      name: "Bacon Cheese Burger",
+      price: 1500,
+      image: "./images/Bacon-Cheese-Burger.png",
+      description: "Bacon Cheese Burger",
+      active: true,
+      idcategory: 3,
+    },
+    {
+      id: 4,
+      name: "Bacon Cheese Burger",
+      price: 1500,
+      image: "./images/Bacon-Cheese-Burger.png",
+      description: "Bacon Cheese Burger",
+      active: true,
+      idcategory: 4,
+    },
+    { 
+      id: 5,
+      name: "Bacon Cheese Burger",
+      price: 1500,
+      image: "./images/Bacon-Cheese-Burger.png",
+      description: "Bacon Cheese Burger",
+      active: true,
+      idcategory: 1,
+    },
+    {
+      id: 6,
+      name: "Bacon Cheese Burger",
+      price: 1500,
+      image: "./images/Bacon-Cheese-Burger.png",
+      description: "Bacon Cheese Burger",
+      active: true,
+      idcategory: 3,
+    },
+    {
+      id: 7,
+      name: "Bacon Cheese Burger",
+      price: 1500,
+      image: "./images/Bacon-Cheese-Burger.png",
+      description: "Bacon Cheese Burger",
+      active: true,
+      idcategory: 2,
+    },
+    {
+      id: 8,
+      name: "Bacon Cheese Burger",
+      price: 1500,
+      image: "./images/Bacon-Cheese-Burger.png",
+      description: "Bacon Cheese Burger",
+      active: true,
+      idcategory: 1,
+    },
+    {
+      id: 9,
+      name: "Bacon Cheese Burger",
+      price: 1500,
+      image: "./images/Bacon-Cheese-Burger.png",
+      description: "Bacon Cheese Burger",
+      active: true,
+      idcategory: 4,
+    },
+  ];
+
+  res.status(200).json(products);
+});
 
 router.post("/orders", async (req, res) => {
   try {

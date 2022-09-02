@@ -14,7 +14,7 @@ export default function Cards({ products }) {
     <>
       {products &&
         products.map((p, i) => (
-          <div key={p.id} onClick={(e) => handlePickProduct(p.id)}>
+          <div key={p.id} onClick={() => handlePickProduct(p.id)}>
            <Card name={p.name} cat={p.cat}/>
           </div>
         ))}

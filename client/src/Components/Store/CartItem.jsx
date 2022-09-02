@@ -2,6 +2,11 @@ import React from "react";
 import styled from "styled-components";
 
 const CartItem = ({ currCart }) => {
+
+  function handleClick(e) {
+    console.log()
+  }
+
   return (
     <>
       {currCart &&
@@ -14,8 +19,8 @@ const CartItem = ({ currCart }) => {
                 <div className="name">{p.product.name}</div>
               </div>
               <div className="qty-changer">
-                <button className="btn-decr">{"<"}</button>
-                <button className="btn-incr">{">"}</button>
+                <button className="btn-decr" id="bd" onClick={(e) => handleClick(e)}>{"<"}</button>
+                <button className="btn-incr" id="bi">{">"}</button>
               </div>
               <div className="price">$2700</div>
               <div className="delete-item">X</div>

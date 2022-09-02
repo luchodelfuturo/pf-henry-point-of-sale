@@ -1,59 +1,66 @@
 const server = require("./src/app.js");
-const { conn, Category } = require("./src/db.js");
+const { conn, Category, Product } = require("./src/db.js");
+const { Op } = require("sequelize");
 
-function precarga (){
+function precarga() {
   const category = [
-      {   name: "Burgers",
-          section: "kitchen"
-      },
-      {   name: "Pizzas",
-          section: "kitchen"
-      },
-      {   name: "Drinks",
-          section: "counter"
-      },
-      {   name: "Extras",
-          section: "counter"
-      }
-    ]  
+    { name: "Burgers", section: "kitchen" },
+    { name: "Pizzas", section: "kitchen" },
+    { name: "Drinks", section: "counter" },
+    { name: "Extras", section: "counter" },
+  ];
   Category.bulkCreate(category).then(() => console.log("Categories preloaded"));
 }
+// function preCharge() {
+//   const products = [
+//     {
+//       name: "Bacon Cheese Burger",
+//       category: "Burgers",
+//       price: 1500,
+//       image: "./images/Bacon-Cheese-Burger.png",
+//       description: "Bacon Cheese Burger",
+//     },
+//     {
+//       name: "Cheese Burger",
+//       category: "Burgers",
+//       price: 900,
+//       image: "./images/Cheese-Burger.png",
+//       description: "Cheese Burger",
+//     },
+//     {
+//       name: "Crispy chicken burger",
+//       category: "Burgers",
+//       price: 1200,
+//       image: "./images/Crispy-chiken-burger.png",
+//       description: "Crispy chicken burger",
+//     },
+//     {
+//       name: "Veggie Burger",
+//       category: "Burgers",
+//       price: 1000,
+//       image: "./images/Veggie-Burger.png",
+//       description: "Veggie Burger",
+//     },
+//   ];
+//   products
+//     .forEach((e) => {
+//       let newProduct = Product.create(e);
+//       newProduct.addCategories(e.category);
+//     })
 
-
-// function preCarga() {
-//   const products = {
-//     products: [
-//       {
-//         id: 1,
-//         name: "Philadelphia",
-//         description: "Roll Philadelphia",
-//         id_cat: ["Rolls", "Salsas", "Bebidas"],
-//         image: "",
-//         price: "900",
-//         status: "active",
-//       },
-//       {
-//         id: 2,
-//         name: "Philadelphia",
-//         description: "Roll Philadelphia",
-//         id_cat: ["Rolls", "Salsas", "Bebidas"],
-//         image: "",
-//         price: "900",
-//         status: "active",
-//       }
-//     ]
-//   }
-//   Product.bulkCreate(products)
+//     //.then(() => console.log("Products preloaded"));
+  
 // }
 
-
-
-conn.sync({ force: true }).then(() => {
- // preCarga()
-  server.listen(3001, () => {
-    console.log("%s listening at 3001");
+conn
+  .sync({ force: true })
+  .then(() => {
+    // preCarga()
+    server.listen(3001, () => {
+      console.log("%s listening at 3001");
+    });
+  })
+  .then(() => {
+    precarga();
+    //preCharge();
   });
-}) 
-.then (()=>{
-  precarga()
-});

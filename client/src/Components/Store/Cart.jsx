@@ -3,18 +3,24 @@ import StoreContext from "../../GlobalStates/StoreContext";
 import CartItem from "./CartItem";
 
 function Cart({ products }) {
-  const { cartProducts } = useContext(StoreContext);
+  const { idProducts } = useContext(StoreContext);
+
   let currCart = [];
-  currCart = cartProducts.map((e) => {
+
+  currCart = idProducts.map((e) => {
     let product = products.find((f) => f.id === e);
 
+
+    //console.log(product)
+    
+    //if (product.id === products.id) console.log("igual")
     return {
       ...currCart,
       product,
     };
   });
 
-console.log(currCart)
+//console.log(currCart)
 
   return (
     <div>
