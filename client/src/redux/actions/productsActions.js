@@ -9,7 +9,8 @@ export const getProducts = () => (dispatch) => {
 };
 
 export const searchProducts = (name) => (dispatch) => {
-  axios.get(`http://localhost:3001/products?name${name}`)
+  axios.get(`http://localhost:3001/products?name=${name}`)
   .then((res) => dispatch(getAllProducts(res.data)))
+  .then(data => console.log(data))
   .catch((e) => console.log(e));
 };
