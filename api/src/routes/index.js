@@ -41,11 +41,14 @@ router.use('/products', productsRoute);
 router.use('/category', categoryRoute);
 
 router.post("/orders", async (req, res) => {
+  const {product} = req.body;
   try {
     const order = await Order.create(req.body);
-    await order.addProducts(req.body.product);
+    await order.addProducts(product);
+    // order.addProducts(product);
+    // const newOrder = Order.findByPk(order.id, {include:[{model:Product}]})
     res.json(order);
-  } catch (error) {
+  } catch (error) { 
     res.send(error);
   }
 });
