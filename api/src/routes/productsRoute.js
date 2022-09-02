@@ -10,7 +10,7 @@ router.get('/', async (req, res) => {
       name: name
      },
      include: Category
-    })
+    });
 
     res.json(productByName)
   }

@@ -34,11 +34,11 @@ const { Product, Category, User, Order } = sequelize.models;
 
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
-// Order.belongsToMany(Product, { through:'OrderProduct' });
-// Product.belongsToMany(Order, { through:'OrderProduct' });
+Order.belongsToMany(Product, { through:'OrderProduct', timestamps: false});
+Product.belongsToMany(Order, { through:'OrderProduct', timestamps: false});
 
-Category.belongsToMany(Product, {through:'CategoryProduct'});
-Product.hasOne(Category,{through:'CategoryProduct'});
+Category.belongsToMany(Product, {through:'CategoryProduct', timestamps: false});
+Product.hasOne(Category,{through:'CategoryProduct',  timestamps: false});
 
 
 module.exports = {
