@@ -105,6 +105,16 @@ export default function AdminProducts() {
   const [inputCategory, setInputCategory] = useState("");
   const [showFormProducts, setShowFormProducts] = useState(false);
 
+  const imagenes = {
+    Pizzas:
+      "https://www.laespanolaaceites.com/wp-content/uploads/2019/06/pizza-con-chorizo-jamon-y-queso-1080x671.jpg",
+    Hamburguers:
+      "https://media.istockphoto.com/photos/hamburger-with-cheese-and-french-fries-picture-id1188412964?k=20&m=1188412964&s=612x612&w=0&h=Ow-uMeygg90_1sxoCz-vh60SQDssmjP06uGXcZ2MzPY=",
+    Drinks:
+      "https://media.glamour.mx/photos/61905c1b2d97bd4c522a3fed/master/w_1600%2Cc_limit/245951.jpg",
+    default:
+      "https://media.istockphoto.com/photos/chinese-food-blank-background-picture-id545286388?k=20&m=545286388&s=612x612&w=0&h=1zAWEuV5W6SoYtErOkWasELFcAWMKgQEBUsNOoH5znc=",
+  };
   const addProduct = (product) => {
     setProducts(products.concat(product));
   };
@@ -116,7 +126,12 @@ export default function AdminProducts() {
     setInputCategory("");
   };
 
-  const [productEdit, setProductEdit] = useState();
+  const [productEdit, setProductEdit] = useState({
+    name: "",
+    price: "",
+    categorias: "",
+    desc: "",
+  });
 
   return (
     <div
@@ -188,6 +203,7 @@ export default function AdminProducts() {
                 setShowFormProducts={setShowFormProducts}
                 addProduct={addProduct}
                 productEdit={productEdit}
+                setProductEdit={setProductEdit}
               />
             )}
 
@@ -210,7 +226,10 @@ export default function AdminProducts() {
               {products.map((prod) => {
                 return (
                   <div
-                    onClick={() => setProductEdit(prod)}
+                    onClick={() => {
+                      setProductEdit(prod);
+                      setShowFormProducts(true);
+                    }}
                     style={{
                       backgroundColor: "white",
                       width: "100%",
@@ -232,42 +251,20 @@ export default function AdminProducts() {
                         height: "40%",
                       }}
                     >
-                      {prod.categorias === "Pizzas" && (
-                        <img
-                          src="https://www.laespanolaaceites.com/wp-content/uploads/2019/06/pizza-con-chorizo-jamon-y-queso-1080x671.jpg"
-                          alt=""
-                          style={{
-                            objectFit: "cover",
-                            width: "100%",
-                            height: "100%",
-                            borderRadius: "8px 8px 0px 0px",
-                          }}
-                        />
-                      )}
-                      {prod.categorias === "Hamburguers" && (
-                        <img
-                          src="https://media.istockphoto.com/photos/hamburger-with-cheese-and-french-fries-picture-id1188412964?k=20&m=1188412964&s=612x612&w=0&h=Ow-uMeygg90_1sxoCz-vh60SQDssmjP06uGXcZ2MzPY="
-                          alt=""
-                          style={{
-                            objectFit: "cover",
-                            width: "100%",
-                            height: "100%",
-                            borderRadius: "8px 8px 0px 0px",
-                          }}
-                        />
-                      )}
-                      {prod.categorias === "Drinks" && (
-                        <img
-                          src="https://media.glamour.mx/photos/61905c1b2d97bd4c522a3fed/master/w_1600%2Cc_limit/245951.jpg"
-                          alt=""
-                          style={{
-                            objectFit: "cover",
-                            width: "100%",
-                            height: "100%",
-                            borderRadius: "8px 8px 0px 0px",
-                          }}
-                        />
-                      )}
+                      <img
+                        src={
+                          imagenes[prod.categorias]
+                            ? imagenes[prod.categorias]
+                            : imagenes.default
+                        }
+                        alt=""
+                        style={{
+                          objectFit: "cover",
+                          width: "100%",
+                          height: "100%",
+                          borderRadius: "8px 8px 0px 0px",
+                        }}
+                      />
                     </div>
                     <div
                       style={{

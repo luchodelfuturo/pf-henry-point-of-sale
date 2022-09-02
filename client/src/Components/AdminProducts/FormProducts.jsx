@@ -6,13 +6,18 @@ export default function FormProducts({
   setShowFormProducts,
   addProduct,
   productEdit,
+  setProductEdit,
 }) {
-  const [state, setState] = useState({
-    name: "",
-    price: "",
-    categorias: "",
-    desc: "",
-  });
+  const [state, setState] = useState(
+    !productEdit
+      ? { name: "", price: "", categorias: "", desc: "" }
+      : {
+          name: productEdit.name,
+          price: productEdit.price,
+          categorias: productEdit.categorias,
+          desc: productEdit.desc,
+        }
+  );
   const imagenes = {
     Pizzas:
       "https://www.laespanolaaceites.com/wp-content/uploads/2019/06/pizza-con-chorizo-jamon-y-queso-1080x671.jpg",
@@ -76,7 +81,15 @@ export default function FormProducts({
             top: "10px",
             backgroundColor: "red",
           }}
-          onClick={() => setShowFormProducts(false)}
+          onClick={() => {
+            setShowFormProducts(false);
+            setProductEdit({
+              name: "",
+              price: "",
+              categorias: "",
+              desc: "",
+            });
+          }}
         >
           X
         </button>
