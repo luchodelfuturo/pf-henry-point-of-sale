@@ -4,7 +4,7 @@ import { getProducts } from "../../redux/actions/productsActions";
 
 function Store() {
   const dispatch = useDispatch();
-  const { products } = useSelector((state) => state);
+  const { products } = useSelector((state) => state.products);
 
   useEffect(() => {
     dispatch(getProducts());

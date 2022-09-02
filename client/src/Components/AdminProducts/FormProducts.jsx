@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 
 export default function FormProducts({
-  categorias,
+  categories,
   setShowFormProducts,
   addProduct,
   productEdit,
@@ -10,21 +10,30 @@ export default function FormProducts({
 }) {
   const [state, setState] = useState(
     !productEdit
-      ? { name: "", price: "", categorias: "", desc: "" }
+      ? {
+          name: "",
+          price: "",
+
+          description: "",
+          active: true,
+          idcategory: "",
+          image: "s",
+        }
       : {
           name: productEdit.name,
           price: productEdit.price,
-          categorias: productEdit.categorias,
-          desc: productEdit.desc,
+
+          description: productEdit.description,
+          idcategory: productEdit.idcategory,
+          active: productEdit.active,
+          image: productEdit.image,
         }
   );
+  console.log("STATE edit:", state.idcategory);
   const imagenes = {
-    Pizzas:
-      "https://www.laespanolaaceites.com/wp-content/uploads/2019/06/pizza-con-chorizo-jamon-y-queso-1080x671.jpg",
-    Hamburguers:
-      "https://media.istockphoto.com/photos/hamburger-with-cheese-and-french-fries-picture-id1188412964?k=20&m=1188412964&s=612x612&w=0&h=Ow-uMeygg90_1sxoCz-vh60SQDssmjP06uGXcZ2MzPY=",
-    Drinks:
-      "https://media.glamour.mx/photos/61905c1b2d97bd4c522a3fed/master/w_1600%2Cc_limit/245951.jpg",
+    2: "https://www.laespanolaaceites.com/wp-content/uploads/2019/06/pizza-con-chorizo-jamon-y-queso-1080x671.jpg",
+    1: "https://media.istockphoto.com/photos/hamburger-with-cheese-and-french-fries-picture-id1188412964?k=20&m=1188412964&s=612x612&w=0&h=Ow-uMeygg90_1sxoCz-vh60SQDssmjP06uGXcZ2MzPY=",
+    3: "https://media.glamour.mx/photos/61905c1b2d97bd4c522a3fed/master/w_1600%2Cc_limit/245951.jpg",
     default:
       "https://media.istockphoto.com/photos/chinese-food-blank-background-picture-id545286388?k=20&m=545286388&s=612x612&w=0&h=1zAWEuV5W6SoYtErOkWasELFcAWMKgQEBUsNOoH5znc=",
   };
@@ -35,12 +44,22 @@ export default function FormProducts({
   };
   const handleCategoria = (e) => {
     const value = e.target.value;
+    setState({ ...state, idcategory: value });
   };
+
+  //     "name": "Burger Doble",
+  //     "price": 200,
+  //     "image": "",
+  //     "description": "veggie burger",
+  //     "active": true,
+  //     "idcategory": 1
+  //
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("prodcuto a post:", state);
     addProduct(state);
-    setShowFormProducts(false);
+   
   };
 
   return (
@@ -125,8 +144,8 @@ export default function FormProducts({
             >
               <img
                 src={
-                  imagenes[state.categorias]
-                    ? imagenes[state.categorias]
+                  imagenes[state.idcategory]
+                    ? imagenes[state.idcategory]
                     : imagenes.default
                 }
                 alt=""
@@ -158,8 +177,9 @@ export default function FormProducts({
               disabled={
                 state.name === "" ||
                 state.price === "" ||
-                state.categorias === "" ||
-                state.desc === ""
+                state.idcategory === "" ||
+                state.description === "" ||
+                state.idcategory === "Select Category"
               }
               type="submit"
               style={{
@@ -233,8 +253,8 @@ export default function FormProducts({
                 borderRadius: "5px",
               }}
               type="text"
-              name="desc"
-              value={state.desc}
+              name="description"
+              value={state.description}
             />
             <div
               style={{
@@ -276,22 +296,22 @@ export default function FormProducts({
               Categorias
             </div>
             <select
-              onChange={(e) => handleChange(e)}
+              onChange={(e) => handleCategoria(e)}
               style={{
                 border: "2px solid black",
                 padding: "14px",
                 borderRadius: "5px",
               }}
-              name="categorias"
+              name="idcategory"
               id=""
-              value={state.categorias}
+              value={state.idcategory}
             >
-              <option value="">Select Category</option>
-              {categorias &&
-                categorias.map((cat, index) => {
+              <option>Select Category</option>
+              {categories &&
+                categories.map((cat, index) => {
                   return (
-                    <option key={index} value={cat}>
-                      {cat}
+                    <option key={index} value={cat.id}>
+                      {cat.name}
                     </option>
                   );
                 })}
