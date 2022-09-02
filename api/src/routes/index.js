@@ -12,41 +12,12 @@ const router = Router();
 // otro cambio
 // cambio3
 
-router.get("/orders", async (req, res) => {
-  let results = [];
-  results = await Order.findAll({ include: Product });
+const ordersRoute = require("./ordersRoute.js");
+const productsRoute = require("./productsRoute.js");
+const categoryRoute = require("./categoryRoute.js");
 
-  if (results.length === 0) {
-    res.status(404).json("No se encontraron resultados");
-  } else {
-    res.status(200).json(results);
-  }
-});
+router.use("/orders", ordersRoute);
+router.use("/products", productsRoute);
+router.use("/category", categoryRoute);
 
-router.get("/orders/ready", async (req, res) => {
-  let results = [];
-  results = await Order.findAll({ where: { status: "r" }, include: Product });
-
-  if (results.length === 0) {
-    res.status(404).json("No se encontraron resultados");
-  } else {
-    res.status(200).json(results);
-  }
-});
-
-const productsRoute = require ('./productsRoute.js');
-const categoryRoute = require ('./categoryRoute.js');
-
-router.use('/products', productsRoute);
-router.use('/category', categoryRoute);
-
-router.post("/orders", async (req, res) => {
-  try {
-    const order = await Order.create(req.body);
-    await order.addProducts(req.body.product);
-    res.json(order);
-  } catch (error) {
-    res.send(error);
-  }
-});
 module.exports = router;
