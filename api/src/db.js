@@ -41,8 +41,8 @@ const { Product, Category, User, Order } = sequelize.models;
 
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
-// Order.belongsToMany(Product, { through:'OrderProduct' });
-// Product.belongsToMany(Order, { through:'OrderProduct' });
+Order.belongsToMany(Product, { through: "OrderProduct" });
+Product.belongsToMany(Order, { through: "OrderProduct" });
 
 Category.belongsToMany(Product, { through: "CategoryProduct" });
 Product.belongsToMany(Category, { through: "CategoryProduct" });
