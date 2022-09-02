@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import FormProducts from "./FormProducts";
-import { getProducts } from "../../redux/actions/productsActions";
+import { getProducts, postProducts } from "../../redux/actions/productsActions";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { getCategories } from "../../redux/actions/categoriesActions";
@@ -126,7 +126,7 @@ export default function AdminProducts() {
   useEffect(() => {
     dispatch(getProducts());
     dispatch(getCategories());
-  }, [dispatch, showFormProducts]);
+  }, [dispatch, showFormProducts, postProducts]);
 
   const imagenes = {
     2: "https://www.laespanolaaceites.com/wp-content/uploads/2019/06/pizza-con-chorizo-jamon-y-queso-1080x671.jpg",
@@ -147,16 +147,25 @@ export default function AdminProducts() {
   const addProduct = async (product) => {
     //post product
 
-    await axios.post("http://localhost:3001/products/add", product);
+    // await axios.post("http://localhost:3001/products/add", product);
+    dispatch(postProducts(product));
     setShowFormProducts(false);
+    dispatch(getProducts());
+
     // setProductos(productos.concat(product));
   };
+
+  const addCategory = async (category) => {
+    await axios.post("http://localhost:3001/category/add", category);
+    setInputCategory("");
+    dispatch(getCategories());
+  };
   console.log(inputCategory);
+  // Submit Category
   const handleSubmit = (e) => {
     e.preventDefault();
     //Acá hacer post Category
-    setCategorias(categorias.concat(inputCategory));
-    setInputCategory("");
+    addCategory({ name: inputCategory, section: "kitchen" });
   };
 
   return (

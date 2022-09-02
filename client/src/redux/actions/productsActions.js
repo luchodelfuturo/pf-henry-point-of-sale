@@ -1,5 +1,6 @@
 import axios from "axios";
-import { getAllProducts } from "../slices/productsSlice";
+import { getAllProducts, postProductReducer } from "../slices/productsSlice";
+
 
 export const getProducts = () => (dispatch) => {
   console.log('hola get products')
@@ -15,7 +16,8 @@ export const getProducts = () => (dispatch) => {
 
 };
 
-export const postProducts = (product) => (dispatch) => {
+export const postProducts = (product) => async (dispatch) => {
   console.log('hola post products')
-  axios.post("http://localhost:3001/products/add", product)
+  await axios.post("http://localhost:3001/products/add", product)
+    .then(dispatch(postProductReducer))
 }
