@@ -71,36 +71,4 @@ router.post("/add", async (req, res) => {
 
 
 
-<<<<<<< HEAD
-    const categoryN = await Category.findOne({
-      where: {
-        id: idcategory,
-      },
-    });
-
-    await newProduct[0].addCategory(categoryN);
-
-    res.status(200).json({ message: "Product succefully created" });
-  } catch (error) {
-    console.log(error);
-
-    res.status(404).json({ message: "Cant create product" });
-  }
-});
-router.delete("/activities/:id", async (req, res) => {
-  const { id } = req.params;
-  try {
-    const activity = await Activity.destroy({
-      where: {
-        id: id,
-      },
-    });
-    res.json(activity);
-  } catch (error) {
-    res.send(error);
-  }
-});
-
-=======
->>>>>>> 6b64d5cc3a496fcc180ed6c7080c31a7840d5f14
 module.exports = router;
