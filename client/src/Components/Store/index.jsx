@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../../redux/actions/productsActions";
-import SearchBar from "../SearchBar";
+// import SearchBar from "../SearchBar";
 
 function Store() {
   const dispatch = useDispatch();
@@ -13,7 +13,7 @@ function Store() {
 
   return (
     <div>
-      <SearchBar/>
+      {/* <SearchBar/> */}
       {products &&
         products.map((p, i) => {
           return (

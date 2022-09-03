@@ -7,7 +7,7 @@ export const getProducts = () => (dispatch) => {
     .get("http://localhost:3001/products")
 
     .then((res) => {
-      console.log(res)
+      console.log(res.data)
       dispatch(getAllProducts(res.data))
     })
 
