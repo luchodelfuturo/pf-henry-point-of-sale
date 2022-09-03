@@ -31,9 +31,9 @@ export default function FormProducts({
   );
   console.log("STATE edit:", state.idcategory);
   const imagenes = {
-    2: "https://www.laespanolaaceites.com/wp-content/uploads/2019/06/pizza-con-chorizo-jamon-y-queso-1080x671.jpg",
-    1: "https://media.istockphoto.com/photos/hamburger-with-cheese-and-french-fries-picture-id1188412964?k=20&m=1188412964&s=612x612&w=0&h=Ow-uMeygg90_1sxoCz-vh60SQDssmjP06uGXcZ2MzPY=",
-    3: "https://media.glamour.mx/photos/61905c1b2d97bd4c522a3fed/master/w_1600%2Cc_limit/245951.jpg",
+    3: "https://www.laespanolaaceites.com/wp-content/uploads/2019/06/pizza-con-chorizo-jamon-y-queso-1080x671.jpg",
+    2: "https://media.istockphoto.com/photos/hamburger-with-cheese-and-french-fries-picture-id1188412964?k=20&m=1188412964&s=612x612&w=0&h=Ow-uMeygg90_1sxoCz-vh60SQDssmjP06uGXcZ2MzPY=",
+    4: "https://media.glamour.mx/photos/61905c1b2d97bd4c522a3fed/master/w_1600%2Cc_limit/245951.jpg",
     default:
       "https://media.istockphoto.com/photos/chinese-food-blank-background-picture-id545286388?k=20&m=545286388&s=612x612&w=0&h=1zAWEuV5W6SoYtErOkWasELFcAWMKgQEBUsNOoH5znc=",
   };
@@ -44,10 +44,8 @@ export default function FormProducts({
   };
   const handleCategoria = (e) => {
     const value = e.target.value;
-    const imagePost = imagenes[state.idcategory]
-      ? imagenes[state.idcategory]
-      : imagenes.default;
-    setState({ ...state, idcategory: value, image: imagePost });
+
+    setState({ ...state, idcategory: value, image: imagenes[value] });
   };
 
   //     "name": "Burger Doble",
