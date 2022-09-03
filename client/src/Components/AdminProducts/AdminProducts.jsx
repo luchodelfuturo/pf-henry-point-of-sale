@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import FormProducts from "./FormProducts";
-import { getProducts, postProducts } from "../../redux/actions/productsActions";
+import {
+  filterByCategoryAction,
+  getProducts,
+  postProducts,
+} from "../../redux/actions/productsActions";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { getCategories } from "../../redux/actions/categoriesActions";
@@ -17,6 +21,7 @@ export default function AdminProducts() {
     "Pizzas",
     "Drinks",
   ]);
+  const [productsFinal, setProductsFinal] = useState();
   const [productEdit, setProductEdit] = useState({
     name: "",
     price: "",
@@ -26,107 +31,14 @@ export default function AdminProducts() {
     idcategory: "",
     image: "",
   });
-  console.log("categorias", categories);
 
-  // const [productos, setProductos] = useState([
-  //   {
-  //     name: "Pizza Doble queso",
-  //     price: 200,
-  //     desc: "Pizza con extra queso y no sé que más poner aqui",
-  //     categorias: "Pizzas",
-  //   },
-  //   {
-  //     name: "Hamburguesa",
-  //     price: 400,
-  //     desc: "Pizza con extra queso y no sé que más poner aqui",
-  //     categorias: "Hamburguers",
-  //   },
-  //   {
-  //     name: "Tragos",
-  //     price: 600,
-  //     desc: "Pizza con extra queso y no sé que más poner aqui",
-  //     categorias: "Drinks",
-  //   },
-  //   {
-  //     name: "Pizza Doble queso",
-  //     price: 200,
-  //     desc: "Pizza con extra queso y no sé que más poner aqui",
-  //     categorias: "Pizzas",
-  //   },
-  //   {
-  //     name: "Hamburguesa",
-  //     price: 400,
-  //     desc: "Pizza con extra queso y no sé que más poner aqui",
-  //     categorias: "Hamburguers",
-  //   },
-  //   {
-  //     name: "Tragos",
-  //     price: 600,
-  //     desc: "Pizza con extra queso y no sé que más poner aqui",
-  //     categorias: "Drinks",
-  //   },
-  //   {
-  //     name: "Pizza Doble queso",
-  //     price: 200,
-  //     desc: "Pizza con extra queso y no sé que más poner aqui",
-  //     categorias: "Pizzas",
-  //   },
-  //   {
-  //     name: "Hamburguesa",
-  //     price: 400,
-  //     desc: "Pizza con extra queso y no sé que más poner aqui",
-  //     categorias: "Hamburguers",
-  //   },
-  //   {
-  //     name: "Tragos",
-  //     price: 600,
-  //     desc: "Pizza con extra queso y no sé que más poner aqui",
-  //     categorias: "Drinks",
-  //   },
-  //   {
-  //     name: "Pizza Doble queso",
-  //     price: 200,
-  //     desc: "Pizza con extra queso y no sé que más poner aqui",
-  //     categorias: "Pizzas",
-  //   },
-  //   {
-  //     name: "Hamburguesa",
-  //     price: 400,
-  //     desc: "Pizza con extra queso y no sé que más poner aqui",
-  //     categorias: "Hamburguers",
-  //   },
-  //   {
-  //     name: "Tragos",
-  //     price: 600,
-  //     desc: "Pizza con extra queso y no sé que más poner aqui",
-  //     categorias: "Drinks",
-  //   },
-  //   {
-  //     name: "Pizza Doble queso",
-  //     price: 200,
-  //     desc: "Pizza con extra queso y no sé que más poner aqui",
-  //     categorias: "Pizzas",
-  //   },
-  //   {
-  //     name: "Hamburguesa",
-  //     price: 400,
-  //     desc: "Pizza con extra queso y no sé que más poner aqui",
-  //     categorias: "Hamburguers",
-  //   },
-  //   {
-  //     name: "Tragos",
-  //     price: 600,
-  //     desc: "Pizza con extra queso y no sé que más poner aqui",
-  //     categorias: "Drinks",
-  //   },
-  // ]);
   const [addCatShow, setAddCatShow] = useState(false);
   const [inputCategory, setInputCategory] = useState("");
   const [showFormProducts, setShowFormProducts] = useState(false);
   useEffect(() => {
     dispatch(getProducts());
     dispatch(getCategories());
-  }, [dispatch, showFormProducts, postProducts]);
+  }, [dispatch, showFormProducts]);
 
   const imagenes = {
     2: "https://www.laespanolaaceites.com/wp-content/uploads/2019/06/pizza-con-chorizo-jamon-y-queso-1080x671.jpg",
@@ -135,24 +47,10 @@ export default function AdminProducts() {
     default:
       "https://media.istockphoto.com/photos/chinese-food-blank-background-picture-id545286388?k=20&m=545286388&s=612x612&w=0&h=1zAWEuV5W6SoYtErOkWasELFcAWMKgQEBUsNOoH5znc=",
   };
-  //   {
-  //     "name": "Burger Doble",
-  //     "price": 200,
-  //     "image": "",
-  //     "description": "veggie burger",
-  //     "active": true,
-  //     "idcategory": 1
-  // }
 
   const addProduct = async (product) => {
-    //post product
-
-    // await axios.post("http://localhost:3001/products/add", product);
-    dispatch(postProducts(product));
+    await dispatch(postProducts(product)).then(dispatch(getProducts()));
     setShowFormProducts(false);
-    dispatch(getProducts());
-
-    // setProductos(productos.concat(product));
   };
 
   const addCategory = async (category) => {
@@ -160,13 +58,18 @@ export default function AdminProducts() {
     setInputCategory("");
     dispatch(getCategories());
   };
-  console.log(inputCategory);
+
   // Submit Category
   const handleSubmit = (e) => {
     e.preventDefault();
     //Acá hacer post Category
     addCategory({ name: inputCategory, section: "kitchen" });
   };
+  const filterCategory = async (category) => {
+    await dispatch(filterByCategoryAction(category));
+  };
+
+  console.log("esto son los producs del reducer state:", products);
 
   return (
     <div
@@ -291,9 +194,9 @@ export default function AdminProducts() {
                         >
                           <img
                             src={
-                              imagenes[prod.idcategory]
-                                ? imagenes[prod.idcategory]
-                                : imagenes.default
+                              prod.image
+                                ? prod.image
+                                : imagenes[prod.idcategory]
                             }
                             alt=""
                             style={{
@@ -395,6 +298,7 @@ export default function AdminProducts() {
                 categories.map((categ, index) => {
                   return (
                     <div
+                      onClick={() => filterCategory(categ.name.toLowerCase())}
                       key={index}
                       style={{
                         width: "90%",

@@ -44,7 +44,10 @@ export default function FormProducts({
   };
   const handleCategoria = (e) => {
     const value = e.target.value;
-    setState({ ...state, idcategory: value });
+    const imagePost = imagenes[state.idcategory]
+      ? imagenes[state.idcategory]
+      : imagenes.default;
+    setState({ ...state, idcategory: value, image: imagePost });
   };
 
   //     "name": "Burger Doble",
@@ -59,7 +62,6 @@ export default function FormProducts({
     e.preventDefault();
     console.log("prodcuto a post:", state);
     addProduct(state);
-   
   };
 
   return (
