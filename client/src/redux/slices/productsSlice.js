@@ -8,7 +8,6 @@ export const productsSlice = createSlice({
   },
   reducers: {
     getAllProducts: (state, action) => {
-      console.log(action.payload)
       state.products = action.payload;
     },
     getProdById: (state, action) => {
