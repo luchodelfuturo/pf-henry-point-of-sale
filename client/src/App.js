@@ -8,7 +8,7 @@ import { StoreProvider } from "./GlobalStates/StoreContext";
 
 
 function App() {
- develop
+
   return (
     <div className="App">
       <Route exact path="/kitchen" component={Kitchen} />
