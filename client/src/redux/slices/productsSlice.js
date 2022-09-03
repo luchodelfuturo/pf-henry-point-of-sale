@@ -17,7 +17,7 @@ export const productsSlice = createSlice({
       state.detail = action.payload;
     },
     filterByCategory: (state, action) => {
-      state.products = state.allProducts.filter(prod => prod.categories[0].name.toLowerCase().includes(action.payload))
+      state.products = action.payload === 'all categories' ? state.allProducts : state.allProducts.filter(prod => prod.categories[0].name.toLowerCase().includes(action.payload))
 
     }
   },

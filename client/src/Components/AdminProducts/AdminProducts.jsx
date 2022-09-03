@@ -69,6 +69,7 @@ export default function AdminProducts() {
     await dispatch(filterByCategoryAction(category));
   };
 
+  const [changeColor, setChangeColor] = useState("white");
   console.log("esto son los producs del reducer state:", products);
 
   return (
@@ -298,7 +299,9 @@ export default function AdminProducts() {
                 categories.map((categ, index) => {
                   return (
                     <div
-                      onClick={() => filterCategory(categ.name.toLowerCase())}
+                      onClick={() => {
+                        filterCategory(categ.name.toLowerCase());
+                      }}
                       key={index}
                       style={{
                         width: "90%",
