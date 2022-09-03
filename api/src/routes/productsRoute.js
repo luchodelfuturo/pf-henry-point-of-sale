@@ -1,12 +1,38 @@
 const { Router } = require("express");
 const router = Router();
-const { Product, Category } = require("../db.js");
+const { Product, Category, Op } = require("../db.js");
 
 router.get("/", async (req, res) => {
+  const name = req.query.name
   let allProducts = [];
   try {
-    allProducts = await Product.findAll({ include: Category });
-    res.json(allProducts.length > 0 ? allProducts : "No hay productos");
+    allProducts = await Product.findAll({ include: Category })
+    if (name) {
+      const product = await Product.findAndCountAll({
+        where: {
+          name: {
+            [Op.iLike]: `%${name}%`,
+          },
+        },
+
+      });
+      if (product.count === 0) {
+        res.send({
+          count: 0,
+          rows: ["No existe"],
+        });
+      } else {
+
+        res.json(product);
+      }
+    } else {
+      res.json(allProducts.length > 0 ? allProducts : "No hay productos");
+    }
+
+
+
+
+
   } catch (error) {
     res.status(404).json(error);
   }
@@ -42,35 +68,10 @@ router.post("/add", async (req, res) => {
     res.status(404).json({ message: "Cant create product" });
   }
 });
-router.delete("/activities/:id", async (req, res) => {
-  const { id } = req.params;
-  try {
-    const activity = await Activity.destroy({
-      where: {
-        id: id,
-      },
-    });
-    res.json(activity);
-  } catch (error) {
-    res.send(error);
-  }
-});
 
-router.post("/add", async (req, res) => {
-  let { name, price, image, description, active, idcategory } = req.body;
 
-  try {
-    const newProduct = await Product.findOrCreate({
-      where: {
-        name: name,
-        price: price,
-        image: image,
-        description: description,
-        active: active,
-        idcategory: idcategory,
-      },
-    });
 
+<<<<<<< HEAD
     const categoryN = await Category.findOne({
       where: {
         id: idcategory,
@@ -100,4 +101,6 @@ router.delete("/activities/:id", async (req, res) => {
   }
 });
 
+=======
+>>>>>>> 6b64d5cc3a496fcc180ed6c7080c31a7840d5f14
 module.exports = router;

@@ -1,6 +1,7 @@
 import React, { useEffect, useContext } from "react";
 import { useDispatch } from "react-redux";
 import { getProducts } from "../../redux/actions/productsActions";
+import NavBarApp from "../NavbarApp/NavBarApp";
 import StoreContext from "../../GlobalStates/StoreContext";
 import Cards from "./Cards";
 import Cart from "./Cart";
@@ -39,7 +40,9 @@ function Store() {
             </div>
           </div>
         </div>
-        <div className="navbar">NAVBAR</div>
+        <div style={{ height: "10vh" }}>
+        <NavBarApp />
+      </div>
       </div>
     </>
   );

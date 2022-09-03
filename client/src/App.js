@@ -7,12 +7,17 @@ import { StoreProvider } from "./GlobalStates/StoreContext";
 
 
 function App() {
+
   return (
     <div className="App">
       <Route exact path="/kitchen" component={Kitchen} />
+
       <StoreProvider>
         <Route exact path="/store" component={Store} />
       </StoreProvider>
+
+      <Route exact path="/counter" component={Counter} />
+
       <Route exact path="/adminProducts" component={AdminProducts} />
     </div>
   );

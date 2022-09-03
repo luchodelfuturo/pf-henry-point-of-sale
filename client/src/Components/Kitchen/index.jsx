@@ -1,12 +1,14 @@
 import React from "react";
-import Nav from "../NavBar";
+import NavBarApp from "../NavbarApp/NavBarApp";
 import Orders from "../Orders";
 
 function Kitchen() {
   return (
     <div>
       <Orders />
-      <Nav />
+      <div style={{ height: "10vh" }}>
+        <NavBarApp />
+      </div>
     </div>
   );
 }

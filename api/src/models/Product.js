@@ -12,7 +12,10 @@ module.exports = (sequelize) => {
             type: DataTypes.FLOAT,
             allowNull: false,
         },
-        image:{
+        idcategory: {
+            type: DataTypes.FLOAT,
+        },
+        image: {
             type: DataTypes.STRING,
             allowNull: true,
         },
@@ -25,7 +28,7 @@ module.exports = (sequelize) => {
             defaultValue: true
         }
     },
-    {
-        timestamps: false,
-    }); 
+        {
+            timestamps: false,
+        });
 }
