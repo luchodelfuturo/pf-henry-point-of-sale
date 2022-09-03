@@ -36,6 +36,10 @@ export const ordersSlice = createSlice({
       state.sortedOrders = action.payload;
       state.filteredOrders = action.payload;
     },
+    //nuevo:
+    postOrders: (state, action) => {
+      state.orders.concat(action.payload)
+    }
   },
 });
 
@@ -46,5 +50,6 @@ export const {
   filterDoing,
   filterPending,
   clean,
+  postOrders
 } = ordersSlice.actions;
 export default ordersSlice.reducer;
