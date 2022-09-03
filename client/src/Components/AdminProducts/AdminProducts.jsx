@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
 import FormProducts from "./FormProducts";
-import { getProducts } from "../../redux/actions/productsActions";
+import {
+  filterByCategoryAction,
+  getProducts,
+  postProducts,
+} from "../../redux/actions/productsActions";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { getCategories } from "../../redux/actions/categoriesActions";
 import axios from "axios";
+import NavBarApp from "../NavbarApp/NavBarApp";
 export default function AdminProducts() {
   const dispatch = useDispatch();
 
@@ -17,6 +22,7 @@ export default function AdminProducts() {
     "Pizzas",
     "Drinks",
   ]);
+  const [productsFinal, setProductsFinal] = useState();
   const [productEdit, setProductEdit] = useState({
     name: "",
     price: "",
@@ -26,100 +32,7 @@ export default function AdminProducts() {
     idcategory: "",
     image: "",
   });
-  console.log("categorias", categories);
 
-  // const [productos, setProductos] = useState([
-  //   {
-  //     name: "Pizza Doble queso",
-  //     price: 200,
-  //     desc: "Pizza con extra queso y no sé que más poner aqui",
-  //     categorias: "Pizzas",
-  //   },
-  //   {
-  //     name: "Hamburguesa",
-  //     price: 400,
-  //     desc: "Pizza con extra queso y no sé que más poner aqui",
-  //     categorias: "Hamburguers",
-  //   },
-  //   {
-  //     name: "Tragos",
-  //     price: 600,
-  //     desc: "Pizza con extra queso y no sé que más poner aqui",
-  //     categorias: "Drinks",
-  //   },
-  //   {
-  //     name: "Pizza Doble queso",
-  //     price: 200,
-  //     desc: "Pizza con extra queso y no sé que más poner aqui",
-  //     categorias: "Pizzas",
-  //   },
-  //   {
-  //     name: "Hamburguesa",
-  //     price: 400,
-  //     desc: "Pizza con extra queso y no sé que más poner aqui",
-  //     categorias: "Hamburguers",
-  //   },
-  //   {
-  //     name: "Tragos",
-  //     price: 600,
-  //     desc: "Pizza con extra queso y no sé que más poner aqui",
-  //     categorias: "Drinks",
-  //   },
-  //   {
-  //     name: "Pizza Doble queso",
-  //     price: 200,
-  //     desc: "Pizza con extra queso y no sé que más poner aqui",
-  //     categorias: "Pizzas",
-  //   },
-  //   {
-  //     name: "Hamburguesa",
-  //     price: 400,
-  //     desc: "Pizza con extra queso y no sé que más poner aqui",
-  //     categorias: "Hamburguers",
-  //   },
-  //   {
-  //     name: "Tragos",
-  //     price: 600,
-  //     desc: "Pizza con extra queso y no sé que más poner aqui",
-  //     categorias: "Drinks",
-  //   },
-  //   {
-  //     name: "Pizza Doble queso",
-  //     price: 200,
-  //     desc: "Pizza con extra queso y no sé que más poner aqui",
-  //     categorias: "Pizzas",
-  //   },
-  //   {
-  //     name: "Hamburguesa",
-  //     price: 400,
-  //     desc: "Pizza con extra queso y no sé que más poner aqui",
-  //     categorias: "Hamburguers",
-  //   },
-  //   {
-  //     name: "Tragos",
-  //     price: 600,
-  //     desc: "Pizza con extra queso y no sé que más poner aqui",
-  //     categorias: "Drinks",
-  //   },
-  //   {
-  //     name: "Pizza Doble queso",
-  //     price: 200,
-  //     desc: "Pizza con extra queso y no sé que más poner aqui",
-  //     categorias: "Pizzas",
-  //   },
-  //   {
-  //     name: "Hamburguesa",
-  //     price: 400,
-  //     desc: "Pizza con extra queso y no sé que más poner aqui",
-  //     categorias: "Hamburguers",
-  //   },
-  //   {
-  //     name: "Tragos",
-  //     price: 600,
-  //     desc: "Pizza con extra queso y no sé que más poner aqui",
-  //     categorias: "Drinks",
-  //   },
-  // ]);
   const [addCatShow, setAddCatShow] = useState(false);
   const [inputCategory, setInputCategory] = useState("");
   const [showFormProducts, setShowFormProducts] = useState(false);
@@ -129,35 +42,36 @@ export default function AdminProducts() {
   }, [dispatch, showFormProducts]);
 
   const imagenes = {
-    2: "https://www.laespanolaaceites.com/wp-content/uploads/2019/06/pizza-con-chorizo-jamon-y-queso-1080x671.jpg",
-    1: "https://media.istockphoto.com/photos/hamburger-with-cheese-and-french-fries-picture-id1188412964?k=20&m=1188412964&s=612x612&w=0&h=Ow-uMeygg90_1sxoCz-vh60SQDssmjP06uGXcZ2MzPY=",
-    3: "https://media.glamour.mx/photos/61905c1b2d97bd4c522a3fed/master/w_1600%2Cc_limit/245951.jpg",
+    3: "https://www.laespanolaaceites.com/wp-content/uploads/2019/06/pizza-con-chorizo-jamon-y-queso-1080x671.jpg",
+    2: "https://media.istockphoto.com/photos/hamburger-with-cheese-and-french-fries-picture-id1188412964?k=20&m=1188412964&s=612x612&w=0&h=Ow-uMeygg90_1sxoCz-vh60SQDssmjP06uGXcZ2MzPY=",
+    4: "https://media.glamour.mx/photos/61905c1b2d97bd4c522a3fed/master/w_1600%2Cc_limit/245951.jpg",
     default:
       "https://media.istockphoto.com/photos/chinese-food-blank-background-picture-id545286388?k=20&m=545286388&s=612x612&w=0&h=1zAWEuV5W6SoYtErOkWasELFcAWMKgQEBUsNOoH5znc=",
   };
-  //   {
-  //     "name": "Burger Doble",
-  //     "price": 200,
-  //     "image": "",
-  //     "description": "veggie burger",
-  //     "active": true,
-  //     "idcategory": 1
-  // }
 
   const addProduct = async (product) => {
-    //post product
-
-    await axios.post("http://localhost:3001/products/add", product);
+    await dispatch(postProducts(product)).then(dispatch(getProducts()));
     setShowFormProducts(false);
-    // setProductos(productos.concat(product));
   };
-  console.log(inputCategory);
+
+  const addCategory = async (category) => {
+    await axios.post("http://localhost:3001/category/add", category);
+    setInputCategory("");
+    dispatch(getCategories());
+  };
+
+  // Submit Category
   const handleSubmit = (e) => {
     e.preventDefault();
     //Acá hacer post Category
-    setCategorias(categorias.concat(inputCategory));
-    setInputCategory("");
+    addCategory({ name: inputCategory, section: "kitchen" });
   };
+  const filterCategory = async (category) => {
+    await dispatch(filterByCategoryAction(category));
+  };
+
+  const [changeColor, setChangeColor] = useState("white");
+  console.log("esto son los producs del reducer state:", products);
 
   return (
     <div
@@ -165,32 +79,38 @@ export default function AdminProducts() {
         width: "100%",
         minHeight: "100vh",
         height: "100%",
-        backgroundColor: "lightgray",
+
         display: "flex",
         flexDirection: "column",
         justifyContent: "start",
-        margin: "auto",
+        margin: "0 auto",
+        boxSizing: "border-box",
       }}
     >
       <div
         style={{
+          boxSizing: "border-box",
           minHeight: "90vh",
-          width: "100%",
+          width: "90%",
+          margin: "auto",
           height: "90vh",
           backgroundColor: "white",
           display: "flex",
           flexDirection: "column",
+          padding: "10px",
           justifyContent: "start",
         }}
       >
         <div
           style={{
+            borderRadius: "26px",
             width: "90%",
-            margin: "20px auto",
-            backgroundColor: "red",
+            margin: "0 auto",
+            border: "2px solid gray",
             height: "10%",
             display: "flex",
             justifyContent: "space-around",
+            alignItems: "center",
           }}
         >
           <span>Buscar Productos "[X]"</span>{" "}
@@ -206,7 +126,6 @@ export default function AdminProducts() {
             display: "flex",
             margin: "0 auto",
             gap: "10px",
-            backgroundColor: "violet",
 
             overflowY: "scroll",
           }}
@@ -216,10 +135,12 @@ export default function AdminProducts() {
             style={{
               width: "80%",
               height: "90%",
-              backgroundColor: "green",
+              borderRadius: "26px",
+              border: "2px solid gray",
+
               display: "flex",
               flexDirection: "column",
-              margin: "auto",
+              margin: " auto",
               padding: "10px 0",
             }}
           >
@@ -235,9 +156,9 @@ export default function AdminProducts() {
 
             <div
               style={{
-                width: "90%",
+                width: "95%",
                 height: "90%",
-                backgroundColor: "lightblue",
+
                 margin: "0 auto",
                 padding: "10px",
                 display: "grid",
@@ -282,9 +203,9 @@ export default function AdminProducts() {
                         >
                           <img
                             src={
-                              imagenes[prod.idcategory]
-                                ? imagenes[prod.idcategory]
-                                : imagenes.default
+                              prod.image
+                                ? prod.image
+                                : imagenes[prod.idcategory]
                             }
                             alt=""
                             style={{
@@ -359,7 +280,9 @@ export default function AdminProducts() {
             style={{
               width: "30%",
               height: "90%",
-              backgroundColor: "lightgreen",
+              border: "2px solid gray",
+              borderRadius: "26px",
+
               display: "flex",
               flexDirection: "column",
               justifyContent: "start",
@@ -374,7 +297,7 @@ export default function AdminProducts() {
                 width: "90%",
                 height: "80%",
                 margin: "auto",
-                backgroundColor: "white",
+
                 display: "flex",
                 flexDirection: "column",
                 padding: "4px",
@@ -386,9 +309,13 @@ export default function AdminProducts() {
                 categories.map((categ, index) => {
                   return (
                     <div
+                      onClick={() => {
+                        filterCategory(categ.name.toLowerCase());
+                      }}
                       key={index}
                       style={{
                         width: "90%",
+                        backgroundColor: "white",
                         margin: "0 auto",
                         minHeight: "40px",
                         height: "30%",
@@ -461,16 +388,10 @@ export default function AdminProducts() {
           </div>
         </div>
       </div>
-      <div
-        style={{
-          height: "10vh",
-          width: "100%",
-          backgroundColor: "lightblue",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        Navbar Bottom
+      {/* NavBarApp */}
+
+      <div style={{ height: "10vh" }}>
+        <NavBarApp />
       </div>
     </div>
   );
