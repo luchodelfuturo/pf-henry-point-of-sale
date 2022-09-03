@@ -17,8 +17,10 @@ export const productsSlice = createSlice({
       state.detail = action.payload;
     },
     filterByCategory: (state, action) => {
-      state.products = action.payload === 'all categories' ? state.allProducts : state.allProducts.filter(prod => prod.categories[0].name.toLowerCase().includes(action.payload))
-
+      const filterProducts = action.payload === 'all categories' ? state.allProducts : state.allProducts.filter(prod => prod.categories[0].name.toLowerCase().includes(action.payload))
+      console.log("filterProducts: " + filterProducts)
+      //state.products = filterProducts
+      !filterProducts.length > 0 ? state.products = 'No hay productos' : state.products = filterProducts;
     }
   },
 });
