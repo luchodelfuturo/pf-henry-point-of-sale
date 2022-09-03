@@ -3,11 +3,11 @@ import StoreContext from "../../GlobalStates/StoreContext";
 import Card from "./Card";
 
 export default function Cards({ products }) {
-  const { addToCart } = useContext(StoreContext);
+  const { addProductById } = useContext(StoreContext);
 
   function handlePickProduct(p) {
     //e.preventDefault();
-    addToCart(p);
+    addProductById(p);
   }
   
   return (

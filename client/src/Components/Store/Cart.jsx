@@ -1,40 +1,45 @@
-import React, { useContext } from "react";
-import StoreContext from "../../GlobalStates/StoreContext";
+import React from "react";
 import CartItem from "./CartItem";
+import styled from "styled-components";
+import "./cart.css";
 
 function Cart({ products }) {
-  const { idProducts } = useContext(StoreContext);
+  const totals = products.reduce((acc, curr) => {
+    return acc + curr.subTotal;
+  }, 0);
 
-  let currCart = [];
-
-  currCart = idProducts.map((e) => {
-    let product = products.find((f) => f.id === e);
-
-
-    //console.log(product)
-    
-    //if (product.id === products.id) console.log("igual")
-    return {
-      ...currCart,
-      product,
-    };
-  });
-
-//console.log(currCart)
 
   return (
     <div>
-      <div className="cart-container">
+      <div className="cart">
         <div className="items">
           <div className="items-header"></div>
           <div className="items">
-            {currCart.length > 0 ? <CartItem currCart={currCart} /> : null}
+            {products.length > 0 ? <CartItem AllProducts={products} /> : null}
           </div>
         </div>
-        <div className="checkout"></div>
+        <Checkout>
+          <div className="delete-cart">X</div>
+          <div className="pay-btn">
+            <button>PAY</button>
+          </div>
+          <div className="totals">
+            <div className="total-label">Total</div>
+            <div className="total-price">{totals}</div>
+          </div>
+        </Checkout>
       </div>
     </div>
   );
 }
 
 export default Cart;
+
+const Checkout = styled.div`
+display: flex;
+justify-content: space-between;
+align-items: center;
+
+width: 600px;
+height: 100px;
+`

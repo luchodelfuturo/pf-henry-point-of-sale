@@ -1,105 +1,104 @@
-import { createContext, useCallback, useEffect, useState } from "react";
+import { createContext, useReducer } from "react";
 import { useSelector } from "react-redux";
+
 const StoreContext = createContext();
 
+let prev = [];
+let exists = {};
+const initialState = [];
+function reducer(state = initialState, action = {}) {
+  switch (action.type) {
+    case "INCREMENT":
+      prev = state.filter((e) => e.product.id !== action.payload);
+      exists = state.find((e) => e.product.id === action.payload);
+
+      return [
+        ...prev,
+        {
+          qty: exists.qty++,
+          product: exists.product,
+          subTotal: exists.qty * exists.product.price - exists.product.price,
+        },
+      ];
+
+    case "DECREMENT":
+      prev = state.filter((e) => e.product.id !== action.payload);
+      exists = state.find((e) => e.product.id === action.payload);
+      let dec = exists.qty;
+      exists.qty > 1 ? dec-- : (dec = 1);
+
+      return [
+        ...prev,
+        {
+          qty: dec,
+          product: exists.product,
+          subTotal: dec * exists.product.price,
+        },
+      ];
+    case "ADD":
+      console.log("ADD");
+      return [
+        ...state,
+        {
+          qty: 1,
+          subTotal: action.payload.price,
+          product: action.payload,
+        },
+      ];
+    case "DELETE":
+      prev = state.filter((e) => e.product.id !== action.payload);
+
+      return [...prev];
+
+    default:
+      return state;
+  }
+}
+
 export function StoreProvider({ children }) {
-
   const { products } = useSelector((state) => state.products);
-  //console.log(products)
-  const [cartProducts, setCartProducts] = useState([]);
-  const [idProducts, setIdProducts] = useState([]);
-  const [currProduct, setCurrProduct] = useState({})
-  
+  const [state, dispatch] = useReducer(reducer, reducer());
 
-  // const format = {
-  //   qty: 0,
-  //   product: {}
-  // };
-
-  //console.log(product)
-  //if (product.id === products.id) console.log("igual")
-  
-  const itemAdder = () => {
-    console.log("adder")
-
-    // currProduct.map((e)=> {
-    //   if (e.qty =)
-    // })
-
-
-    // setCartProducts([
-    //   ...cartProducts,
-    //   currProduct
-    // ])
+  function qtyIncr(id) {
+    dispatch({ type: "INCREMENT", payload: id });
+  }
+  function qtyDecr(id) {
+    dispatch({ type: "DECREMENT", payload: id });
+  }
+  function itemDelete(id) {
+    dispatch({ type: "DELETE", payload: id });
   }
 
-  useEffect(() => {
-    let aux = idProducts.map((e) => {
-    let product = products.find((f) => f.id === e);
-    let qty = 0
+  let aux = {};
 
-    // if (cartProducts.qty === 0){
-    //   qty++;
-    // }
-    
-    // cartProducts && cartProducts.forEach(el => {
-    //   el.qty = 0 ? qty++ : 
-    // });
+  function addProductById(added) {
+    console.log("added = " + added);
 
+    if (state.find((e) => e.product.id === added)) {
+      dispatch({ type: "INCREMENT", payload: added });
+    } else {
+      aux = () => {
+        let { id, name, price, active, categories } = products.find(
+          (f) => f.id === added
+        );
 
+        return {
+          id,
+          name,
+          price,
+          active,
+          categories: categories.map((e) => e.name).toString(),
+        };
+      };
 
-    return {
-      qty,
-      product
-    };
-
-  });
-
-  console.log({aux})
-  setCurrProduct(aux)
-  console.log(currProduct)
-
-
-
-
-  itemAdder();
-  console.log(cartProducts)
-
-  }, [idProducts, products]);
-
-  //useEffect(() => {
-  
-
-   
-
-
-
-  //}, []);
-
-  
-
-
-  
-  //setCartProducts(...cartProducts, currProduct)
-
-
-  
-
-  function addToCart(currProduct) {
-    setIdProducts([...idProducts, currProduct]);
-    console.log(idProducts)
-    //setCartProducts([...idProducts, currProduct]);
-
-    // setCartProducts([
-    //          ...cartProducts,
-
-    // ]);
-
-
+      dispatch({ type: "ADD", payload: aux() });
+    }
   }
 
   return (
-    <StoreContext.Provider value={{ idProducts, cartProducts, addToCart }}>
+    <StoreContext.Provider
+      value={{ products, state, addProductById, qtyIncr, qtyDecr, itemDelete }}
+    >
       {children}
     </StoreContext.Provider>
   );
