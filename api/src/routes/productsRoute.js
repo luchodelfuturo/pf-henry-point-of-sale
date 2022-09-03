@@ -42,18 +42,7 @@ router.post("/add", async (req, res) => {
     res.status(404).json({ message: "Cant create product" });
   }
 });
-router.delete("/activities/:id", async (req, res) => {
-  const { id } = req.params;
-  try {
-    const activity = await Activity.destroy({
-      where: {
-        id: id,
-      },
-    });
-    res.json(activity);
-  } catch (error) {
-    res.send(error);
-  }
-});
+
+
 
 module.exports = router;
