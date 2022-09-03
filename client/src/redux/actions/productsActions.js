@@ -5,10 +5,10 @@ import { getAllProducts, filterByCategory } from "../slices/productsSlice";
 export const getProducts = () => (dispatch) => {
   console.log('hola get products')
   axios
-    .get("http://localhost:3001/products")
+    .get("http://192.168.0.12:3001/products")
 
     .then((res) => {
-      console.log(res)
+//      console.log(res)
       dispatch(getAllProducts(res.data))
     })
 
