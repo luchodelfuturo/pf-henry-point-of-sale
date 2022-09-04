@@ -11,6 +11,10 @@ async function precarga() {
   ];
   await Category.bulkCreate(category).then(() => console.log("Categories preloaded"));
 
+
+
+
+
   // Desde aqui muere el codigo xd 
 
   const burguers = await Product.bulkCreate([
@@ -94,18 +98,11 @@ async function precarga() {
       idcategory: 5
     }
   ])
+
   await extras[0].addCategory(5)
   await extras[1].addCategory(5)
 
-
-
 }
-
-
-
-
-
-
 
 // Syncing all the models at once.
 conn

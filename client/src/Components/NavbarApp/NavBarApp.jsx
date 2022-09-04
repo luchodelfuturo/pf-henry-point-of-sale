@@ -57,7 +57,7 @@ export default function NavBarApp() {
             backgroundColor: "white",
             borderRadius: "10px",
           }}
-          onClick={() => history.push("/kitchen")}
+          onClick={() => history.push("/counter")}
         >
           Pedidos Ready
         </button>

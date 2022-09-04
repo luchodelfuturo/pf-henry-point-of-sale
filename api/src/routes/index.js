@@ -8,9 +8,6 @@ const router = Router();
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
-// prueba
-// otro cambio
-// cambio3
 
 const ordersRoute = require("./ordersRoute.js");
 const productsRoute = require("./productsRoute.js");
