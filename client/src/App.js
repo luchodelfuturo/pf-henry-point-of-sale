@@ -2,6 +2,7 @@ import "./App.css";
 import { Route } from "react-router-dom";
 import Kitchen from "./Components/Kitchen";
 import Store from "./Components/Store";
+import Counter from "./Components/Counter/counter";
 import AdminProducts from "./Components/AdminProducts/AdminProducts";
 import { StoreProvider } from "./GlobalStates/StoreContext";
 
