@@ -58,6 +58,11 @@ function reducer(state = initialState, action = {}) {
 export function StoreProvider({ children }) {
   const { products } = useSelector((state) => state.products);
   const [state, dispatch] = useReducer(reducer, reducer());
+  //console.log(products)
+
+  
+
+
 
   function qtyIncr(id) {
     dispatch({ type: "INCREMENT", payload: id });
@@ -68,6 +73,11 @@ export function StoreProvider({ children }) {
   function itemDelete(id) {
     dispatch({ type: "DELETE", payload: id });
   }
+
+
+  
+
+
 
   let aux = {};
 
