@@ -24,3 +24,6 @@
   display: flex;
   flex-wrap: wrap;
 }
+.category-buttons{
+  display: flex;
+}

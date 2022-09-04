@@ -49,9 +49,7 @@ function reducer(state = initialState, action = {}) {
       prev = state.filter((e) => e.product.id !== action.payload);
 
       return [...prev];
-      case "DELETE_ALL":
-      
-
+    case "DELETE_ALL":
       return [];
 
     default:
@@ -61,6 +59,13 @@ function reducer(state = initialState, action = {}) {
 
 export function StoreProvider({ children }) {
   const { products } = useSelector((state) => state.products);
+  const { categories } = useSelector((state) => state.categories);
+
+
+  console.log("CATEGORIES");
+
+  console.log(categories);
+
   const [state, dispatch] = useReducer(reducer, reducer());
   //console.log(products)
 
@@ -74,7 +79,7 @@ export function StoreProvider({ children }) {
     dispatch({ type: "DELETE", payload: id });
   }
   function deleteAll(id) {
-    dispatch({ type: "DELETE_ALL"});
+    dispatch({ type: "DELETE_ALL" });
   }
 
   let aux = {};
@@ -106,8 +111,9 @@ export function StoreProvider({ children }) {
   return (
     <StoreContext.Provider
       value={{
-        products,
         state,
+        products,
+        categories,
         addProductById,
         qtyIncr,
         qtyDecr,
