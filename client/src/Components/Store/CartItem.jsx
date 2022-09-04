@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import StoreContext from "../../GlobalStates/StoreContext";
 import styled from "styled-components";
 
@@ -81,8 +81,15 @@ export default CartItem;
 const Item = styled.div`
   display: flex;
   flex-direction: column;
-  color: white;
-  background-color: blue;
+  color: black;
+  margin-top: 5px;
+  //position: absolute;
+width: 590px;
+height: 83px;
+
+background: #FFFFFF;
+box-shadow: 4px 6px 9px -4px rgba(0, 0, 0, 0.25);
+border-radius: 0px 20px 20px 0px;
   .div-container {
     display: flex;
     justify-content: space-between;
@@ -95,9 +102,10 @@ const Item = styled.div`
   }
   .product-info {
     text-align: start;
-    min-width: 157px;
+    min-width: 255px;
   }
   .qty-changer {
+    display: flex;
     width: 166px;
     .btn-decr {
       width: 83px;

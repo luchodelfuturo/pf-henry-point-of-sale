@@ -1,3 +1,5 @@
+import styled from "styled-components";
+
 // Variables
 export const colors = {
   violet: "#A259FF",
@@ -14,3 +16,16 @@ export const colors = {
   grey800: "#121A23",
   grey900: "#0A1019",
 };
+
+export const BtnRounded = styled.button`
+  font-family: "Lato", sans-serif;
+  background: #fff;
+  width: 87px;
+  height: 45px;
+  box-shadow: 4px 2px 9px -1px rgba(0, 0, 0, 0.25);
+  border-radius: 26px;
+  border: none;
+  font-weight: 600;
+  font-size: 18px;
+  margin-right: 10px;
+`;
