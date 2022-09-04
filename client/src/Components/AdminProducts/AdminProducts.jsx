@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCategories } from "../../redux/actions/categoriesActions";
 import axios from "axios";
 import NavBarApp from "../NavbarApp/NavBarApp";
+import { ButtonSave } from '../../theme/styled-componets';
 
 export default function AdminProducts() {
   const dispatch = useDispatch();
@@ -112,8 +113,8 @@ export default function AdminProducts() {
             alignItems: "center",
           }}
         >
-          <span>Buscar Productos "[X]"</span>
-          <button onClick={() => setShowFormProducts(!showFormProducts)}>Agregar Productos</button>
+          <span>Buscar Productos </span>
+          <ButtonSave onClick={() => setShowFormProducts(!showFormProducts)}>Agregar Productos</ButtonSave>
           <span>Admin Page</span>
         </div>
         <div
@@ -123,8 +124,6 @@ export default function AdminProducts() {
             display: "flex",
             margin: "0 auto",
             gap: "10px",
-
-            overflowY: "scroll",
           }}
         >
           {/* Productos */}
