@@ -1,21 +1,19 @@
 import React from "react";
 import styled from "styled-components";
 
-const Card = ({name, cat}) => {
+const Card = ({ name, cat, image }) => {
   return (
     <>
       <CardWrapper>
+        <div className="img">
+          <img className="image" src={image} alt="img" width="168px" />
+        </div>
         <div className="name">
           <p>{name}</p>
         </div>
-        {/* <div className="cat">
+        <div className="cat">
           <p>{cat}</p>
-        </div> */}
-
-        {/* <div className="img">
-          <img className="image" src={image} alt="img" />
-        </div> */}
-        
+        </div>
       </CardWrapper>
     </>
   );
@@ -25,15 +23,17 @@ export default Card;
 
 const CardWrapper = styled.div`
   display: flex;
-  background-color: white ;
+  flex-direction: column;
+  background-color: white;
   border-radius: 25px;
   margin: 10px;
   width: 168px;
   height: 192px;
   overflow: hidden;
-  
+
   position: relative;
   .name {
+    //font-family: 'Lato';
     /* display: flex;
     align-items: center; */
     color: black;
@@ -49,5 +49,25 @@ const CardWrapper = styled.div`
     /* width: 200px;
     height: 100px;
     position: static; */
+    font-size: 20px;
+    font-weight: 600;
+  }
+  .img {
+    /* left: -25%;
+    display: block; */
+    //width: 200px;
+    //display: flex;
+    //display: flex;
+    //justify-content: center;
+    //position: relative;
+    height: 98px;
+    .image {
+      height: 95px;
+    }
+    //left: -25%;
+
+    /* margin: auto; */
+    /* min-height: 100%;
+    min-width: 100%; */
   }
 `;

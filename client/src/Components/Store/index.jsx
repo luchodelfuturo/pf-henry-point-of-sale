@@ -21,7 +21,7 @@ function Store() {
     <>
       <div className="container">
         <div className="store-component">
-          <div className="clients-tabs">Clients</div>
+          {/* <div className="clients-tabs">Clients</div> */}
           <div className="store-container">
             <div className="cart-container">
             
