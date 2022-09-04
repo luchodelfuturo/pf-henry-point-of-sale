@@ -6,6 +6,6 @@ export default configureStore({
   reducer: {
     orders: orders,
     products: products,
-    categories: categories,
+    categories: categories, 
   },
 });
