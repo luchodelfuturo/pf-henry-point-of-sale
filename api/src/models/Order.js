@@ -34,7 +34,7 @@ module.exports = (sequelize) => {
         // This way, the current date/time will be used to populate this column (at the moment of insertion)
       },
       status: {
-        type: DataTypes.ENUM("p", "d", "r", "f"),
+        type: DataTypes.ENUM("pending", "doing", "ready", "finished"),
       },
       comments: {
         type: DataTypes.STRING(250),
