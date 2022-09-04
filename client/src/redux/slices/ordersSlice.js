@@ -7,6 +7,8 @@ export const ordersSlice = createSlice({
     sortedOrders: [],
     status: 1,
     filteredOrders: [],
+    ordersReady: [], //aca se gurado todo lo que le llegue de la base de datos
+    ordersReadyCopy: [],
   },
   reducers: {
     getOrders: (state, action) => {
@@ -32,6 +34,9 @@ export const ordersSlice = createSlice({
 
       state.filteredOrders = filter;
     },
+    ordersReadyReducer: (state, action) => {
+      state.ordersReady = action.payload;
+    },
     clean: (state, action) => {
       state.sortedOrders = action.payload;
       state.filteredOrders = action.payload;
@@ -46,5 +51,7 @@ export const {
   filterDoing,
   filterPending,
   clean,
+  ordersReadyReducer,
+  orderEnded,
 } = ordersSlice.actions;
 export default ordersSlice.reducer;

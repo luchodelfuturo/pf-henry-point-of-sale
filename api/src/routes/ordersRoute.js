@@ -21,16 +21,16 @@ router.put("/put/:orderNumber", async (req, res) => {
   return res.send("status updated");
 });
 
-router.get("/ready", async (req, res) => {
-  let results = [];
-  results = await Order.findAll({ where: { status: "r" }, include: Product });
+// router.get("/ready", async (req, res) => {
+//   let results = [];
+//   results = await Order.findAll({ where: { status: "r" }, include: Product });
 
-  if (results.length === 0) {
-    res.status(404).json("No se encontraron resultados");
-  } else {
-    res.status(200).json(results);
-  }
-});
+//   if (results.length === 0) {
+//     res.status(404).json("No se encontraron resultados");
+//   } else {
+//     res.status(200).json(results);
+//   }
+// });
 
 router.post("/", async (req, res) => {
   try {

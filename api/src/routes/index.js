@@ -15,8 +15,9 @@ const router = Router();
 const ordersRoute = require("./ordersRoute.js");
 const productsRoute = require("./productsRoute.js");
 const categoryRoute = require("./categoryRoute.js");
-
+const readyRoute = require("./ordersReadyPut.js");
 router.use("/orders", ordersRoute);
+router.use("/orders/ready", readyRoute);
 router.use("/products", productsRoute);
 router.use("/category", categoryRoute);
 
