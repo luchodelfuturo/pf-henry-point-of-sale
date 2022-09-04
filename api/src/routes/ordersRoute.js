@@ -23,7 +23,7 @@ router.put("/put/:orderNumber", async (req, res) => {
 
 router.get("/ready", async (req, res) => {
   let results = [];
-  results = await Order.findAll({ where: { status: "rready" }, include: Product });
+  results = await Order.findAll({ where: { status: "ready" }, include: Product });
 
   if (results.length === 0) {
     res.status(404).json("No se encontraron resultados");

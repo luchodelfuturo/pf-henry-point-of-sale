@@ -82,7 +82,6 @@ export default function FormProducts({
           width: "80%",
           height: "80%",
           backgroundColor: "lightgray",
-
           margin: "auto",
           position: "relative",
           zIndex: "10",

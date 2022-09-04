@@ -35,7 +35,6 @@ function Orders() {
 
   return (
     <div className="Container">
-      <h1>{time}</h1>
       {loading ? (
         <div id="empty">
           <h2>There are not orders !</h2>
@@ -72,9 +71,9 @@ function Orders() {
                       id="status"
                       onChange={(e) => handleChange(e, o.orderNumber)}
                     >
-                      <option value="p">pending</option>
-                      <option value="d">doing</option>
-                      <option value="r">ready</option>
+                      <option value="pendin">pending</option>
+                      <option value="doing">doing</option>
+                      <option value="ready">ready</option>
                     </select>
                     <p id="amount">${o.products.map((p) => p.price)}</p>
                   </div>
@@ -100,9 +99,9 @@ function Orders() {
                       id="status"
                       onChange={(e) => handleChange(e, o.orderNumber)}
                     >
-                      <option value="p">pending</option>
-                      <option value="d">doing</option>
-                      <option value="r">ready</option>
+                      <option value="pending">pending</option>
+                      <option value="doing">doing</option>
+                      <option value="ready">ready</option>
                     </select>
                     <p id="amount">${o.products.map((p) => p.price)}</p>
                   </div>

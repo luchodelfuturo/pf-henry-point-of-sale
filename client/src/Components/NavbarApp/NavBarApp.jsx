@@ -1,78 +1,25 @@
-import React from "react";
+import React, { useState}  from "react";
 import { useHistory } from "react-router-dom";
+import {NavBar, Button, Time} from '../Styled-Components/styled-componets' 
+
 
 export default function NavBarApp() {
+
   const history = useHistory();
+  const [time, setTime] = useState("");
+  setTimeout(() => {
+    setInterval(() => {
+      setTime(new Date().toLocaleTimeString());
+    }, 1000);
+  });
+
   return (
-    <div
-      style={{
-        width: "100%",
-        height: "100%",
-        margin: "auto",
-        backgroundColor: "black",
-        color: "white",
-        display: "flex",
-      }}
-    >
-      <div
-        style={{
-          width: "60%",
-          height: "100%",
-
-          margin: "auto",
-
-          display: "flex",
-          alignContent: "center",
-          justifyContent: "space-around",
-          gap: "10px",
-        }}
-      >
-        <button
-          style={{
-            width: "100%",
-            padding: "10px 30px",
-            backgroundColor: "white",
-            borderRadius: "10px",
-          }}
-          onClick={() => history.push("/store")}
-        >
-          Ventas
-        </button>
-        <button
-          style={{
-            width: "100%",
-
-            padding: "10px 30px",
-            backgroundColor: "white",
-            borderRadius: "10px",
-          }}
-          onClick={() => history.push("/kitchen")}
-        >
-          Cocina
-        </button>
-        <button
-          style={{
-            width: "100%",
-            padding: "10px 30px",
-            backgroundColor: "white",
-            borderRadius: "10px",
-          }}
-          onClick={() => history.push("/counter")}
-        >
-          Pedidos Ready
-        </button>
-        <button
-          style={{
-            width: "100%",
-            padding: "10px 30px",
-            backgroundColor: "white",
-            borderRadius: "10px",
-          }}
-          onClick={() => history.push("/adminProducts")}
-        >
-          Admin Products
-        </button>
-      </div>
-    </div>
+    <NavBar>
+      <Button onClick={() => history.push("/store")}>Ventas</Button>
+      <Button onClick={() => history.push("/kitchen")}>Kitchen</Button>
+      <Button onClick={() => history.push("/counter")}>Pedidos Ready</Button>
+      <Button onClick={() => history.push("/adminProducts")}>Products</Button>
+      <Time>{time}</Time>
+    </NavBar>
   );
 }

@@ -18,33 +18,20 @@ function Store() {
   }, [dispatch]);
 
   return (
-    <>
-      <div className="container">
-        <div className="store-component">
-          <div className="clients-tabs">Clients</div>
-          <div className="store-container">
-            <div className="cart-container">
-            
-              <Cart products={state} />
-            </div>
-            <div className="products-container">
-              <div className="search-product">
-                BUSCADOR
-              </div>
-              <div className="category-buttons">
-                CATEGORIAS
-              </div>
-              <div className="cards-container">
-                <Cards products={products} />
-              </div>
-            </div>
+    <div className="container">
+      <div className="store-component">
+        <div className="clients-tabs">Clients</div>
+        <div className="store-container">
+          <div className="cart-container"><Cart products={state} /></div>
+          <div className="products-container">
+            <div className="search-product">BUSCADOR</div>
+            <div className="category-buttons">CATEGORIAS</div>
+            <div className="cards-container"><Cards products={products}/></div>
           </div>
         </div>
-        <div style={{ height: "10vh" }}>
-        <NavBarApp />
       </div>
-      </div>
-    </>
+      <NavBarApp />
+    </div>
   );
 }
 

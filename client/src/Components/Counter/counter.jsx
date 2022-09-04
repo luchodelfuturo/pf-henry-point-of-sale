@@ -1,6 +1,6 @@
 import React from "react";
-import Nav from "../NavBar";
 import Orders from "../Orders";
+import NavBarApp from "../NavbarApp/NavBarApp";
 
 function Counter() {
   return (
@@ -13,7 +13,7 @@ function Counter() {
             <h1>Ready</h1>
         </div>
       </div>
-      <Nav />
+      <NavBarApp/>
     </div>
   );
 }
