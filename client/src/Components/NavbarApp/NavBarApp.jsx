@@ -1,6 +1,6 @@
 import React, { useState}  from "react";
 import { useHistory } from "react-router-dom";
-import {NavBar, Button, Time} from '../Styled-Components/styled-componets' 
+import {NavBar, Button, Time} from '../../theme/styled-componets' 
 
 
 export default function NavBarApp() {

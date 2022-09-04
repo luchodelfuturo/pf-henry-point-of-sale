@@ -1,28 +1,28 @@
 import styled from 'styled-components';
+import {colors} from "./variables";
 
 export const Button = styled.button`
-    background-color: #7f5af0;
+    background-color: ${colors.violet};
     border-radius: 0.3rem;
     border-style: none;
     width: 60rem;
     height: 3rem;
     font-family: 'Century Gothic', Arial, Helvetica, sans-serif;
     font-weight: bold;
-    color: #fffffe;
+    color: ${colors.white};
     font-size: 17px;
     cursor: pointer;
     transition: all 0.5s ease;
     margin:0rem 0.5rem;
-
     &:hover{
-        background-color: #16161a;
+        background-color: ${colors.grey1};
     }
 `
 
 
 
 export const NavBar = styled.nav`
-    background-color: #242629;
+    background-color: ${colors.grey2};
     position: fixed;
     bottom: 0;
     height: 4rem;
@@ -38,7 +38,7 @@ export const NavBar = styled.nav`
 export const Time = styled.h2`
     font-family: 'Century Gothic', Arial, Helvetica, sans-serif;
     font-weight: bold;
-    color: #fffffe;
+    color: ${colors.white};
     font-size: 27px;
     margin-right: 5rem;
     margin-left: 2rem;
