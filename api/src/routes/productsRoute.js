@@ -1,12 +1,38 @@
 const { Router } = require("express");
 const router = Router();
-const { Product, Category } = require("../db.js");
+const { Product, Category, Op } = require("../db.js");
 
 router.get("/", async (req, res) => {
+  const name = req.query.name
   let allProducts = [];
   try {
-    allProducts = await Product.findAll({ include: Category });
-    res.json(allProducts.length > 0 ? allProducts : "No hay productos");
+    allProducts = await Product.findAll({ include: Category })
+    if (name) {
+      const product = await Product.findAndCountAll({
+        where: {
+          name: {
+            [Op.iLike]: `%${name}%`,
+          },
+        },
+
+      });
+      if (product.count === 0) {
+        res.send({
+          count: 0,
+          rows: ["No existe"],
+        });
+      } else {
+
+        res.json(product);
+      }
+    } else {
+      res.json(allProducts.length > 0 ? allProducts : "No hay productos");
+    }
+
+
+
+
+
   } catch (error) {
     res.status(404).json(error);
   }

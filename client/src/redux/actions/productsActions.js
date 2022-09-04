@@ -1,5 +1,6 @@
 import axios from "axios";
-import { getAllProducts } from "../slices/productsSlice";
+import { getAllProducts, filterByCategory } from "../slices/productsSlice";
+
 
 export const getProducts = () => (dispatch) => {
   console.log('hola get products')
@@ -7,7 +8,7 @@ export const getProducts = () => (dispatch) => {
     .get("http://localhost:3001/products")
 
     .then((res) => {
-      console.log(res)
+      //      console.log(res)
       dispatch(getAllProducts(res.data))
     })
 
@@ -15,7 +16,12 @@ export const getProducts = () => (dispatch) => {
 
 };
 
-export const postProducts = (product) => (dispatch) => {
+export const postProducts = (product) => async (dispatch) => {
   console.log('hola post products')
-  axios.post("http://localhost:3001/products/add", product)
+  return await axios.post("http://localhost:3001/products/add", product)
+}
+
+export const filterByCategoryAction = (category) => (dispatch) => {
+  console.log('Haciendo filter by category action')
+  dispatch(filterByCategory(category))
 }
