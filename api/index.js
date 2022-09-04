@@ -1,5 +1,5 @@
 const server = require("./src/app.js");
-const { conn, Category } = require("./src/db.js");
+const { conn, Category, Product } = require("./src/db.js");
 
 async function precarga() {
   const category = [
@@ -11,22 +11,10 @@ async function precarga() {
   ];
   await Category.bulkCreate(category).then(() => console.log("Categories preloaded"));
 
-  const category = [
-      {   name: "Burgers",
-          section: "kitchen"
-      },
-      {   name: "Pizzas",
-          section: "kitchen"
-      },
-      {   name: "Drinks",
-          section: "counter"
-      },
-      {   name: "Extras",
-          section: "counter"
-      }
-    ]  
-  Category.bulkCreate(category).then(() => console.log("Categories preloaded"));
-  
+
+
+
+
   // Desde aqui muere el codigo xd 
 
   const burguers = await Product.bulkCreate([
