@@ -126,15 +126,12 @@ export function StoreProvider({ children }) {
       return { qty: p.qty, nameProduct: p.product.name, section: p.section };
     });
   }
-  sendOrder()
+  sendOrder();
 
   let order = {
-    status: "p",
     comments: "",
     productsOrder: productsOrder,
   };
-
-  
 
   return (
     <StoreContext.Provider
