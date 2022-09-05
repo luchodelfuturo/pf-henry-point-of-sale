@@ -7,6 +7,7 @@ import {
   updateStatus,
   filterPending,
   postOrders,
+  ordersReadyReducer
 } from "../slices/ordersSlice";
 
 export const getOrdersAction = () => (dispatch) => {
@@ -49,9 +50,6 @@ export const postOrdersAction = (order) => (dispatch) => {
   })
     .then((res) => res.json())
     .then((r) => dispatch(postOrders(r.data)));
-<<<<<<< HEAD
-};
-=======
 };
 //---------------new actions
 export const ordersReadyAction = () => (dispatch) => {
@@ -68,4 +66,3 @@ export const updateStatusFinished = (status, orderNumber) => (dispatch) => {
     })
     .then((res) => dispatch(updateStatus(res.data)));
 };
->>>>>>> ae036d48a4d25bb6852b4a44825c09cfc381cd0f

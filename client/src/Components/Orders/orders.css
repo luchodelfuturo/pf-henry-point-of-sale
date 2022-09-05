@@ -62,7 +62,8 @@ margin-top: -120px;
 #grilla {
     display: grid;
     grid-template-columns: auto auto auto auto;
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
     width: 100%;
 }
 
