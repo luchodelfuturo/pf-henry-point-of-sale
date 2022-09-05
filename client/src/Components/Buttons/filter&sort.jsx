@@ -1,11 +1,8 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import {
-  cleanAction,
-  filterDoingAction,
-  filterPendingAction,
-  sortByOrderNumberAction,
+import {cleanAction, filterDoingAction,filterPendingAction,sortByOrderNumberAction
 } from "../../redux/actions/ordersActions";
+import {FiltrosDiv} from "../../theme/styled-componets";
 
 function FilterSort() {
   const dispatch = useDispatch();
@@ -27,7 +24,7 @@ function FilterSort() {
   };
 
   return (
-    <div>
+    <FiltrosDiv>
       <label>Sort By</label>
       <select name="sort" id="sort" onChange={(e) => handleChange(e)}>
         <option value="sortDefault">default</option>
@@ -42,7 +39,7 @@ function FilterSort() {
         <option value="doing">doing</option>
         <option value="ready">ready</option>
       </select>
-    </div>
+    </FiltrosDiv>
   );
 }
 

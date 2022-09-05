@@ -1,25 +1,23 @@
- .Container{
-  display: grid;
-  grid-template-columns: repeat(400, 1fr);
+
+.Container{
+  display: flex;
+  flex-direction: column;
+  /* grid-template-columns: repeat(400, 1fr); */
   height: 90vh;
-  font-size: xx-small; 
   align-items: center;
-  background-color: #586875;
-  color: #f4f7f7;
+  color: #010101;
   margin: 0;
 } 
 
 #empty {
-    color: white;
-border: solid 2px black;
-border-radius: 20px;
-background-color: green;
-margin-top: -20vh;
-height: 40vh;
-width: 30vw;
-/* margin-left: 35vw; */
-padding-top: 60px;
+    color: #fffffe;
+    border-style: none;
+    margin-top: -20vh;
+    height: 40vh;
+    width: 30vw;
+    padding-top: 60px;
 }
+
 .button{
     /* margin-top: 30px; */
     cursor: pointer;
@@ -27,15 +25,19 @@ padding-top: 60px;
 }
 
 .Card{
-    display: table;
+
    
     /* margin-left: 30vw; */
     /* margin-top: 15vh; */
     /* align-items: center; */
-    height: 60vh;
-    width: 20vw;
-    border: solid 2px black;
-    border-radius: 20px;
+    height: 20rem;
+    width: 20rem;
+    border-style: none;
+    border-radius: 0.3rem;
+    background-color: #242629;
+    margin: 0.5rem;
+    padding: 1rem;
+    color: #fffffe;
     /* 
 color: red;
 background-color: grey; */
@@ -58,15 +60,28 @@ background-color: grey; */
 /* } */
 #orderNumber{
   /* margin-left: 250px; */
-   color:red;
+   color:#fffffe;
+   font-family: 'Century Gothic';
+   font-weight: bold;
+   font-size: 22px;
 }
-#date {
-    margin-left: -80px;
-    margin-top: -20px 
+
+#grilla {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
 }
+
 #time {
-    margin-right: -50px;
-    margin-top: -23px 
+    color: #fffffe;
+    font-family: 'Century Gothic';
+    font-weight: bold;
+    font-size: 22px;
+}
+
+#head {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 /* #amount{ */
     /* margin-left: 250px;

@@ -119,3 +119,11 @@ export const contenedorEmergentes = styled.div`
     justify-content: center;
     align-content: center;
 `
+
+export const FiltrosDiv = styled.div`
+    background-color: ${colors.grey2};
+    width: 100%;
+    color: ${colors.white};
+    display: flex;
+    flex-direction: row;
+`

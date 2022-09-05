@@ -355,6 +355,8 @@ export default function AdminProducts() {
                     }}
                     placeholder="Add Category"
                     type="text"
+                    name=""
+                    id=""
                     value={inputCategory}
                     onChange={(e) => setInputCategory(e.target.value)}
                   />

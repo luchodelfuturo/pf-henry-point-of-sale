@@ -1,12 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect  } from "react";
 import "./orders.css";
-import { useEffect } from "react";
 import FilterSort from "../Buttons/filter&sort";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getOrdersAction,
-  updateStatusAction,
-} from "../../redux/actions/ordersActions";
+import { getOrdersAction, updateStatusAction} from "../../redux/actions/ordersActions";
 
 function Orders() {
   const dispatch = useDispatch();
@@ -38,75 +34,59 @@ function Orders() {
       {loading ? (
         <div id="empty">
           <h2>There are not orders !</h2>
-          <button
-            className="button"
-            onClick={() => {
-              window.location.reload();
-            }}
-          >
-            Refresh
-          </button>
+          <button className="button" onClick={() => {window.location.reload();}}>Refresh</button>
         </div>
       ) : (
         <>
           <FilterSort />
-          {filteredOrders.length > 0
-            ? filteredOrders.map((o) => {
-                return (
-                  <div key={o.orderNumber} className="Card">
-                    <p id="orderNumber">#{o.orderNumber}</p>
-                    <p id="date">{o.date}</p>
-                    <ul id="time">
-                      <b>time:</b>
-                      <li>init:{o.timeInit}</li>
-                    </ul>
-                    <h4 id="title">Order:</h4>
-                    <p>{o.products.map((p) => p.name)}</p>
-                    <p>Cantidad:</p>
-                    <p> 1</p>
-                    {o.comments && <p id="comments">{o.comments}</p>}
-                    <label id="status">status:</label>
-                    <select
-                      name="status"
-                      id="status"
-                      onChange={(e) => handleChange(e, o.orderNumber)}
-                    >
+        <div id="grilla">
+          {filteredOrders.length > 0 ? filteredOrders.map((o) => {
+            return (
+              <div key={o.orderNumber} className="Card">
+                <p id="orderNumber"># {o.orderNumber}</p>
+                <p id="time">Time: {o.timeInit}</p>
+                <h4 id="title">Order:</h4>
+                <p>{o.products.map((p) => p.name)}</p>
+                <p>Cantidad:</p>
+                <p> 1</p>
+                {o.comments && <p id="comments">{o.comments}</p>}
+                <label id="status">status:</label>
+                <select
+                  name="status"
+                  id="status"
+                  onChange={(e) => handleChange(e, o.orderNumber)}
+                >
                       <option value="pendin">pending</option>
                       <option value="doing">doing</option>
                       <option value="ready">ready</option>
                     </select>
-                    <p id="amount">${o.products.map((p) => p.price)}</p>
+          
                   </div>
-                );
-              })
+              
+            );
+          })
             : orders.map((o) => {
                 return (
                   <div key={o.orderNumber} className="Card">
-                    <p id="orderNumber">#{o.orderNumber}</p>
-                    <p id="date">{o.date}</p>
-                    <ul id="time">
-                      <b>time:</b>
-                      <li>init:{o.timeInit}</li>
-                    </ul>
+                    <div id="head">
+                      <p id="orderNumber"># {o.orderNumber}</p>
+                      <p id="time">{o.timeInit}</p>
+                    </div>
                     <h4 id="title">Order:</h4>
                     <p>{o.products.map((p) => p.name)}</p>
                     <p>Cantidad</p>
                     <p> 1</p>
                     {o.comments && <p id="comments">{o.comments}</p>}
                     <label id="status">status:</label>
-                    <select
-                      name="status"
-                      id="status"
-                      onChange={(e) => handleChange(e, o.orderNumber)}
-                    >
+                    <select name="status"  id="status" onChange={(e) => handleChange(e, o.orderNumber)}>
                       <option value="pending">pending</option>
                       <option value="doing">doing</option>
                       <option value="ready">ready</option>
                     </select>
-                    <p id="amount">${o.products.map((p) => p.price)}</p>
                   </div>
                 );
               })}
+          </div>
         </>
       )}
     </div>
