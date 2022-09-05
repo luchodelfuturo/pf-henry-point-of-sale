@@ -1,4 +1,3 @@
-import "./App.css";
 import { Route } from "react-router-dom";
 import Kitchen from "./Components/Kitchen";
 import Store from "./Components/Store";

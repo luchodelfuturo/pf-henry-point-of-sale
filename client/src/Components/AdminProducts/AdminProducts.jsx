@@ -5,11 +5,12 @@ import {
   getProducts,
   postProducts,
 } from "../../redux/actions/productsActions";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getCategories } from "../../redux/actions/categoriesActions";
 import axios from "axios";
 import NavBarApp from "../NavbarApp/NavBarApp";
+import { ButtonSave } from '../../theme/styled-componets';
+
 export default function AdminProducts() {
   const dispatch = useDispatch();
 
@@ -79,7 +80,6 @@ export default function AdminProducts() {
         width: "100%",
         minHeight: "100vh",
         height: "100%",
-
         display: "flex",
         flexDirection: "column",
         justifyContent: "start",
@@ -113,11 +113,9 @@ export default function AdminProducts() {
             alignItems: "center",
           }}
         >
-          <span>Buscar Productos "[X]"</span>{" "}
-          <button onClick={() => setShowFormProducts(!showFormProducts)}>
-            Agregar Productos [X]
-          </button>
-          Admin Page
+          <span>Buscar Productos </span>
+          <ButtonSave onClick={() => setShowFormProducts(!showFormProducts)}>Agregar Productos</ButtonSave>
+          <span>Admin Page</span>
         </div>
         <div
           style={{
@@ -126,8 +124,6 @@ export default function AdminProducts() {
             display: "flex",
             margin: "0 auto",
             gap: "10px",
-
-            overflowY: "scroll",
           }}
         >
           {/* Productos */}
@@ -241,18 +237,7 @@ export default function AdminProducts() {
                           >
                             {prod.name}
                           </span>
-                          {/* <p
-                        style={{
-                          width: "90%",
-                          margin: "0 auto",
-                          height: "fit",
-                          fontSize: "90%",
 
-                          textAlign: "start",
-                        }}
-                      >
-                        {prod.desc}
-                      </p> */}
                           <span
                             style={{
                               borderRadius: "10px",
@@ -388,11 +373,9 @@ export default function AdminProducts() {
           </div>
         </div>
       </div>
-      {/* NavBarApp */}
 
-      <div style={{ height: "10vh" }}>
-        <NavBarApp />
-      </div>
+      <NavBarApp />
+
     </div>
   );
 }

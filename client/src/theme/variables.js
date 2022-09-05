@@ -2,11 +2,15 @@ import styled from "styled-components";
 
 // Variables
 export const colors = {
-  violet: "#A259FF",
-  white: "#FFF",
-  black: "#000",
+  violet: "#7f5af0",
+  green: "#2cb67d",
+  white: "#fffffe",
+  black: "#010101",
+  grey1: "#16161a",
+  grey2: "#242629",
+  grey3: "#72757e",
+  grey4: "#94a1b2",
   yellow: "#E7D576",
-  green: "#A8E776",
   orange: "#FFB775",
   sky: "#B5FFED",
   grey50: "#F7FAFC",
