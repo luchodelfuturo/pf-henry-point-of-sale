@@ -59,7 +59,10 @@ const CartItem = ({ AllProducts }) => {
                   {">"}
                 </button>
               </div>
-              <div className="price">{p.subTotal}</div>
+              <div className="price-cont">
+                <div className="sign">$</div>
+                <div className="price">{p.subTotal}</div>
+              </div>
               <div
                 className="delete-item"
                 onClick={() => handleDelete(p.product.id)}
@@ -93,12 +96,25 @@ const Item = styled.div`
     height: 83px;
   }
   .qty {
+    font-weight: 600;
+    font-size: 20px;
     width: 57px;
     text-align: center;
   }
   .product-info {
+    
     text-align: start;
     min-width: 255px;
+
+    .cat{
+      font-weight: 400;
+    font-size: 16px;
+    }
+    .name{
+      font-weight: 400;
+    font-size: 18px;
+    }
+
   }
   .qty-changer {
     display: flex;
@@ -112,11 +128,23 @@ const Item = styled.div`
       height: 83px;
     }
   }
-  .price {
+  .price-cont {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
     width: 112px;
-    text-align: center;
+    .price {
+      font-weight: 700;
+      font-size: 24px;
+      text-align: center;
+    }
+    .sign {
+      font-size: 16px;
+    }
   }
+
   .delete-item {
+    cursor: pointer;
     width: 50px;
     text-align: center;
   }

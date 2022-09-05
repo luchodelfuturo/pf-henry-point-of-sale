@@ -35,7 +35,7 @@ function Store() {
               <Cart products={state} />
             </div>
             <div className="products-container">
-              <div className="search-product">BUSCADOR</div>
+              {/* <div className="search-product">BUSCADOR</div> */}
               <div className="category-buttons">
                 {categories &&
                   categories.map((categ, index) => {
