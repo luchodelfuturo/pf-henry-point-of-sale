@@ -50,8 +50,7 @@ function Store() {
               <div className="category-buttons">
                 {categories &&
                   categories.map((categ, index) => {
-
-                   const namer = index > 0 ? categ.name : 'All'
+                    const namer = index > 0 ? categ.name : "All";
                     return (
                       <BtnRounded
                         onClick={() => {

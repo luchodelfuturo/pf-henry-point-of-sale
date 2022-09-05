@@ -4,7 +4,7 @@ const { Order, Product } = require("../db.js");
 
 router.get("/", async (req, res) => {
   let results = [];
-  results = await Order.findAll({ include: Product });
+  results = await Order.findAll();
 
   if (results.length === 0) {
     res.status(404).json("No se encontraron resultados");
@@ -23,7 +23,10 @@ router.put("/put/:orderNumber", async (req, res) => {
 
 router.get("/ready", async (req, res) => {
   let results = [];
-  results = await Order.findAll({ where: { status: "r" }, include: Product });
+  results = await Order.findAll({
+    where: { status: "ready" },
+    include: Product,
+  });
 
   if (results.length === 0) {
     res.status(404).json("No se encontraron resultados");
@@ -35,7 +38,7 @@ router.get("/ready", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     const order = await Order.create(req.body);
-    await order.addProducts(req.body.product);
+    //await order.addProducts(req.body.product);
     res.json(order);
   } catch (error) {
     res.send(error);

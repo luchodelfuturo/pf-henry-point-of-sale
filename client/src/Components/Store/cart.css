@@ -1,10 +1,28 @@
-.cart{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    
-
+.cart {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
-.items{
-    height: 550px;
+.items {
+  height: 550px;
+}
+.items-header {
+  display: flex;
+  justify-content: space-between;
+  width: 590px;
+  height: 39px;
+  font-weight: 700;
+}
+.items-header-qty {
+  width: 57px;
+  font-size: 20px;
+}
+.items-header-prod {
+  text-align: start;
+  min-width: 255px;
+  font-size: 24px;
+}
+.items-header-sub {
+  width: 112px;
+  font-size: 20px;
 }

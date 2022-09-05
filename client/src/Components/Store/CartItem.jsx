@@ -21,7 +21,6 @@ const CartItem = ({ AllProducts }) => {
   // setTotal(products.product.price * products.qty)
   //         console.log(total)
 
-
   function handleIncr(p) {
     qtyIncr(p);
   }
@@ -37,9 +36,7 @@ const CartItem = ({ AllProducts }) => {
       {console.log(products)}
       {products &&
         products.map((p, i) => (
-          
           <Item key={i}>
-          
             <div className="div-container">
               <div className="qty">{p.qty}</div>
               <div className="product-info">
@@ -84,12 +81,12 @@ const Item = styled.div`
   color: black;
   margin-top: 5px;
   //position: absolute;
-width: 590px;
-height: 83px;
+  width: 590px;
+  height: 83px;
 
-background: #FFFFFF;
-box-shadow: 4px 6px 9px -4px rgba(0, 0, 0, 0.25);
-border-radius: 0px 20px 20px 0px;
+  background: #ffffff;
+  box-shadow: 4px 6px 9px -4px rgba(0, 0, 0, 0.25);
+  border-radius: 0px 20px 20px 0px;
   .div-container {
     display: flex;
     justify-content: space-between;
