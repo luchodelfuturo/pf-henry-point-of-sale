@@ -44,14 +44,7 @@
 
 }
 
-#cantidad {
-margin-left: 170px;
-margin-top: -120px;
-}
 
-#qty {
-    margin-left: 170px;
-}
 #orderNumber{
    color:#fffffe;
    font-family: 'Century Gothic';
@@ -72,6 +65,16 @@ margin-top: -120px;
     font-family: 'Century Gothic';
     font-weight: bold;
     font-size: 22px;
+}
+
+
+#prodYcant{
+    display: flex;
+    flex-direction: row;
+}
+
+#cant{
+    margin-left: 1rem;
 }
 
 #head {

@@ -1,0 +1,38 @@
+.container {
+  /* display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(5, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 16px; */
+  /* grid-template-columns: repeat(400, 1fr); */
+  height: 70vh;
+  font-size: small;
+  align-items: center;
+  /* background-color: #586875; */
+  color: #f4f7f7;
+  margin: 0;
+  width: 441px;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.etapas_de_ordenes {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  height: 89vh;
+}
+#orderNumber {
+  text-align: left;
+  margin-left: 14px;
+}
+
+.card {
+  display: table;
+  height: 17vh;
+  width: 19vw;
+  border: solid 2px black;
+  border-radius: 20px;
+  color: black;
+  margin: 5px 5px;
+}

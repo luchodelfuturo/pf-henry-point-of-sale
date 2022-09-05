@@ -68,16 +68,17 @@ function Orders() {
                         <p id="orderNumber">#{o.orderNumber}</p>
                         <p id="time">{o.timeInit}</p>
                       </div>
-                      <h4 id="title">Order:</h4>
 
+                      <h4 id="title">Order:</h4>
                       {o.productsOrder.map((p) => (
                         <p id="products"> {p.nameProduct}</p>
                       ))}
 
-                      <p id="cantidad">Cantidad</p>
+                      <h4 id="cantidad">Cantidad</h4>
                       {o.productsOrder.map((p) => (
                         <p id="qty">{p.qty}</p>
                       ))}
+
                       {o.comments && (
                         <p id="comments">
                           Comments: <br />
@@ -117,16 +118,21 @@ function Orders() {
                         <p id="orderNumber">#{o.orderNumber}</p>
                         <p id="time">{o.timeInit}</p>
                       </div>
-                      <h4 id="title">Order:</h4>
 
+                      <div id="prodYcant">
+                      <div id="prod">
+                      <h4 id="title">Order:</h4>
                       {o.productsOrder.map((p) => (
                         <p id="products"> {p.nameProduct}</p>
                       ))}
-
-                      <p id="cantidad">Cantidad</p>
+                      </div >
+                      <div id="cant">
+                      <h4 id="cantidad">Cantidad</h4>
                       {o.productsOrder.map((p) => (
                         <p id="qty">{p.qty}</p>
                       ))}
+                      </div>
+                      </div>
                       {o.comments && (
                         <p id="comments">
                           Comments: <br />
