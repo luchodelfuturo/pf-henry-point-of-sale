@@ -9,11 +9,20 @@
   margin: 0;
 } 
 
+#doing {
+    background-color: #A8E776;
+
+}
+
+#pending {
+    background-color: #FFB775;
+}
+
 #empty {
     color: white;
 border: solid 2px black;
 border-radius: 20px;
-background-color: green;
+background-color: #A8E776;
 margin-top: -20vh;
 height: 40vh;
 width: 30vw;
