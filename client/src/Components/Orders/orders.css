@@ -9,6 +9,15 @@
   margin: 0;
 } 
 
+#doing {
+    background-color: #A8E776;
+
+}
+
+#pending {
+    background-color: #FFB775;
+}
+
 #empty {
     color: #fffffe;
     border-style: none;

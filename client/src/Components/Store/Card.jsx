@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const Card = ({ name, cat, image }) => {
+const Card = ({ name, cat, image, price }) => {
   return (
     <>
       <CardWrapper>
@@ -11,8 +11,10 @@ const Card = ({ name, cat, image }) => {
         <div className="name">
           <p>{name}</p>
         </div>
-        <div className="cat">
-          <p>{cat}</p>
+        <div className="cat">{cat}</div>
+        <div className="price-cont">
+          <div className="sign">$</div>
+          <div className="price">{price}</div>
         </div>
       </CardWrapper>
     </>
@@ -25,6 +27,7 @@ const CardWrapper = styled.div`
   display: flex;
   flex-direction: column;
   background-color: white;
+  box-shadow: 4px 9px 17px -11px rgba(0, 0, 0, 0.25);
   border-radius: 25px;
   margin: 10px;
   width: 168px;
@@ -33,41 +36,60 @@ const CardWrapper = styled.div`
 
   position: relative;
   .name {
-    //font-family: 'Lato';
-    /* display: flex;
-    align-items: center; */
     color: black;
-    //justify-content: space-around;
-    /* font-size: 20px;
-    text-align: center;
-    //font-smooth: 2em;
-    text-decoration: none; */
-    //position: relative;
-    /* min-height: 100px;
-    padding-left: 5px;
-    padding-right: 5px; */
-    /* width: 200px;
-    height: 100px;
-    position: static; */
-    font-size: 20px;
-    font-weight: 600;
+    margin-top: -20px;
+    text-align: left;
+    font-size: 18px;
+    font-weight: 700;
+    padding-left: 10px;
+    padding-right: 10px;
   }
   .img {
-    /* left: -25%;
-    display: block; */
-    //width: 200px;
-    //display: flex;
-    //display: flex;
-    //justify-content: center;
-    //position: relative;
     height: 98px;
     .image {
       height: 95px;
     }
-    //left: -25%;
+  }
+  .cat {
+    font-weight: 600;
+    font-size: 18px;
 
-    /* margin: auto; */
-    /* min-height: 100%;
-    min-width: 100%; */
+    text-align: center;
+    //vertical-align: middle;
+    position: absolute;
+    margin-left: 10px;
+    margin-top: 10px;
+    padding-left: 7px;
+    padding-right: 7px;
+    height: 28px;
+    background-color: #8ef5b5;
+    border-radius: 25px;
+  }
+  .price-cont {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3px 3px 0px 0px;
+    margin-top: 147px;
+    margin-left: 10px;
+    position: relative;
+    background-color: #8ef5b5;
+    box-shadow: 4px 2px 9px -1px rgba(0, 0, 0, 0.25);
+    border-radius: 26px;
+    width: 84px;
+    height: 28px;
+    text-align: center;
+  position: absolute;
+
+    .sign {
+      font-size: 15px;
+      padding-bottom: 6px;
+      margin-left: 5px;
+    }
+    .price {
+      font-size: 24px;
+      margin-left: 5px;
+      padding-bottom: 6px;
+    }
   }
 `;

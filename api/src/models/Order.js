@@ -35,10 +35,14 @@ module.exports = (sequelize) => {
       },
       status: {
         type: DataTypes.ENUM("pending", "doing", "ready", "finished"),
+        defaultValue: "pending",
       },
       comments: {
         type: DataTypes.STRING(250),
       },
+      productsOrder: {
+        type: DataTypes.JSON()
+      }
     },
     {
       timestamps: false,
