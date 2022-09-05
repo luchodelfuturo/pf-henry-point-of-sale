@@ -45,7 +45,10 @@ function Orders() {
         onClick={() => {
           window.location.reload();
         }}
-      > Refresh</button>
+      >
+        {" "}
+        Refresh
+      </button>
       {orders.length < 1 ? (
         <div id="empty">
           <h2>There are not orders !</h2>
@@ -54,11 +57,10 @@ function Orders() {
         <>
           <FilterSort />
           <div id="grilla">
-          {filteredOrders.length > 0
-            ? filteredOrders.map((o) => {
-                return (
-                  
-                  o.status !== "ready" && (
+            {filteredOrders.length > 0
+              ? filteredOrders.map((o) => {
+                  return o.status === "ready" ||
+                    o.status === "finished" ? null : (
                     <div
                       key={o.orderNumber}
                       id={o.status === "doing" ? "doing" : "pending"}
@@ -101,14 +103,11 @@ function Orders() {
                         <option value="ready">ready</option>
                       </select>
                     </div>
-                  )
-                  
-                );
-              })
-            : orders.map((o) => {
-                return (
-                  
-                  o.status !== "ready" && (
+                  );
+                })
+              : orders.map((o) => {
+                  return o.status === "ready" ||
+                    o.status === "finished" ? null : (
                     <div
                       key={o.orderNumber}
                       id={o.status === "doing" ? "doing" : "pending"}
@@ -120,18 +119,18 @@ function Orders() {
                       </div>
 
                       <div id="prodYcant">
-                      <div id="prod">
-                      <h4 id="title">Order:</h4>
-                      {o.productsOrder.map((p) => (
-                        <p id="products"> {p.nameProduct}</p>
-                      ))}
-                      </div >
-                      <div id="cant">
-                      <h4 id="cantidad">Cantidad</h4>
-                      {o.productsOrder.map((p) => (
-                        <p id="qty">{p.qty}</p>
-                      ))}
-                      </div>
+                        <div id="prod">
+                          <h4 id="title">Order:</h4>
+                          {o.productsOrder.map((p) => (
+                            <p id="products"> {p.nameProduct}</p>
+                          ))}
+                        </div>
+                        <div id="cant">
+                          <h4 id="cantidad">Cantidad</h4>
+                          {o.productsOrder.map((p) => (
+                            <p id="qty">{p.qty}</p>
+                          ))}
+                        </div>
                       </div>
                       {o.comments && (
                         <p id="comments">
@@ -155,10 +154,8 @@ function Orders() {
                         <option value="ready">ready</option>
                       </select>
                     </div>
-                  )
-                  
-                );
-              })}
+                  );
+                })}
           </div>
         </>
       )}
