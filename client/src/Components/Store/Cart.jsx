@@ -7,7 +7,7 @@ import { postOrdersAction } from "../../redux/actions/ordersActions";
 import { useDispatch } from "react-redux";
 
 function Cart({ products }) {
-  const { deleteAll, sendOrder, order } = useContext(StoreContext);
+  const { deleteAll, order } = useContext(StoreContext);
 
   let dispatch = useDispatch();
   let confirmMessage = "";
@@ -20,12 +20,11 @@ function Cart({ products }) {
 
   function onSubmit(e) {
     e.preventDefault();
-    sendOrder();
     try {
-      
-      console.log(JSON.stringify(order))
       dispatch(postOrdersAction(order));
       confirmMessage = "Se ha realizado el pedido correctamente";
+      deleteAll();
+
     } catch (error) {
       confirmMessage = "Se ha producido un error";
     }

@@ -128,8 +128,6 @@ export function StoreProvider({ children }) {
   }
   sendOrder()
 
-
-
   let order = {
     status: "p",
     comments: "",
