@@ -37,22 +37,6 @@ function Store() {
   });
 
   return (
-<<<<<<< HEAD
-    <div className="container">
-      <div className="store-component">
-        <div className="clients-tabs">Clients</div>
-        <div className="store-container">
-          <div className="cart-container"><Cart products={state} /></div>
-          <div className="products-container">
-            <div className="search-product">BUSCADOR</div>
-            <div className="category-buttons">CATEGORIAS</div>
-            <div className="cards-container"><Cards products={products}/></div>
-          </div>
-        </div>
-      </div>
-      <NavBarApp />
-    </div>
-=======
     <>
       <div className="container">
         <div className="store-component">
@@ -91,7 +75,6 @@ function Store() {
         </div>
       </div>
     </>
->>>>>>> 18306386f7661c83f026ab1f2e54f53d122f87fb
   );
 }
 
