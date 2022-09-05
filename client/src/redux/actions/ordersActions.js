@@ -7,6 +7,7 @@ import {
   updateStatus,
   filterPending,
   postOrders,
+  ordersReadyReducer
 } from "../slices/ordersSlice";
 
 export const getOrdersAction = () => (dispatch) => {
