@@ -4,12 +4,9 @@ import { useEffect } from "react";
 import FilterSort from "../Buttons/filter&sort";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  filterDoingAction,
-  filterPendingAction,
   getOrdersAction,
   updateStatusAction,
 } from "../../redux/actions/ordersActions";
-import { filterDoing } from "../../redux/slices/ordersSlice";
 
 function Orders() {
   const dispatch = useDispatch();
@@ -75,11 +72,15 @@ function Orders() {
                         <li>init:{o.timeInit}</li>
                       </ul>
                       <h4 id="title">Order:</h4>
-                      <p id="products">
-                        {o.products.map((p) => p.name + ", ")}
-                      </p>
-                      <p>Cantidad</p>
-                      <p> 1</p>
+
+                      {o.productsOrder.map((p) => (
+                        <p id="products"> {p.nameProduct}</p>
+                      ))}
+
+                      <p id="cantidad">Cantidad</p>
+                      {o.productsOrder.map((p) => (
+                        <p id="qty">{p.qty}</p>
+                      ))}
                       {o.comments && <p id="comments">{o.comments}</p>}
                       <label id="status">status:</label>
                       <select
@@ -116,11 +117,15 @@ function Orders() {
                         <li>init:{o.timeInit}</li>
                       </ul>
                       <h4 id="title">Order:</h4>
-                      <p id="products">
-                        {o.products.map((p) => p.name + ", ")}
-                      </p>
-                      <p>Cantidad</p>
-                      <p> 1</p>
+
+                      {o.productsOrder.map((p) => (
+                        <p id="products"> {p.nameProduct}</p>
+                      ))}
+
+                      <p id="cantidad">Cantidad</p>
+                      {o.productsOrder.map((p) => (
+                        <p id="qty">{p.qty}</p>
+                      ))}
                       {o.comments && <p id="comments">{o.comments}</p>}
                       <label id="status">status:</label>
                       <select

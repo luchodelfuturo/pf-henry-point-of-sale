@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: repeat(400, 1fr);
   height: 90vh;
-  font-size: xx-small; 
+  font-size: x-small; 
   align-items: center;
   background-color: #586875;
   color: #f4f7f7;
@@ -65,6 +65,15 @@ background-color: grey; */
     /* margin-top: -18vh; */
     /* position: static; */
 /* } */
+#cantidad {
+margin-left: 170px;
+margin-top: -75px;
+}
+
+#qty {
+    margin-left: 170px;
+    margin-top: 12px;
+}
 #orderNumber{
   /* margin-left: 250px; */
    color:red;

@@ -25,8 +25,8 @@ export const ordersSlice = createSlice({
     },
     filterDoing: (state, action) => {
       const filter = state.orders.filter((o) => o.status === "doing");
-
-      state.filteredOrders = filter;
+      let orders = filter.filter((o) => o.status !== "pending");
+      state.filteredOrders = orders;
     },
     filterPending: (state, action) => {
       const filter = state.orders.filter((o) => o.status === "pending");
