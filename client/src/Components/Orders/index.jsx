@@ -45,10 +45,7 @@ function Orders() {
         onClick={() => {
           window.location.reload();
         }}
-      >
-        Refresh
-      </button>
-      <h1>{time}</h1>
+      > Refresh</button>
       {orders.length < 1 ? (
         <div id="empty">
           <h2>There are not orders !</h2>
@@ -56,31 +53,32 @@ function Orders() {
       ) : (
         <>
           <FilterSort />
+          <div id="grilla">
           {filteredOrders.length > 0
             ? filteredOrders.map((o) => {
                 return (
+                  
                   o.status !== "ready" && (
                     <div
                       key={o.orderNumber}
                       id={o.status === "doing" ? "doing" : "pending"}
                       className="Card"
                     >
-                      <p id="orderNumber">#{o.orderNumber}</p>
-                      <p id="date">{o.date}</p>
-                      <ul id="time">
-                        <b>time:</b>
-                        <li>init:{o.timeInit}</li>
-                      </ul>
-                      <h4 id="title">Order:</h4>
+                      <div id="head">
+                        <p id="orderNumber">#{o.orderNumber}</p>
+                        <p id="time">{o.timeInit}</p>
+                      </div>
 
+                      <h4 id="title">Order:</h4>
                       {o.productsOrder.map((p) => (
                         <p id="products"> {p.nameProduct}</p>
                       ))}
 
-                      <p id="cantidad">Cantidad</p>
+                      <h4 id="cantidad">Cantidad</h4>
                       {o.productsOrder.map((p) => (
                         <p id="qty">{p.qty}</p>
                       ))}
+
                       {o.comments && (
                         <p id="comments">
                           Comments: <br />
@@ -102,35 +100,39 @@ function Orders() {
                         )}
                         <option value="ready">ready</option>
                       </select>
-                      {/* <p id="amount">${o.products.map((p) => p.price)}</p> */}
                     </div>
                   )
+                  
                 );
               })
             : orders.map((o) => {
                 return (
+                  
                   o.status !== "ready" && (
                     <div
                       key={o.orderNumber}
                       id={o.status === "doing" ? "doing" : "pending"}
                       className="Card"
                     >
-                      <p id="orderNumber">#{o.orderNumber}</p>
-                      <p id="date">{o.date}</p>
-                      <ul id="time">
-                        <b>time:</b>
-                        <li>init:{o.timeInit}</li>
-                      </ul>
-                      <h4 id="title">Order:</h4>
+                      <div id="head">
+                        <p id="orderNumber">#{o.orderNumber}</p>
+                        <p id="time">{o.timeInit}</p>
+                      </div>
 
+                      <div id="prodYcant">
+                      <div id="prod">
+                      <h4 id="title">Order:</h4>
                       {o.productsOrder.map((p) => (
                         <p id="products"> {p.nameProduct}</p>
                       ))}
-
-                      <p id="cantidad">Cantidad</p>
+                      </div >
+                      <div id="cant">
+                      <h4 id="cantidad">Cantidad</h4>
                       {o.productsOrder.map((p) => (
                         <p id="qty">{p.qty}</p>
                       ))}
+                      </div>
+                      </div>
                       {o.comments && (
                         <p id="comments">
                           Comments: <br />
@@ -152,11 +154,12 @@ function Orders() {
                         )}
                         <option value="ready">ready</option>
                       </select>
-                      {/* <p id="amount">${o.products.map((p) => p.price)}</p> */}
                     </div>
                   )
+                  
                 );
               })}
+          </div>
         </>
       )}
     </div>
