@@ -1,4 +1,4 @@
-import React, { useContext }  from "react";
+import React, { useContext } from "react";
 import StoreContext from "../../GlobalStates/StoreContext";
 import CartItem from "./CartItem";
 import styled from "styled-components";
@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 
 function Cart({ products }) {
   const { deleteAll } = useContext(StoreContext);
-  
+
   let dispatch = useDispatch();
   let confirmMessage = "";
   const totals = products.reduce((acc, curr) => {
@@ -29,30 +29,36 @@ function Cart({ products }) {
     deleteAll();
   }
 
-
   return (
     <div>
       <div className="cart">
         <div className="items">
-          <div className="items-header"></div>
+          <div className="items-header">
+            <div className="items-header-qty">qty.</div>
+            <div className="items-header-prod">Products</div>
+            <div className="items-header-sub">Sub-total</div>
+          </div>
           <div className="items">
             {products.length > 0 ? <CartItem AllProducts={products} /> : null}
           </div>
         </div>
-        {products.length > 0 ? <Checkout>
-          <button className="delete-cart" onClick={() => handleDeleteAll()}>X</button>
-          <div className="pay-btn">
-            <button className="checkout-btn" onClick={onSubmit}>
-              PAY
+        {products.length > 0 ? (
+          <Checkout>
+            <button className="delete-cart" onClick={() => handleDeleteAll()}>
+              X
             </button>
-            {!confirmMessage ? null : <p>{confirmMessage}</p>}
-          </div>
-          <div className="totals">
-            <div className="total-label">Total</div>
-            <div className="total-price">${totals}</div>
-          </div>
-        </Checkout> : null }
-        
+            <div className="pay-btn">
+              <button className="checkout-btn" onClick={onSubmit}>
+                PAY
+              </button>
+              {!confirmMessage ? null : <p>{confirmMessage}</p>}
+            </div>
+            <div className="totals">
+              <div className="total-label">Total</div>
+              <div className="total-price">${totals}</div>
+            </div>
+          </Checkout>
+        ) : null}
       </div>
     </div>
   );
@@ -86,7 +92,7 @@ const Checkout = styled.div`
     text-align: center;
     font-size: 28px;
     padding-top: 5px;
-    color: #FF4F58;
+    color: #ff4f58;
     background-color: #eaeaea;
     width: 58px;
     height: 61px;
@@ -96,10 +102,9 @@ const Checkout = styled.div`
     margin-left: 75px;
   }
 
-  .totals{
+  .totals {
     display: flex;
     flex-direction: column;
-    
   }
   .total-label {
     color: #604f4f;
