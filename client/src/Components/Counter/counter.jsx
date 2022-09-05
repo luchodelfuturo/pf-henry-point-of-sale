@@ -23,28 +23,50 @@ function Counter() {
 
   return (
     <div>
-      {/* <div className={s.etapas_de_ordenes}>
-        <div class="pedidos en preparacion">
+      <div className={s.etapas_de_ordenes}>
+        {/* <div class="pedidos en preparacion">
           <h1>Pending orders</h1>
-        </div>
+        </div> */}
         <div className="pedidos listos para entregar">
           <h1>Ready</h1>
           <div className={s.container}>
-            {ordersReady.length > 0 &&
+            {ordersReady &&
               ordersReady.map((o) => {
                 return (
-                  o.status !== "f" && (
-                    <div key={o.orderNumber} className={s.card}>
-                      <span id="orderNumber">Order #{o.orderNumber}</span>{" "}
-                      &nbsp; &nbsp;
-                      <span>{o.date}</span> &nbsp; &nbsp;
-                      <span>{o.timeInit}</span>
+                  o.status !== "finished" && (
+                    <div
+                      key={o.orderNumber}
+                      id={o.status === "doing" ? "doing" : "pending"}
+                      className="Card"
+                    >
+                      <div id="head">
+                        <p id="orderNumber">#{o.orderNumber}</p>
+                        <p id="time">{o.timeInit}</p>
+                      </div>
+
+                      <h4 id="title">Order:</h4>
+                      {o.productsOrder.map((p) => (
+                        <p id="products"> {p.nameProduct}</p>
+                      ))}
+
+                      <h4 id="cantidad">Cantidad</h4>
+                      {o.productsOrder.map((p) => (
+                        <p id="qty">{p.qty}</p>
+                      ))}
+
+                      {o.comments && (
+                        <p id="comments">
+                          Comments: <br />
+                          {o.comments}
+                        </p>
+                      )}
+                      <label id="status">status:</label>
                       <select
                         name="status"
                         onChange={(e) => handleEnded(e, o.orderNumber)}
                       >
                         <option>Select</option>
-                        <option value="f">finished</option>
+                        <option value="finished">finished</option>
                       </select>
                     </div>
                   )
@@ -52,7 +74,7 @@ function Counter() {
               })}
           </div>
         </div>
-      </div> */}
+      </div>
       <NavBarApp />
     </div>
   );

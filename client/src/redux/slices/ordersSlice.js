@@ -7,6 +7,7 @@ export const ordersSlice = createSlice({
     sortedOrders: [],
     status: 1,
     filteredOrders: [],
+    ordersReady: [],
   },
   reducers: {
     getOrders: (state, action) => {
