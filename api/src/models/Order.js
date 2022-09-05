@@ -40,7 +40,7 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING(250),
       },
       productsOrder: {
-        type: DataTypes.JSON()
+        type: DataTypes.ARRAY(DataTypes.JSONB)
       }
     },
     {

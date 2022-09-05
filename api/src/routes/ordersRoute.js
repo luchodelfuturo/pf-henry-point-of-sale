@@ -33,6 +33,7 @@ router.get("/ready", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
+  console.log(req.body)
   try {
     const order = await Order.create(req.body);
     //await order.addProducts(req.body.product);
