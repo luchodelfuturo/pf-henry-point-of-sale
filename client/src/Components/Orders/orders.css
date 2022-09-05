@@ -1,16 +1,15 @@
- .Container{
-  display: grid;
-  grid-template-columns: repeat(400, 1fr);
+
+.Container{
+  display: flex;
+  flex-direction: column;
   height: 90vh;
-  font-size: xx-small; 
   align-items: center;
-  background-color: #586875;
-  color: #f4f7f7;
+  color: #010101;
   margin: 0;
 } 
 
 #doing {
-    background-color: #A8E776;
+    background-color: #2cb67d;
 
 }
 
@@ -19,80 +18,67 @@
 }
 
 #empty {
-    color: white;
-border: solid 2px black;
-border-radius: 20px;
-background-color: #A8E776;
-margin-top: -20vh;
-height: 40vh;
-width: 30vw;
-/* margin-left: 35vw; */
-padding-top: 60px;
+    color: #16161a;
+    border-style: none;
+    height: 40vh;
+    width: 30vw;
+    padding-top: 60px;
 }
+
 .button{
-    /* margin-top: 30px; */
+
     cursor: pointer;
     
 }
 
 .Card{
-    display: table;
-   
-    /* margin-left: 30vw; */
-    /* margin-top: 15vh; */
-    /* align-items: center; */
-    height: 60vh;
-    width: 20vw;
-    border: solid 2px black;
-    border-radius: 20px;
-    /* 
-color: red;
-background-color: grey; */
 
-
-/* position: relative; 
-  width: 250px;
-  padding: 20px;
-  color: #586875;
-  background-color: #f4f7f7;
-  box-shadow: 0 10px 20px #0006;
-  animation-duration: 0.5s;
-  animation-timing-function: ease-in-out; 
-  animation-fill-mode: forwards; */
+    height: auto;
+    width: 20rem;
+    border-style: none;
+    border-radius: 0.3rem;
+    background-color: #242629;
+    margin: 0.5rem;
+    padding: 1rem;
+    color: #fffffe;
 
 }
-/* #title { */
-    /* margin-top: -18vh; */
-    /* position: static; */
-/* } */
+
+
 #orderNumber{
-  /* margin-left: 250px; */
-   color:red;
+   color:#fffffe;
+   font-family: 'Century Gothic';
+   font-weight: bold;
+   font-size: 22px;
 }
-#date {
-    margin-left: -80px;
-    margin-top: -20px 
+
+#grilla {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    width: 100%;
 }
+
 #time {
-    margin-right: -50px;
-    margin-top: -23px 
+    color: #fffffe;
+    font-family: 'Century Gothic';
+    font-weight: bold;
+    font-size: 22px;
 }
-/* #amount{ */
-    /* margin-left: 250px;
-    margin-top: -40px; */
-/* }  */
-/* #status { */
-    /* margin-right: 250px;
-    margin-bottom: -120px; */
-    
-/* } */
-/* #comments {
-    padding-top: 20px;
-    background-color: aliceblue;
-    width: 305px;
-    height: 50px;
-    margin-left: 40px;
-} */
-li {
-    list-style: none;
+
+
+#prodYcant{
+    display: flex;
+    flex-direction: row;
+}
+
+#cant{
+    margin-left: 1rem;
+}
+
+#head {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }

@@ -25,17 +25,6 @@ function Store() {
     await dispatch(filterByCategoryAction(category));
   };
 
-  const cat = categories.map((c, i) => {
-    let obj = {
-      id: 1,
-      name: "All",
-      section: "kitchen",
-    };
-
-    if (i > 0) return c;
-    else return obj;
-  });
-
   return (
     <>
       <div className="container">

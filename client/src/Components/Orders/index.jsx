@@ -4,16 +4,13 @@ import { useEffect } from "react";
 import FilterSort from "../Buttons/filter&sort";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  filterDoingAction,
-  filterPendingAction,
+  cleanAction,
   getOrdersAction,
   updateStatusAction,
 } from "../../redux/actions/ordersActions";
-import { filterDoing } from "../../redux/slices/ordersSlice";
 
 function Orders() {
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(true);
   const { orders, status, filteredOrders } = useSelector(
     (state) => state.orders
   );
@@ -22,7 +19,6 @@ function Orders() {
   }, [status, orders.length, dispatch]);
 
   useEffect(() => {
-    if (orders.length > 0) setLoading(false);
     // if (filteredOrders.length < 1) setLoading(true);
   }, [orders.status, orders, orders.length, dispatch]);
 
@@ -35,6 +31,7 @@ function Orders() {
 
   const handleChange = (e, n) => {
     dispatch(updateStatusAction(e.target.value, n));
+    dispatch(cleanAction());
     if (e.target.value === "ready") alert("order sent to pedidos ready");
     // e.target.value === "doing" && filteredOrders.length > 0
     //   ? dispatch(filterDoingAction())
@@ -49,38 +46,47 @@ function Orders() {
           window.location.reload();
         }}
       >
+        {" "}
         Refresh
       </button>
-      <h1>{time}</h1>
-      {loading ? (
+      {orders.length < 1 ? (
         <div id="empty">
           <h2>There are not orders !</h2>
         </div>
       ) : (
         <>
           <FilterSort />
-          {filteredOrders.length > 0
-            ? filteredOrders.map((o) => {
-                return (
-                  o.status !== "ready" && (
+          <div id="grilla">
+            {filteredOrders.length > 0
+              ? filteredOrders.map((o) => {
+                  return o.status === "ready" ||
+                    o.status === "finished" ? null : (
                     <div
                       key={o.orderNumber}
                       id={o.status === "doing" ? "doing" : "pending"}
                       className="Card"
                     >
-                      <p id="orderNumber">#{o.orderNumber}</p>
-                      <p id="date">{o.date}</p>
-                      <ul id="time">
-                        <b>time:</b>
-                        <li>init:{o.timeInit}</li>
-                      </ul>
+                      <div id="head">
+                        <p id="orderNumber">#{o.orderNumber}</p>
+                        <p id="time">{o.timeInit}</p>
+                      </div>
+
                       <h4 id="title">Order:</h4>
-                      <p id="products">
-                        {o.products.map((p) => p.name + ", ")}
-                      </p>
-                      <p>Cantidad</p>
-                      <p> 1</p>
-                      {o.comments && <p id="comments">{o.comments}</p>}
+                      {o.productsOrder.map((p) => (
+                        <p id="products"> {p.nameProduct}</p>
+                      ))}
+
+                      <h4 id="cantidad">Cantidad</h4>
+                      {o.productsOrder.map((p) => (
+                        <p id="qty">{p.qty}</p>
+                      ))}
+
+                      {o.comments && (
+                        <p id="comments">
+                          Comments: <br />
+                          {o.comments}
+                        </p>
+                      )}
                       <label id="status">status:</label>
                       <select
                         name="status"
@@ -96,32 +102,42 @@ function Orders() {
                         )}
                         <option value="ready">ready</option>
                       </select>
-                      {/* <p id="amount">${o.products.map((p) => p.price)}</p> */}
                     </div>
-                  )
-                );
-              })
-            : orders.map((o) => {
-                return (
-                  o.status !== "ready" && (
+                  );
+                })
+              : orders.map((o) => {
+                  return o.status === "ready" ||
+                    o.status === "finished" ? null : (
                     <div
                       key={o.orderNumber}
                       id={o.status === "doing" ? "doing" : "pending"}
                       className="Card"
                     >
-                      <p id="orderNumber">#{o.orderNumber}</p>
-                      <p id="date">{o.date}</p>
-                      <ul id="time">
-                        <b>time:</b>
-                        <li>init:{o.timeInit}</li>
-                      </ul>
-                      <h4 id="title">Order:</h4>
-                      <p id="products">
-                        {o.products.map((p) => p.name + ", ")}
-                      </p>
-                      <p>Cantidad</p>
-                      <p> 1</p>
-                      {o.comments && <p id="comments">{o.comments}</p>}
+                      <div id="head">
+                        <p id="orderNumber">#{o.orderNumber}</p>
+                        <p id="time">{o.timeInit}</p>
+                      </div>
+
+                      <div id="prodYcant">
+                        <div id="prod">
+                          <h4 id="title">Order:</h4>
+                          {o.productsOrder.map((p) => (
+                            <p id="products"> {p.nameProduct}</p>
+                          ))}
+                        </div>
+                        <div id="cant">
+                          <h4 id="cantidad">Cantidad</h4>
+                          {o.productsOrder.map((p) => (
+                            <p id="qty">{p.qty}</p>
+                          ))}
+                        </div>
+                      </div>
+                      {o.comments && (
+                        <p id="comments">
+                          Comments: <br />
+                          {o.comments}
+                        </p>
+                      )}
                       <label id="status">status:</label>
                       <select
                         name="status"
@@ -137,11 +153,10 @@ function Orders() {
                         )}
                         <option value="ready">ready</option>
                       </select>
-                      {/* <p id="amount">${o.products.map((p) => p.price)}</p> */}
                     </div>
-                  )
-                );
-              })}
+                  );
+                })}
+          </div>
         </>
       )}
     </div>

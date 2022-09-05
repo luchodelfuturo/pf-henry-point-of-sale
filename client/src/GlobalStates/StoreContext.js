@@ -5,6 +5,7 @@ const StoreContext = createContext();
 
 let prev = [];
 let exists = {};
+let section = "";
 const initialState = [];
 function reducer(state = initialState, action = {}) {
   switch (action.type) {
@@ -18,6 +19,7 @@ function reducer(state = initialState, action = {}) {
           qty: exists.qty++,
           product: exists.product,
           subTotal: exists.qty * exists.product.price - exists.product.price,
+          section: exists.section,
         },
       ];
 
@@ -33,16 +35,21 @@ function reducer(state = initialState, action = {}) {
           qty: dec,
           product: exists.product,
           subTotal: dec * exists.product.price,
+          section: exists.section,
         },
       ];
     case "ADD":
-      console.log("ADD");
+      //exists = state.find((e) => e.product.id === action.payload);
+
+      console.log(state);
+
       return [
         ...state,
         {
           qty: 1,
           subTotal: action.payload.price,
           product: action.payload,
+          section: action.payload.section,
         },
       ];
     case "DELETE":
@@ -61,10 +68,13 @@ export function StoreProvider({ children }) {
   const { products } = useSelector((state) => state.products);
   const { categories } = useSelector((state) => state.categories);
 
-
   console.log("CATEGORIES");
 
   console.log(categories);
+
+  console.log("PRODUCTS");
+
+  console.log(products);
 
   const [state, dispatch] = useReducer(reducer, reducer());
   //console.log(products)
@@ -101,12 +111,27 @@ export function StoreProvider({ children }) {
           price,
           active,
           categories: categories.map((e) => e.name).toString(),
+          section: categories.map((e) => e.section).toString(),
         };
       };
 
       dispatch({ type: "ADD", payload: aux() });
     }
   }
+
+  let productsOrder = {};
+
+  function sendOrder() {
+    productsOrder = state.map((p) => {
+      return { qty: p.qty, nameProduct: p.product.name, section: p.section };
+    });
+  }
+  sendOrder();
+
+  let order = {
+    comments: "",
+    productsOrder: productsOrder,
+  };
 
   return (
     <StoreContext.Provider
@@ -119,6 +144,8 @@ export function StoreProvider({ children }) {
         qtyDecr,
         itemDelete,
         deleteAll,
+        sendOrder,
+        order,
       }}
     >
       {children}
