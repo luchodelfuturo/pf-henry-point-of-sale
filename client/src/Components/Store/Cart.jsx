@@ -35,7 +35,7 @@ function Cart({ products }) {
   }
 
   return (
-    <div>
+    <div className="cart-cont">
       <div className="cart">
         <div className="items">
           <div className="items-header">

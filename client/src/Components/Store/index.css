@@ -19,11 +19,15 @@
 }
 .products-container {
   width: 640px;
+
 }
+
+
 .cards-container {
   display: flex;
   flex-wrap: wrap;
 }
 .category-buttons{
   display: flex;
+  margin-top: 10px;
 }
