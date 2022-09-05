@@ -6,7 +6,7 @@ import {
   filterDoing,
   updateStatus,
   filterPending,
-  postOrders
+  postOrders,
 } from "../slices/ordersSlice";
 
 export const getOrdersAction = () => (dispatch) => {
@@ -41,11 +41,12 @@ export const filterPendingAction = () => (dispatch) => {
 };
 
 export const postOrdersAction = (order) => (dispatch) => {
+  console.log(order);
   fetch(`http://localhost:3001/orders`, {
     method: "POST",
     body: JSON.stringify(order),
-    headers: {"Content-type": "application/json; charset=UTF-8"}
+    headers: { "Content-type": "application/json; charset=UTF-8" },
   })
-  .then(res => res.json())
-  .then(r => dispatch(postOrders(r.data)))
-}
+    .then((res) => res.json())
+    .then((r) => dispatch(postOrders(r.data)));
+};
