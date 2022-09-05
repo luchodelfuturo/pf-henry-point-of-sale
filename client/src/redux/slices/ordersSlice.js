@@ -11,7 +11,9 @@ export const ordersSlice = createSlice({
   reducers: {
     getOrders: (state, action) => {
       let orders = action.payload.filter((o) => o.status !== "ready");
-      state.orders = orders;
+      state.orders = orders.sort((a, b) => {
+        return a.orderNumber - b.orderNumber;
+      });
     },
     sortByOrderNumber: (state, action) => {
       let sortedOrders = state.orders;
@@ -25,15 +27,16 @@ export const ordersSlice = createSlice({
     },
     filterDoing: (state, action) => {
       const filter = state.orders.filter((o) => o.status === "doing");
-      let orders = filter.filter((o) => o.status !== "pending");
-      state.filteredOrders = orders;
+      // let orders = filter.filter((o) => o.status !== "pending");
+      state.filteredOrders = filter;
     },
     filterPending: (state, action) => {
       const filter = state.orders.filter((o) => o.status === "pending");
       state.filteredOrders = filter;
     },
     clean: (state, action) => {
-      state.sortedOrders = action.payload;
+      // state.filteredOrders = state.orders;
+      // state.sortedOrders = action.payload;
       state.filteredOrders = action.payload;
     },
     //nuevo:

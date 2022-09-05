@@ -2,13 +2,27 @@
   display: grid;
   grid-template-columns: repeat(400, 1fr);
   height: 90vh;
-  font-size: x-small; 
+  /* font-size: x-small;  */
   align-items: center;
-  background-color: #586875;
-  color: #f4f7f7;
+  background-color: #F7FAFC;
+  color: #000;
   margin: 0;
 } 
-
+/* export const colors = {
+    violet: "#A259FF",
+    white: "#FFF",
+    black: "#000",
+    yellow: "#E7D576",
+    green: "#A8E776",
+    orange: "#FFB775",
+    sky: "#B5FFED",
+    grey50: "#F7FAFC",
+    grey300: "#e9e9e9",
+    grey400: "#bdbdbd",
+    grey500: "#6D7076",
+    grey800: "#121A23",
+    grey900: "#0A1019",
+  }; */
 #doing {
     background-color: #A8E776;
 
@@ -37,8 +51,8 @@ padding-top: 60px;
 
 .Card{
     display: table;
-   
-    /* margin-left: 30vw; */
+    margin: 5px;
+     padding: 10px;
     /* margin-top: 15vh; */
     /* align-items: center; */
     height: 60vh;
@@ -67,7 +81,7 @@ background-color: grey; */
 /* } */
 #cantidad {
 margin-left: 170px;
-margin-top: -75px;
+margin-top: -120px;
 }
 
 #qty {
@@ -79,12 +93,12 @@ margin-top: -75px;
    color:red;
 }
 #date {
-    margin-left: -80px;
-    margin-top: -20px 
+    margin-left: -150px;
+    margin-top: -50px 
 }
 #time {
-    margin-right: -50px;
-    margin-top: -23px 
+    margin-right: -120px;
+    margin-top: -40px 
 }
 /* #amount{ */
     /* margin-left: 250px;

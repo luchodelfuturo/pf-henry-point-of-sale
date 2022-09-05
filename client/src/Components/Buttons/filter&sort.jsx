@@ -17,7 +17,9 @@ function FilterSort() {
 
     if (e.target.value === "sortDefault") return dispatch(cleanAction());
 
-    if (e.target.value === "filterDefault") dispatch(cleanAction());
+    if (e.target.value === "filterDefault") {
+      dispatch(cleanAction());
+    }
 
     if (e.target.value === "pending") dispatch(filterPendingAction());
 
@@ -28,7 +30,7 @@ function FilterSort() {
 
   return (
     <>
-      {!orders.length < 2 && (
+      {orders.length > 1 && (
         <div>
           <label>Filter by status:</label>
           <select name="filter" id="filter" onChange={(e) => handleChange(e)}>

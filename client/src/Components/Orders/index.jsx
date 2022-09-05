@@ -4,13 +4,13 @@ import { useEffect } from "react";
 import FilterSort from "../Buttons/filter&sort";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  cleanAction,
   getOrdersAction,
   updateStatusAction,
 } from "../../redux/actions/ordersActions";
 
 function Orders() {
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(true);
   const { orders, status, filteredOrders } = useSelector(
     (state) => state.orders
   );
@@ -19,7 +19,6 @@ function Orders() {
   }, [status, orders.length, dispatch]);
 
   useEffect(() => {
-    if (orders.length > 0) setLoading(false);
     // if (filteredOrders.length < 1) setLoading(true);
   }, [orders.status, orders, orders.length, dispatch]);
 
@@ -32,6 +31,7 @@ function Orders() {
 
   const handleChange = (e, n) => {
     dispatch(updateStatusAction(e.target.value, n));
+    dispatch(cleanAction());
     if (e.target.value === "ready") alert("order sent to pedidos ready");
     // e.target.value === "doing" && filteredOrders.length > 0
     //   ? dispatch(filterDoingAction())
@@ -49,7 +49,7 @@ function Orders() {
         Refresh
       </button>
       <h1>{time}</h1>
-      {loading ? (
+      {orders.length < 1 ? (
         <div id="empty">
           <h2>There are not orders !</h2>
         </div>
@@ -81,7 +81,12 @@ function Orders() {
                       {o.productsOrder.map((p) => (
                         <p id="qty">{p.qty}</p>
                       ))}
-                      {o.comments && <p id="comments">{o.comments}</p>}
+                      {o.comments && (
+                        <p id="comments">
+                          Comments: <br />
+                          {o.comments}
+                        </p>
+                      )}
                       <label id="status">status:</label>
                       <select
                         name="status"
@@ -126,7 +131,12 @@ function Orders() {
                       {o.productsOrder.map((p) => (
                         <p id="qty">{p.qty}</p>
                       ))}
-                      {o.comments && <p id="comments">{o.comments}</p>}
+                      {o.comments && (
+                        <p id="comments">
+                          Comments: <br />
+                          {o.comments}
+                        </p>
+                      )}
                       <label id="status">status:</label>
                       <select
                         name="status"
