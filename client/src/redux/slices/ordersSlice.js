@@ -43,6 +43,10 @@ export const ordersSlice = createSlice({
     postOrders: (state, action) => {
       state.orders.concat(action.payload);
     },
+    //new reducer
+    ordersReadyReducer: (state, action) => {
+      state.ordersReady = action.payload;
+    },
   },
 });
 
@@ -54,5 +58,6 @@ export const {
   filterPending,
   clean,
   postOrders,
+  ordersReadyReducer,
 } = ordersSlice.actions;
 export default ordersSlice.reducer;
