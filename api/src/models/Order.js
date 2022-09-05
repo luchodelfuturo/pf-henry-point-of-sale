@@ -39,6 +39,9 @@ module.exports = (sequelize) => {
       comments: {
         type: DataTypes.STRING(250),
       },
+      productsOrder: {
+        type: DataTypes.JSON()
+      }
     },
     {
       timestamps: false,
