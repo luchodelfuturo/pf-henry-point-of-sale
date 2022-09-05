@@ -1,26 +1,18 @@
 .container {
-  /* display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: repeat(5, 1fr);
-  grid-column-gap: 0px;
-  grid-row-gap: 16px; */
-  /* grid-template-columns: repeat(400, 1fr); */
-  height: 70vh;
-  font-size: small;
-  align-items: center;
-  /* background-color: #586875; */
-  color: #f4f7f7;
-  margin: 0;
-  width: 441px;
-  display: flex;
-  flex-direction: column-reverse;
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 .etapas_de_ordenes {
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  height: 89vh;
+  flex-direction: column;
+  height: 90vh;
+  align-items: center;
+  color: #010101;
+  margin: 0;
 }
 #orderNumber {
   text-align: left;
