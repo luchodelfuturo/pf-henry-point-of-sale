@@ -1,10 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  ordersReadyAction,
-  updateStatusFinished,
-} from "../../redux/actions/ordersActions";
+import {ordersReadyAction,updateStatusFinished} from "../../redux/actions/ordersActions";
 import NavBarApp from "../NavbarApp/NavBarApp";
 import s from "../Counter/counter.module.css";
 function Counter() {
@@ -27,7 +24,6 @@ function Counter() {
         {/* <div class="pedidos en preparacion">
           <h1>Pending orders</h1>
         </div> */}
-        <div className="pedidos listos para entregar">
           <h1>Ready</h1>
           <div className={s.container}>
             {ordersReady &&
@@ -37,22 +33,27 @@ function Counter() {
                     <div
                       key={o.orderNumber}
                       id={o.status === "doing" ? "doing" : "pending"}
-                      className="Card"
+                      className='Card'
                     >
                       <div id="head">
                         <p id="orderNumber">#{o.orderNumber}</p>
                         <p id="time">{o.timeInit}</p>
                       </div>
 
-                      <h4 id="title">Order:</h4>
-                      {o.productsOrder.map((p) => (
-                        <p id="products"> {p.nameProduct}</p>
-                      ))}
-
-                      <h4 id="cantidad">Cantidad</h4>
-                      {o.productsOrder.map((p) => (
-                        <p id="qty">{p.qty}</p>
-                      ))}
+                      <div id="prodYcant">
+                        <div id="prod">
+                          <h4 id="title">Order:</h4>
+                          {o.productsOrder.map((p) => (
+                            <p id="products"> {p.nameProduct}</p>
+                          ))}
+                        </div>
+                        <div id="cant">
+                          <h4 id="cantidad">Cantidad</h4>
+                          {o.productsOrder.map((p) => (
+                            <p id="qty">{p.qty}</p>
+                          ))}
+                        </div>
+                      </div>
 
                       {o.comments && (
                         <p id="comments">
@@ -73,7 +74,6 @@ function Counter() {
                 );
               })}
           </div>
-        </div>
       </div>
       <NavBarApp />
     </div>
