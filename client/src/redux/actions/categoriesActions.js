@@ -4,7 +4,7 @@ import { getAllCategories } from "../slices/categoriesSlice";
 export const getCategories = () => (dispatch) => {
     console.log('hola get categories')
     axios
-        .get("localhost:3001/category")
+        .get("http://localhost:3001/category")
 
         .then((res) => {
             console.log(res)
