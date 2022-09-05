@@ -5,7 +5,7 @@ const StoreContext = createContext();
 
 let prev = [];
 let exists = {};
-let section = "";
+//let section = "";
 const initialState = [];
 function reducer(state = initialState, action = {}) {
   switch (action.type) {
@@ -13,13 +13,13 @@ function reducer(state = initialState, action = {}) {
       prev = state.filter((e) => e.product.id !== action.payload);
       exists = state.find((e) => e.product.id === action.payload);
 
+      let inc = exists.qty;
       return [
         ...prev,
         {
-          qty: exists.qty++,
+          qty: inc + 1,
           product: exists.product,
-          subTotal: exists.qty * exists.product.price - exists.product.price,
-          section: exists.section,
+          subTotal: (inc + 1) * exists.product.price,
         },
       ];
 
@@ -35,7 +35,6 @@ function reducer(state = initialState, action = {}) {
           qty: dec,
           product: exists.product,
           subTotal: dec * exists.product.price,
-          section: exists.section,
         },
       ];
     case "ADD":
@@ -49,7 +48,6 @@ function reducer(state = initialState, action = {}) {
           qty: 1,
           subTotal: action.payload.price,
           product: action.payload,
-          section: action.payload.section,
         },
       ];
     case "DELETE":
@@ -111,7 +109,6 @@ export function StoreProvider({ children }) {
           price,
           active,
           categories: categories.map((e) => e.name).toString(),
-          section: categories.map((e) => e.section).toString(),
         };
       };
 
@@ -123,7 +120,7 @@ export function StoreProvider({ children }) {
 
   function sendOrder() {
     productsOrder = state.map((p) => {
-      return { qty: p.qty, nameProduct: p.product.name, section: p.section };
+      return { qty: p.qty, nameProduct: p.product.name };
     });
   }
   sendOrder();
