@@ -9,15 +9,21 @@ export default function Cards({ products }) {
     //e.preventDefault();
     addProductById(p);
   }
-  
+
   return (
     <>
-      {products &&
-        products.map((p, i) => (
-          <div key={p.id} onClick={() => handlePickProduct(p.id)}>
-           <Card name={p.name} cat={p.categories[0].name} image={p.image} price={p.price}/>
-          </div>
-        ))}
+      {!products.includes("No hay productos")
+        ? products.map((p, i) => (
+            <div key={p.id} onClick={() => handlePickProduct(p.id)}>
+              <Card
+                name={p.name}
+                cat={p.categories[0].name}
+                image={p.image}
+                price={p.price}
+              />
+            </div>
+          ))
+        : "no Hay products"}
     </>
   );
 }
