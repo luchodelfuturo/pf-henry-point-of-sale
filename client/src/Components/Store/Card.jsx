@@ -33,7 +33,6 @@ const CardWrapper = styled.div`
   width: 168px;
   height: 192px;
   overflow: hidden;
-
   position: relative;
   .name {
     color: black;
@@ -53,7 +52,6 @@ const CardWrapper = styled.div`
   .cat {
     font-weight: 600;
     font-size: 18px;
-
     text-align: center;
     //vertical-align: middle;
     position: absolute;
@@ -80,7 +78,6 @@ const CardWrapper = styled.div`
     height: 28px;
     text-align: center;
   position: absolute;
-
     .sign {
       font-size: 15px;
       padding-bottom: 6px;

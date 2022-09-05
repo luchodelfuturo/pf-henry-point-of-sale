@@ -7,18 +7,24 @@ import { postOrdersAction } from "../../redux/actions/ordersActions";
 import { useDispatch } from "react-redux";
 
 function Cart({ products }) {
-  const { deleteAll } = useContext(StoreContext);
+  const { deleteAll, sendOrder, order } = useContext(StoreContext);
 
   let dispatch = useDispatch();
   let confirmMessage = "";
+
   const totals = products.reduce((acc, curr) => {
     return acc + curr.subTotal;
   }, 0);
 
+
+
   function onSubmit(e) {
     e.preventDefault();
+    sendOrder();
     try {
-      dispatch(postOrdersAction(products));
+      
+      console.log(JSON.stringify(order))
+      dispatch(postOrdersAction(order));
       confirmMessage = "Se ha realizado el pedido correctamente";
     } catch (error) {
       confirmMessage = "Se ha producido un error";
@@ -70,7 +76,6 @@ const Checkout = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   background: #eaeaea;
   box-shadow: 4px 6px 9px -4px rgba(0, 0, 0, 0.25);
   border-radius: 0px 20px 20px 0px;
@@ -101,7 +106,6 @@ const Checkout = styled.div`
     border-radius: 41px;
     margin-left: 75px;
   }
-
   .totals {
     display: flex;
     flex-direction: column;
@@ -114,10 +118,8 @@ const Checkout = styled.div`
   .total-price {
     width: 157px;
     height: 38px;
-
     font-weight: 700;
     font-size: 32px;
-
     text-align: center;
   }
 `;

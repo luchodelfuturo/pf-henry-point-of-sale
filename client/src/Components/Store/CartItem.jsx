@@ -83,7 +83,6 @@ const Item = styled.div`
   //position: absolute;
   width: 590px;
   height: 83px;
-
   background: #ffffff;
   box-shadow: 4px 6px 9px -4px rgba(0, 0, 0, 0.25);
   border-radius: 0px 20px 20px 0px;
