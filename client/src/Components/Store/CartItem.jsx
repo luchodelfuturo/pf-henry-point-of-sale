@@ -4,9 +4,6 @@ import styled from "styled-components";
 
 const CartItem = ({ AllProducts }) => {
   const { qtyIncr, qtyDecr, itemDelete } = useContext(StoreContext);
-  //const [total, setTotal] = useState(0);
-
-console.log(AllProducts)
 
   function nab(a, b) {
     if (a.product.id === b.product.id) {
@@ -17,16 +14,10 @@ console.log(AllProducts)
     }
     return 1;
   }
-console.log(JSON.parse(window.localStorage.getItem("itemss")))
-  useEffect(() => {
-    
-  }, []);
 
+  useEffect(() => {}, []);
 
   const products = AllProducts.sort(nab);
-
-  // setTotal(products.product.price * products.qty)
-  //         console.log(total)
 
   function handleIncr(p) {
     qtyIncr(p);
@@ -40,7 +31,6 @@ console.log(JSON.parse(window.localStorage.getItem("itemss")))
 
   return (
     <>
-      {console.log(products)}
       {products &&
         products.map((p, i) => (
           <Item key={i}>
@@ -109,19 +99,17 @@ const Item = styled.div`
     text-align: center;
   }
   .product-info {
-    
     text-align: start;
     min-width: 255px;
 
-    .cat{
+    .cat {
       font-weight: 400;
-    font-size: 16px;
+      font-size: 16px;
     }
-    .name{
+    .name {
       font-weight: 400;
-    font-size: 18px;
+      font-size: 18px;
     }
-
   }
   .qty-changer {
     display: flex;

@@ -1,37 +1,19 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import StoreContext from "../../GlobalStates/StoreContext";
 import CartItem from "./CartItem";
 import styled from "styled-components";
 import "./cart.css";
 import { postOrdersAction } from "../../redux/actions/ordersActions";
 import { useDispatch } from "react-redux";
-//import { useLocalStorage } from "../../GlobalStates/useLocalStorage";
 
 function Cart({ products }) {
   const { deleteAll, order, totals } = useContext(StoreContext);
-  //const [itemss, setItemss] = useState([])
-  //const [cart, setCart] = useLocalStorage('items', 2)
 
-  if (products.length > 0) {
-    console.log("ENTRA ALOCAL")
-    window.localStorage.setItem("itemss", JSON.stringify(products));
-  } else {
-    console.log(JSON.parse(window.localStorage.getItem("itemss")))
-  }
-
-  console.log("localstorage " + products);
-  //setItemss(JSON.parse(localStorage.getItem('itemss')))
-  //itemss = products ? products : JSON.parse(localStorage.getItem('itemss'))
-
-  useEffect(() => {
-    console.log("products " + products);
-  }, [products]);
+  useEffect(() => {}, [products]);
 
   let dispatch = useDispatch();
   let confirmMessage = "";
 
-
-  //setCart(3)
   function onSubmit(e) {
     e.preventDefault();
     try {
@@ -57,14 +39,10 @@ function Cart({ products }) {
             <div className="items-header-sub">Sub-total</div>
           </div>
           <div className="items">
-            {JSON.parse(window.localStorage.getItem("itemss")).length > 0 ? (
-              <CartItem
-                AllProducts={JSON.parse(window.localStorage.getItem("itemss"))}
-              />
-            ) : null}
+            {products ? <CartItem AllProducts={products} /> : null}
           </div>
         </div>
-        {products.length > 0 ? (
+        {products ? (
           <Checkout>
             <button className="delete-cart" onClick={() => handleDeleteAll()}>
               X

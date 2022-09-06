@@ -1,6 +1,5 @@
-import { createContext, useReducer } from "react";
+import { createContext, useEffect, useReducer } from "react";
 import { useSelector } from "react-redux";
-//import { useLocalStorage } from "./useLocalStorage";
 
 const StoreContext = createContext();
 
@@ -10,6 +9,8 @@ let exists = {};
 const initialState = [];
 function reducer(state = initialState, action = {}) {
   switch (action.type) {
+    case "INIT":
+      return action.payload;
     case "INCREMENT":
       prev = state.filter((e) => e.product.id !== action.payload);
       exists = state.find((e) => e.product.id === action.payload);
@@ -39,10 +40,6 @@ function reducer(state = initialState, action = {}) {
         },
       ];
     case "ADD":
-      //exists = state.find((e) => e.product.id === action.payload);
-
-      console.log(state);
-
       return [
         ...state,
         {
@@ -67,7 +64,6 @@ export function StoreProvider({ children }) {
   const { products } = useSelector((state) => state.products);
   const { categories } = useSelector((state) => state.categories);
   const [state, dispatch] = useReducer(reducer, reducer());
-  //const [cart, setCart] = useLocalStorage('items', [])
 
   function qtyIncr(id) {
     dispatch({ type: "INCREMENT", payload: id });
@@ -77,9 +73,13 @@ export function StoreProvider({ children }) {
   }
   function itemDelete(id) {
     dispatch({ type: "DELETE", payload: id });
+    if (state.length === 1) {
+      window.localStorage.removeItem("items");
+    }
   }
   function deleteAll(id) {
     dispatch({ type: "DELETE_ALL" });
+    window.localStorage.removeItem("items");
   }
 
   let aux = {};
@@ -104,8 +104,6 @@ export function StoreProvider({ children }) {
 
       dispatch({ type: "ADD", payload: aux() });
     }
-    //setCart(state)
-    //console.log(cart)
   }
 
   const totals = state.reduce((acc, curr) => {
@@ -124,8 +122,21 @@ export function StoreProvider({ children }) {
   let order = {
     comments: "",
     productsOrder: productsOrder,
-    totals: totals
+    totals: totals,
   };
+  const ls = JSON.parse(window.localStorage.getItem("items"));
+  useEffect(() => {
+    if (state.length > 0) {
+      window.localStorage.setItem("items", JSON.stringify(state));
+    } else {
+      if (ls && ls.length > 0) {
+        dispatch({
+          type: "INIT",
+          payload: JSON.parse(window.localStorage.getItem("items")),
+        });
+      }
+    }
+  }, [state.length, ls]);
 
   return (
     <StoreContext.Provider
