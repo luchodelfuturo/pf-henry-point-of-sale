@@ -1,5 +1,6 @@
 import { createContext, useReducer } from "react";
 import { useSelector } from "react-redux";
+//import { useLocalStorage } from "./useLocalStorage";
 
 const StoreContext = createContext();
 
@@ -65,17 +66,8 @@ function reducer(state = initialState, action = {}) {
 export function StoreProvider({ children }) {
   const { products } = useSelector((state) => state.products);
   const { categories } = useSelector((state) => state.categories);
-
-  console.log("CATEGORIES");
-
-  console.log(categories);
-
-  console.log("PRODUCTS");
-
-  console.log(products);
-
   const [state, dispatch] = useReducer(reducer, reducer());
-  //console.log(products)
+  //const [cart, setCart] = useLocalStorage('items', [])
 
   function qtyIncr(id) {
     dispatch({ type: "INCREMENT", payload: id });
@@ -93,8 +85,6 @@ export function StoreProvider({ children }) {
   let aux = {};
 
   function addProductById(added) {
-    console.log("added = " + added);
-
     if (state.find((e) => e.product.id === added)) {
       dispatch({ type: "INCREMENT", payload: added });
     } else {
@@ -114,7 +104,13 @@ export function StoreProvider({ children }) {
 
       dispatch({ type: "ADD", payload: aux() });
     }
+    //setCart(state)
+    //console.log(cart)
   }
+
+  const totals = state.reduce((acc, curr) => {
+    return acc + curr.subTotal;
+  }, 0);
 
   let productsOrder = {};
 
@@ -128,6 +124,7 @@ export function StoreProvider({ children }) {
   let order = {
     comments: "",
     productsOrder: productsOrder,
+    totals: totals
   };
 
   return (
@@ -143,6 +140,7 @@ export function StoreProvider({ children }) {
         deleteAll,
         sendOrder,
         order,
+        totals,
       }}
     >
       {children}
