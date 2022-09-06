@@ -2,7 +2,6 @@ import axios from "axios";
 import { getAllProducts, filterByCategory } from "../slices/productsSlice";
 
 export const getProducts = () => (dispatch) => {
-  console.log("hola get products");
   axios
     .get("http://localhost:3001/products")
 
@@ -15,7 +14,6 @@ export const getProducts = () => (dispatch) => {
 };
 
 export const postProducts = (product) => async (dispatch) => {
-  console.log("hola post products");
   return await axios.post("http://localhost:3001/products/add", product);
 };
 

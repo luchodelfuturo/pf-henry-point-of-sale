@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  cleanReadyAction,
+  cleanAction,
   ordersReadyAction,
   updateStatusFinished,
 } from "../../redux/actions/ordersActions";
@@ -15,9 +15,11 @@ function Counter() {
   const dispatch = useDispatch();
 
   const handleEnded = (e, n) => {
-    e.preventDefault();
+    // e.preventDefault();
     dispatch(updateStatusFinished(e.target.value, n));
-    if (ordersReady.length < 2) dispatch(cleanReadyAction());
+    if (ordersReady.length === 1) {
+      dispatch(cleanAction());
+    }
   };
   useEffect(() => {
     dispatch(ordersReadyAction());

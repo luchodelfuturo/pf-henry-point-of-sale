@@ -41,6 +41,7 @@ export const ordersSlice = createSlice({
     clean: (state, action) => {
       state.orders = action.payload;
       state.filteredOrders = action.payload;
+      state.ordersReady = action.payload;
     },
     //nuevo:
     postOrders: (state, action) => {
