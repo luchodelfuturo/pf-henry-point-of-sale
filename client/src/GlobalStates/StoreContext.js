@@ -1,4 +1,4 @@
-import { createContext, useReducer } from "react";
+import { createContext, useEffect, useReducer } from "react";
 import { useSelector } from "react-redux";
 
 const StoreContext = createContext();
@@ -9,6 +9,8 @@ let exists = {};
 const initialState = [];
 function reducer(state = initialState, action = {}) {
   switch (action.type) {
+    case "INIT":
+      return action.payload;
     case "INCREMENT":
       prev = state.filter((e) => e.product.id !== action.payload);
       exists = state.find((e) => e.product.id === action.payload);
@@ -38,10 +40,6 @@ function reducer(state = initialState, action = {}) {
         },
       ];
     case "ADD":
-      //exists = state.find((e) => e.product.id === action.payload);
-
-      console.log(state);
-
       return [
         ...state,
         {
@@ -65,17 +63,7 @@ function reducer(state = initialState, action = {}) {
 export function StoreProvider({ children }) {
   const { products } = useSelector((state) => state.products);
   const { categories } = useSelector((state) => state.categories);
-
-  console.log("CATEGORIES");
-
-  console.log(categories);
-
-  console.log("PRODUCTS");
-
-  console.log(products);
-
   const [state, dispatch] = useReducer(reducer, reducer());
-  //console.log(products)
 
   function qtyIncr(id) {
     dispatch({ type: "INCREMENT", payload: id });
@@ -85,16 +73,18 @@ export function StoreProvider({ children }) {
   }
   function itemDelete(id) {
     dispatch({ type: "DELETE", payload: id });
+    if (state.length === 1) {
+      window.localStorage.removeItem("items");
+    }
   }
   function deleteAll(id) {
     dispatch({ type: "DELETE_ALL" });
+    window.localStorage.removeItem("items");
   }
 
   let aux = {};
 
   function addProductById(added) {
-    console.log("added = " + added);
-
     if (state.find((e) => e.product.id === added)) {
       dispatch({ type: "INCREMENT", payload: added });
     } else {
@@ -116,6 +106,10 @@ export function StoreProvider({ children }) {
     }
   }
 
+  const totals = state.reduce((acc, curr) => {
+    return acc + curr.subTotal;
+  }, 0);
+
   let productsOrder = {};
 
   function sendOrder() {
@@ -128,7 +122,21 @@ export function StoreProvider({ children }) {
   let order = {
     comments: "",
     productsOrder: productsOrder,
+    totals: totals,
   };
+  const ls = JSON.parse(window.localStorage.getItem("items"));
+  useEffect(() => {
+    if (state.length > 0) {
+      window.localStorage.setItem("items", JSON.stringify(state));
+    } else {
+      if (ls && ls.length > 0) {
+        dispatch({
+          type: "INIT",
+          payload: JSON.parse(window.localStorage.getItem("items")),
+        });
+      }
+    }
+  }, [state.length, ls]);
 
   return (
     <StoreContext.Provider
@@ -143,6 +151,7 @@ export function StoreProvider({ children }) {
         deleteAll,
         sendOrder,
         order,
+        totals,
       }}
     >
       {children}

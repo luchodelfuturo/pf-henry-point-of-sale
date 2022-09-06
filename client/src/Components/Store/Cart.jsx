@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import StoreContext from "../../GlobalStates/StoreContext";
 import CartItem from "./CartItem";
 import styled from "styled-components";
@@ -7,16 +7,12 @@ import { postOrdersAction } from "../../redux/actions/ordersActions";
 import { useDispatch } from "react-redux";
 
 function Cart({ products }) {
-  const { deleteAll, order } = useContext(StoreContext);
+  const { deleteAll, order, totals } = useContext(StoreContext);
+
+  useEffect(() => {}, [products]);
 
   let dispatch = useDispatch();
   let confirmMessage = "";
-
-  const totals = products.reduce((acc, curr) => {
-    return acc + curr.subTotal;
-  }, 0);
-
-
 
   function onSubmit(e) {
     e.preventDefault();
@@ -24,7 +20,6 @@ function Cart({ products }) {
       dispatch(postOrdersAction(order));
       confirmMessage = "Se ha realizado el pedido correctamente";
       deleteAll();
-
     } catch (error) {
       confirmMessage = "Se ha producido un error";
     }
@@ -44,10 +39,10 @@ function Cart({ products }) {
             <div className="items-header-sub">Sub-total</div>
           </div>
           <div className="items">
-            {products.length > 0 ? <CartItem AllProducts={products} /> : null}
+            {products ? <CartItem AllProducts={products} /> : null}
           </div>
         </div>
-        {products.length > 0 ? (
+        {products ? (
           <Checkout>
             <button className="delete-cart" onClick={() => handleDeleteAll()}>
               X
