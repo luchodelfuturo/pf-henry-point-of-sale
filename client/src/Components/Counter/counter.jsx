@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {ordersReadyAction,updateStatusFinished} from "../../redux/actions/ordersActions";
+import {cleanAction, ordersReadyAction,updateStatusFinished} from "../../redux/actions/ordersActions";
 import NavBarApp from "../NavbarApp/NavBarApp";
 import s from "../Counter/counter.module.css";
 function Counter() {
@@ -11,8 +11,11 @@ function Counter() {
   const dispatch = useDispatch();
 
   const handleEnded = (e, n) => {
-    e.preventDefault();
+    // e.preventDefault();
     dispatch(updateStatusFinished(e.target.value, n));
+    if(ordersReady.length === 1){
+      dispatch(cleanAction());
+    }
   };
   useEffect(() => {
     dispatch(ordersReadyAction());
