@@ -4,7 +4,7 @@
   justify-content: space-between;
   width: 1280px;
   height: 800px;
-  background-color: #EFEEEE;
+  background-color: #efeeee;
 }
 .clients-tabs {
   height: 55px;
@@ -16,18 +16,20 @@
 }
 .cart-container {
   width: 640px;
+  
 }
 .products-container {
   width: 640px;
-
 }
-
 
 .cards-container {
   display: flex;
   flex-wrap: wrap;
+  height: 667px;
+  overflow-y: auto;
 }
-.category-buttons{
+.category-buttons {
   display: flex;
   margin-top: 10px;
+  margin-bottom: 10px;
 }
