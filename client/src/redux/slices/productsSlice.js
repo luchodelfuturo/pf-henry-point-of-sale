@@ -9,8 +9,8 @@ export const productsSlice = createSlice({
   },
   reducers: {
     getAllProducts: (state, action) => {
-      state.products = action.payload;
-      state.allProducts = action.payload;
+      state.products = action.payload.filter(prod => prod.active === true)
+      state.allProducts = action.payload.filter(prod => prod.active === true)
       console.log("all products reducer,", state.allProducts)
     },
     getProdById: (state, action) => {
@@ -21,10 +21,23 @@ export const productsSlice = createSlice({
       console.log("filterProducts: " + filterProducts)
       //state.products = filterProducts
       !filterProducts.length > 0 ? state.products = 'No hay productos' : state.products = filterProducts;
+    },
+    disableProduct: (state, action) => {
+      state.products.map(el => {
+        if(el.id === action.payload){
+          el.active = false
+        }
+      })
+      state.allProducts.map(el => {
+        if(el.id === action.payload){
+          el.active = false
+        }
+      })
+      console.log("Product disabled")
     }
   },
 });
 
-export const { getAllProducts, getProdById, filterByCategory } = productsSlice.actions;
+export const { getAllProducts, getProdById, filterByCategory, disableProduct } = productsSlice.actions;
 
 export default productsSlice.reducer;
