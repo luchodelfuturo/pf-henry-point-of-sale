@@ -7,6 +7,7 @@ export default function PayPal (){
 
   const dispatch = useDispatch()
   function createOrder(data, actions) {
+    
     return actions.order.create({
       purchase_units: [
         {
@@ -19,6 +20,7 @@ export default function PayPal (){
   }
   function onApprove(data, actions) {
     return actions.order.capture().then(data=>console.log(data));
+    
   }
 
   function onSubmitPayPal(e){
