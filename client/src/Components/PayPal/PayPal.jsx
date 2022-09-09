@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { postOrderPaypal } from "../../redux/actions/ordersActions";
+import { postOrdersAction } from "../../redux/actions/ordersActions";
 import ReactDOM from "react-dom"
 const PayPalButton = window.paypal.Buttons.driver("react", { React, ReactDOM });
 export default function PayPal (){
@@ -23,7 +23,7 @@ export default function PayPal (){
 
   function onSubmitPayPal(e){
     // e.preventDefault();
-    dispatch(postOrderPaypal())
+    dispatch(postOrdersAction()) //la misma action que se usa en el componente Cart
   }
     return (
     <div style={{width: "2rem"}}>
