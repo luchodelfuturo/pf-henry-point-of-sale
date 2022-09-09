@@ -13,6 +13,14 @@ export default function HistorialPedidos() {
   //   const orderAllOrders = allOrders.sort((a, b) => {
   //     return a.date - b.date;
   //   });
+  const [mostrarForm, setMostrarForm] = useState(false);
+  const [orderEdit, setOrderEdit] = useState({});
+  const colores = {
+    ready: "green",
+    finished: "red",
+    doing: "yellow",
+    pending: "gray",
+  };
   const [fromToFilter, setFromToFilter] = useState({
     from: new Date(),
     to: new Date(),
@@ -23,13 +31,14 @@ export default function HistorialPedidos() {
 
   const handleChangeFromDate = (e) => {
     e.preventDefault();
-    dispatch(filterFromDateAction(e.target.value));
+    console.log("from:", fromToFilter.from, "to:", fromToFilter.to);
+    dispatch(filterFromDateAction(fromToFilter.from, fromToFilter.to));
   };
 
   const handleChangeToDate = (e) => {
     e.preventDefault();
 
-    dispatch(filterToDateAction(e.target.value));
+    dispatch(filterToDateAction(fromToFilter.to));
 
     // Action filter From
   };
@@ -38,7 +47,17 @@ export default function HistorialPedidos() {
     dispatch(getAllOrdersAction());
   }, [dispatch]);
   return (
-    <div style={{ width: "100%", height: "100vh" }}>
+    <div
+      style={{
+        width: "100%",
+        height: "100vh",
+        position: "relative",
+        overflowY: "hidden",
+        display: "flex",
+        flexDirection: "column",
+        gap: "10px",
+      }}
+    >
       {/* filtros Orders */}
       <div
         style={{
@@ -56,8 +75,6 @@ export default function HistorialPedidos() {
         <input
           type="date"
           name="from"
-          
-          
           value={fromToFilter.from}
           onChange={(e) => {
             setFromToFilter({
@@ -70,7 +87,7 @@ export default function HistorialPedidos() {
         />
         <label>Hasta:</label>
         <input
-        min={fromToFilter.from}
+          min={fromToFilter.from}
           type="date"
           name="to"
           value={fromToFilter.to}
@@ -95,7 +112,7 @@ export default function HistorialPedidos() {
         <div
           style={{
             width: "90%",
-            margin: "0 auto",
+            margin: "auto",
             border: "2px solid black",
             backgroundColor: "lightgray",
             borderRadius: "20px 20px 0px 0px",
@@ -114,38 +131,55 @@ export default function HistorialPedidos() {
               return (
                 <div
                   style={{
-                    width: "90%",
-                    margin: "0 auto",
-                    height: "60px",
-                    padding: "0 20px",
-                    justifyContent: "space-around",
-                    alignContent: "center",
-                    backgroundColor: "white",
-                    border: "2px solid black",
-                    borderRadius: "20px",
-
-                    display: "grid",
-                    textAlign: "center",
-
-                    gridTemplateColumns: "10% 20% 20% 20% 10%",
+                    width: "100%",
+                    display: "flex",
+                    padding: "0 8px",
+                    boxSizing: "border-box",
                   }}
                 >
-                  <span>N°: {order.orderNumber}</span>
-                  <span>Fecha: {order.date + "-" + order.timeEnd}</span>
-
-                  <span>Estado: {order.status.toUpperCase()}</span>
-                  <select name="" id="">
-                    <option value="">Ver Productos</option>
-                    {order.productsOrder &&
-                      order.productsOrder.map((product) => {
-                        return (
-                          <option value="">
-                            {product.qty + "-" + product.nameProduct}
-                          </option>
-                        );
-                      })}
-                  </select>
-                  <span>Total</span>
+                  <div
+                    style={{
+                      width: "90%",
+                      margin: "0 auto",
+                      height: "60px",
+                      padding: "0 20px",
+                      justifyContent: "space-around",
+                      alignContent: "center",
+                      backgroundColor: "white",
+                      border: "2px solid black",
+                      borderRadius: "20px",
+                      display: "grid",
+                      textAlign: "center",
+                      gridTemplateColumns: "10% 20% 20% 20% 10% ",
+                    }}
+                  >
+                    <span>N°: {order.orderNumber}</span>
+                    <span>Fecha: {order.date + "-" + order.timeEnd}</span>
+                    <span style={{ backgroundColor: colores[order.status] }}>
+                      {" "}
+                      {order.status.toUpperCase()}
+                    </span>
+                    <select name="" id="">
+                      <option value="">Ver Productos</option>
+                      {order.productsOrder &&
+                        order.productsOrder.map((product) => {
+                          return (
+                            <option value="">
+                              {product.qty + ". " + product.nameProduct}
+                            </option>
+                          );
+                        })}
+                    </select>
+                    <span>Total</span>
+                  </div>
+                  <button
+                    onClick={() => {
+                      setOrderEdit(order);
+                      setMostrarForm(true);
+                    }}
+                  >
+                    Edit
+                  </button>
                 </div>
               );
             })}
@@ -174,6 +208,174 @@ export default function HistorialPedidos() {
       <div style={{ width: "100%", height: "10vh" }}>
         <NavBarApp />
       </div>
+
+      {/*Modal Editar   */}
+      {mostrarForm && (
+        <div
+          style={{
+            position: "absolute",
+            top: "0",
+            left: "0",
+            right: "0",
+            bottom: "0",
+            margin: "auto",
+            zIndex: "20",
+            width: "100%",
+            height: "100vh",
+            backgroundColor: "rgba(0,0,0,0.8)",
+
+            display: "flex",
+          }}
+        >
+          <div
+            style={{
+              top: "0",
+              left: "0",
+              right: "0",
+              bottom: "0",
+              margin: "auto",
+              zIndex: "30",
+              width: "80%",
+              height: "80%",
+              backgroundColor: "lightblue",
+              borderRadius: "20px",
+              border: "2px solid black",
+              display: "flex",
+              flexDirection: "column",
+              gap: "10px",
+            }}
+          >
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "space-between",
+                height: "10%",
+                padding: "20px 40px",
+                borderRadius: "20px 20px 0 0 ",
+                boxSizing: "border-box",
+                backgroundColor: colores.doing,
+              }}
+            >
+              <span>N°: </span>
+              <span>Estado:</span>
+
+              <span>Fecha: </span>
+              <button onClick={() => setMostrarForm(false)}>X</button>
+            </div>
+            <div
+              style={{
+                width: "90%",
+                margin: "0 auto",
+                backgroundColor: "white",
+                height: "50%",
+                borderRadius: "20px",
+                padding: "20px",
+                boxSizing: "border-box",
+              }}
+            >
+              <span>
+                Cant de Productos:
+                {orderEdit.productsOrder && orderEdit.productsOrder.length}{" "}
+              </span>
+              <div
+                style={{
+                  width: "100%",
+                  margin: "0 auto",
+
+                  height: "90%",
+                  display: "grid",
+                  padding: "4px",
+                  boxSizing: "border-box",
+                  gridTemplateColumns: "1fr 1fr",
+                  gridTemplateRows: "1fr 1fr 1fr 1fr",
+                  overflowY: "scroll",
+                  gap: "5px",
+                }}
+              >
+                {orderEdit.productsOrder &&
+                  orderEdit.productsOrder.map((product) => {
+                    return (
+                      <div
+                        style={{
+                          border: "2px solid black",
+                          borderRadius: "20px",
+                          padding: "10px",
+                          boxSizing: "border-box",
+                          textAlign: "center",
+                          display: "flex",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <span>{product.nameProduct}</span>
+                        <span> qty: {product.qty}</span>
+                      </div>
+                    );
+                  })}
+              </div>
+            </div>
+            <div
+              style={{
+                width: "90%",
+                margin: "0 auto",
+                height: "10%",
+                padding: "10px",
+                boxSizing: "border-box",
+                borderRadius: "20px",
+                backgroundColor: "white",
+              }}
+            >
+              Descripcion:
+              {orderEdit.comments}
+            </div>
+            <div
+              style={{
+                width: "90%",
+                margin: "0 auto",
+                height: "12%",
+                padding: "10px",
+                boxSizing: "border-box",
+                display: "flex",
+                alignItems: "center",
+                gap: "20px",
+                justifyContent: "end",
+              }}
+            >
+              <span>Medio de Pago:</span>
+
+              <span>Total:</span>
+
+              <div
+                style={{
+                  width: "40%",
+                  margin: "",
+                  height: "100%",
+                  padding: "10px",
+                  boxSizing: "border-box",
+                  borderRadius: "20px",
+                  backgroundColor: "white",
+                }}
+              ></div>
+            </div>
+            <div
+              style={{
+                width: "80%",
+                margin: "0 auto",
+                height: "12%",
+                padding: "10px",
+                boxSizing: "border-box",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "20px",
+              }}
+            >
+              <button>Borrar</button>
+              <button>Guardar</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
