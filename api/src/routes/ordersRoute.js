@@ -20,6 +20,17 @@ router.put("/put/:orderNumber", async (req, res) => {
   await Order.update({ status }, { where: { orderNumber } });
   return res.send("status updated");
 });
+
+router.put("/payment/put/:orderNumber", async(req,res)=>{
+  const { orderNumber } = req.params;
+  const { methodPayment } = req.body;
+  if(methodPayment){
+     await Order.update({methodPayment}, {where:{ orderNumber}});
+    return res.send("Method Payment Update")
+    }else{
+      res.status(400).json({msg: "Faltan Datos"})
+    }
+  })
 //deleted route ready here
 router.post("/", async (req, res) => {
   console.log(req.body);
