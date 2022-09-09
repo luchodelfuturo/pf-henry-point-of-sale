@@ -4,10 +4,12 @@ export const ordersSlice = createSlice({
   name: "orders",
   initialState: {
     orders: [],
+    allOrders: [],
     sortedOrders: [],
     status: 1,
     filteredOrders: [],
     ordersReady: [],
+
   },
   reducers: {
     getOrders: (state, action) => {
@@ -15,6 +17,14 @@ export const ordersSlice = createSlice({
       state.orders = orders.sort((a, b) => {
         return a.orderNumber - b.orderNumber;
       });
+    },
+    getAllOrders: (state, action) => {
+      state.orders = action.payload.sort((a, b) => {
+        return a.orderNumber - b.orderNumber
+      })
+      state.allOrders = action.payload.sort((a, b) => {
+        return a.orderNumber - b.orderNumber;
+      })
     },
     sortByOrderNumber: (state, action) => {
       let sortedOrders = state.orders;
@@ -54,6 +64,16 @@ export const ordersSlice = createSlice({
     cleanReady: (state, action) => {
       state.ordersReady = action.payload;
     },
+    filterFromDate: (state, action) => {
+      const orders = state.orders;
+
+      state.allOrders = orders.filter(o => o.date >= action.payload)
+    },
+    filterToDate: (state, action) => {
+      const orders = state.orders
+
+      state.allOrders = orders.filter(o => o.date <= action.payload)
+    },
   },
 });
 
@@ -64,8 +84,11 @@ export const {
   filterDoing,
   filterPending,
   clean,
+  getAllOrders,
   postOrders,
   ordersReadyReducer,
   cleanReady,
+  filterFromDate,
+  filterToDate,
 } = ordersSlice.actions;
 export default ordersSlice.reducer;

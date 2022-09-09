@@ -8,13 +8,22 @@ import {
   filterPending,
   postOrders,
   ordersReadyReducer,
+  getAllOrders,
   cleanReady,
+  filterFromDate,
+  filterToDate,
 } from "../slices/ordersSlice";
 
 export const getOrdersAction = () => (dispatch) => {
   axios
     .get(`http://localhost:3001/orders`)
     .then((res) => dispatch(getOrders(res.data)))
+    .catch((e) => console.log(e));
+};
+export const getAllOrdersAction = () => (dispatch) => {
+  axios
+    .get(`http://localhost:3001/orders`)
+    .then((res) => dispatch(getAllOrders(res.data)))
     .catch((e) => console.log(e));
 };
 
@@ -70,4 +79,11 @@ export const updateStatusFinished = (status, orderNumber) => (dispatch) => {
 
 export const cleanReadyAction = () => (dispatch) => {
   dispatch(cleanReady());
+};
+
+export const filterFromDateAction = (dateFrom) => (dispatch) => {
+  dispatch(filterFromDate(dateFrom));
+};
+export const filterToDateAction = (dateTo) => (dispatch) => {
+  dispatch(filterToDate(dateTo));
 };
