@@ -5,6 +5,8 @@ import {
   getAllOrdersAction,
   filterFromDateAction,
   filterToDateAction,
+  disableOrderAction,
+  filterStatusAction,
 } from "../../redux/actions/ordersActions";
 
 export default function HistorialPedidos() {
@@ -27,20 +29,29 @@ export default function HistorialPedidos() {
   });
   useEffect(() => {
     dispatch(getAllOrdersAction());
-  }, [dispatch]);
+  }, [dispatch, mostrarForm]);
 
+  const [totalSuma, setTotalSuma] = useState(0);
   const handleChangeFromDate = (e) => {
     e.preventDefault();
     console.log("from:", fromToFilter.from, "to:", fromToFilter.to);
     dispatch(filterFromDateAction(fromToFilter.from, fromToFilter.to));
   };
 
+  const desactivateOrder = (orderEdit) => {
+    dispatch(disableOrderAction(orderEdit.orderNumber));
+    setMostrarForm(false);
+  };
   const handleChangeToDate = (e) => {
     e.preventDefault();
 
     dispatch(filterToDateAction(fromToFilter.to));
 
     // Action filter From
+  };
+  const handleChangeFilter = (e) => {
+    e.preventDefault();
+    dispatch(filterStatusAction(e.target.value));
   };
 
   useEffect(() => {
@@ -101,10 +112,13 @@ export default function HistorialPedidos() {
           }}
         />
         <label>Filtrar por estado:</label>
-        <select name="" id="">
-          <option value=""></option>
-          <option value=""></option>
-          <option value=""></option>
+
+        <select name="" id="" onChange={(e) => handleChangeFilter(e)}>
+          <option value="All Orders">All Orders</option>
+          <option value="pending">Pending</option>
+          <option value="doing">Doing</option>
+          <option value="ready">Ready</option>
+          <option value="finished">Finished</option>
         </select>
       </div>
       {/* Pedidos List */}
@@ -112,26 +126,30 @@ export default function HistorialPedidos() {
         <div
           style={{
             width: "90%",
-            margin: "auto",
+            margin: "0 auto",
             border: "2px solid black",
             backgroundColor: "lightgray",
             borderRadius: "20px 20px 0px 0px",
             height: "90%",
-            display: "grid",
+            display: "flex",
+            flexDirection: "column",
             boxSizing: "border-box",
             padding: "20px 0px",
 
-            flexDirection: "column",
             gap: "10px",
             overflowY: "scroll",
           }}
         >
           {allOrders &&
             allOrders.map((order) => {
+              // setTotalSuma(totalSuma + order.totalOrder);
+              console.log(order.totalOrder);
               return (
                 <div
                   style={{
                     width: "100%",
+                    height: "60px",
+                    margin: "0 auto",
                     display: "flex",
                     padding: "0 8px",
                     boxSizing: "border-box",
@@ -170,7 +188,7 @@ export default function HistorialPedidos() {
                           );
                         })}
                     </select>
-                    <span>Total</span>
+                    <span>Total $ {order.totalOrder}</span>
                   </div>
                   <button
                     onClick={() => {
@@ -201,7 +219,7 @@ export default function HistorialPedidos() {
             boxSizing: "border-box",
           }}
         >
-          Total: $
+          Total: ${totalSuma}
         </div>
       </div>
       {/* navbar */}
@@ -254,13 +272,14 @@ export default function HistorialPedidos() {
                 padding: "20px 40px",
                 borderRadius: "20px 20px 0 0 ",
                 boxSizing: "border-box",
+
                 backgroundColor: colores.doing,
               }}
             >
-              <span>N°: </span>
-              <span>Estado:</span>
+              <span>N°:{orderEdit.orderNumber} </span>
+              <span>Estado: {orderEdit.status.toUpperCase()}</span>
 
-              <span>Fecha: </span>
+              <span>Fecha: {orderEdit.date}</span>
               <button onClick={() => setMostrarForm(false)}>X</button>
             </div>
             <div
@@ -275,7 +294,7 @@ export default function HistorialPedidos() {
               }}
             >
               <span>
-                Cant de Productos:
+                Cant de Productos:{" "}
                 {orderEdit.productsOrder && orderEdit.productsOrder.length}{" "}
               </span>
               <div
@@ -341,7 +360,7 @@ export default function HistorialPedidos() {
                 justifyContent: "end",
               }}
             >
-              <span>Medio de Pago:</span>
+              <span>Medio de Pago:{orderEdit.methodPayment}</span>
 
               <span>Total:</span>
 
@@ -355,7 +374,10 @@ export default function HistorialPedidos() {
                   borderRadius: "20px",
                   backgroundColor: "white",
                 }}
-              ></div>
+              >
+                {" "}
+                {orderEdit.totalOrder}
+              </div>
             </div>
             <div
               style={{
@@ -370,8 +392,10 @@ export default function HistorialPedidos() {
                 gap: "20px",
               }}
             >
-              <button>Borrar</button>
-              <button>Guardar</button>
+              <button onClick={() => desactivateOrder(orderEdit)}>
+                Borrar
+              </button>
+              {/* <button>Guardar</button> */}
             </div>
           </div>
         </div>

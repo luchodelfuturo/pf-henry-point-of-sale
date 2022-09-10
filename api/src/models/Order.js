@@ -49,7 +49,12 @@ module.exports = (sequelize) => {
       },
       totalOrder: {
         type: DataTypes.FLOAT
-      }
+      },
+      active: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true
+      },
     },
     {
       timestamps: false,

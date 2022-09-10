@@ -12,6 +12,8 @@ import {
   cleanReady,
   filterFromDate,
   filterToDate,
+  disableOrder,
+  filterStatus
 } from "../slices/ordersSlice";
 
 export const getOrdersAction = () => (dispatch) => {
@@ -87,3 +89,15 @@ export const filterFromDateAction = (dateFrom, toFrom) => (dispatch) => {
 export const filterToDateAction = (dateTo) => (dispatch) => {
   dispatch(filterToDate(dateTo));
 };
+
+export const disableOrderAction = (orderNumber) => (dispatch) => {
+
+  console.log("Disable Order ")
+  axios.put(`http://localhost:3001/orders/put/disable/${orderNumber}`)
+    .then((res) => { dispatch(disableOrder(res.data)) })
+    .catch((e) => console.log(e))
+}
+
+export const filterStatusAction = (status) => (dispatch) => {
+  dispatch(filterStatus(status));
+}
