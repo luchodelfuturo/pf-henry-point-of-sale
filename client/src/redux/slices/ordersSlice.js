@@ -8,6 +8,7 @@ export const ordersSlice = createSlice({
     status: 1,
     filteredOrders: [],
     ordersReady: [],
+    finishedOrders: [],
   },
   reducers: {
     getOrders: (state, action) => {
@@ -51,6 +52,9 @@ export const ordersSlice = createSlice({
     ordersReadyReducer: (state, action) => {
       state.ordersReady = action.payload;
     },
+    ordersFinished: (state, action) => {
+      state.finishedOrders = action.payload;
+    },
     cleanReady: (state, action) => {
       state.ordersReady = action.payload;
     },
@@ -66,6 +70,7 @@ export const {
   clean,
   postOrders,
   ordersReadyReducer,
+  ordersFinished,
   cleanReady,
 } = ordersSlice.actions;
 export default ordersSlice.reducer;

@@ -15,10 +15,14 @@ router.get("/finished", async (req, res) => {
   results = await Order.findAll({
     where: { status: "finished" },
   });
+  let total = 0;
+  results.map((o) => (total += parseInt(o.totals)));
 
   if (results.length === 0) {
     res.status(404).json("No se encontraron resultados");
   } else {
+    results.push({ totalSells: total });
+    console.log(results);
     res.status(200).json(results);
   }
 });

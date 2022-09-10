@@ -41,8 +41,11 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING(250),
       },
       productsOrder: {
-        type: DataTypes.ARRAY(DataTypes.JSONB)
-      }
+        type: DataTypes.ARRAY(DataTypes.JSONB),
+      },
+      totals: {
+        type: DataTypes.DECIMAL,
+      },
     },
     {
       timestamps: false,

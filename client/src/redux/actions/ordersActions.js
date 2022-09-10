@@ -9,6 +9,7 @@ import {
   postOrders,
   ordersReadyReducer,
   cleanReady,
+  ordersFinished,
 } from "../slices/ordersSlice";
 
 export const getOrdersAction = () => (dispatch) => {
@@ -52,7 +53,7 @@ export const postOrdersAction = (order) => (dispatch) => {
     .then((res) => res.json())
     .then((r) => dispatch(postOrders(r.data)));
 };
-//---------------new actions
+
 export const ordersReadyAction = () => (dispatch) => {
   axios
     .get("http://localhost:3001/orders/ready/")
@@ -66,6 +67,13 @@ export const updateStatusFinished = (status, orderNumber) => (dispatch) => {
       status: status,
     })
     .then((res) => dispatch(updateStatus(res.data)));
+};
+
+export const getFinishedOrdersAction = () => (dispatch) => {
+  axios
+    .get("http://localhost:3001/orders/ready/finished/")
+    .then((res) => dispatch(ordersFinished(res.data)))
+    .catch((e) => console.log(e));
 };
 
 export const cleanReadyAction = () => (dispatch) => {
