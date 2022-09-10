@@ -14,7 +14,7 @@ module.exports = (sequelize) => {
         },
         paypalPayment: {
             type: DataTypes.DECIMAL,
-            allowNull: false
+            // allowNull: false
         },
         income: {
             type: DataTypes.DECIMAL,
