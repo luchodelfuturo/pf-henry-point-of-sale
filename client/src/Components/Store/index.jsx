@@ -1,8 +1,9 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   getProducts,
   filterByCategoryAction,
+  sortProductsAction,
 } from "../../redux/actions/productsActions";
 import { getCategories } from "../../redux/actions/categoriesActions";
 import NavBarApp from "../NavbarApp/NavBarApp";
@@ -24,9 +25,16 @@ function Store() {
     dispatch(getProducts());
   }, [dispatch]);
 
+  console.log(products)
+
   const filterCategory = async (category) => {
     await dispatch(filterByCategoryAction(category));
   };
+
+  function sort (e) {
+    console.log(e.target.value)
+    dispatch(sortProductsAction(e.target.value))
+  }
 
   return (
     <>
@@ -40,6 +48,15 @@ function Store() {
             <div className="products-container">
               {/* <div className="search-product">BUSCADOR</div> */}
               <div className="category-buttons">
+              <div className="sorts-container">
+          <select onChange={(e) => sort(e)}>
+            <option value="default">Default</option>
+            <option value="valuable">Mayor precio</option>
+            <option value="priceless">Menor precio</option>
+            <option value="popular"> Más vendido </option>
+            <option value="unpopular"> Menos vendido </option>
+          </select>
+        </div>
                 {categories &&
                   categories.map((categ, index) => {
                     const namer = index > 0 ? categ.name : "All";
@@ -57,7 +74,7 @@ function Store() {
                   })}
               </div>
               <div className="cards-container">
-                <Cards products={products} />
+                <Cards products={products}/>
               </div>
             </div>
           </div>

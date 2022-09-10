@@ -1,12 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {cleanAction, filterDoingAction,filterPendingAction,sortByOrderNumberAction
+import {
+  cleanAction,
+  filterDoingAction,
+  filterPendingAction,
+  getOrdersAction,
+  sortByOrderNumberAction,
 } from "../../redux/actions/ordersActions";
-import {FiltrosDiv} from "../../theme/styled-componets";
+import { FiltrosDiv } from "../../theme/styled-componets";
 
 function FilterSort() {
   const dispatch = useDispatch();
   const { orders } = useSelector((state) => state.orders);
+
+  useEffect(() => {
+    dispatch(getOrdersAction());
+  }, [dispatch]);
+
   const handleChange = (e) => {
     if (e.target.value === "orderNumber") dispatch(sortByOrderNumberAction());
 

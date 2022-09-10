@@ -20,12 +20,19 @@ router.put("/put/:orderNumber", async (req, res) => {
   await Order.update({ status }, { where: { orderNumber } });
   return res.send("status updated");
 });
+
 //deleted route ready here
+
 router.post("/", async (req, res) => {
-  console.log(req.body);
+  console.log(req.body)
   try {
     const order = await Order.create(req.body);
-    //await order.addProducts(req.body.product);
+    for(let i = 0; i < req.body.productsOrder.length; i++){
+      let product = await Product.findOne({where: {name: req.body.productsOrder[i].nameProduct}})
+      let selled = product.dataValues.sellCount
+      selled = selled + req.body.productsOrder[i].qty
+      await Product.update({sellCount: selled}, {where: {name: req.body.productsOrder[i].nameProduct}})
+    }
     res.json(order);
   } catch (error) {
     res.send(error);
