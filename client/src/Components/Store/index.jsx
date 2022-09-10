@@ -12,9 +12,12 @@ import Cart from "./Cart";
 import "./index.css";
 import { colors, BtnRounded } from "../../theme/variables";
 
+
 function Store() {
   const dispatch = useDispatch();
   const { state, products, categories } = useContext(StoreContext);
+  
+
 
   useEffect(() => {
     dispatch(getCategories());
