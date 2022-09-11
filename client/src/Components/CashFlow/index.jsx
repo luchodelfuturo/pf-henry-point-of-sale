@@ -1,6 +1,9 @@
 import React, { useMemo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getFinishedOrdersAction } from "../../redux/actions/ordersActions";
+import {
+  addIngresoAction,
+  getFinishedOrdersAction,
+} from "../../redux/actions/ordersActions";
 import { useTable } from "react-table";
 // import EditableCell, { COLUMNS } from "./columns.js";
 import { Table } from "./styledTable";
@@ -45,7 +48,7 @@ function CashFlow() {
         columns: [
           {
             Header: "Efectivo",
-            accessor: "totals",
+            accessor: "totalCash",
           },
           {
             Header: "Tarjeta",
@@ -53,7 +56,7 @@ function CashFlow() {
           },
           {
             Header: "Total",
-            accessor: "totalSells",
+            accessor: "totalCash",
             id: 666,
           },
         ],
@@ -94,7 +97,8 @@ function CashFlow() {
 
             //   return { total };
             // },
-            accessor: "totalSells",
+            accessor: "totalCash",
+            id: 777,
             Cell: ({ value }) => <strong>{value}</strong>,
           },
         ],
@@ -110,7 +114,7 @@ function CashFlow() {
       data: data,
     });
 
-  const [ingreso, setIngreso] = useState("");
+  const [income, setIngreso] = useState("");
 
   const handleChange = (value) => {
     setIngreso(value);
@@ -118,7 +122,8 @@ function CashFlow() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(addIngresoAction());
+
+    dispatch(addIngresoAction(income));
   };
 
   return (
@@ -170,11 +175,11 @@ function CashFlow() {
         </tbody> */}
       </Table>
       <form onSubmit={handleSubmit}>
-        <label>Ingreso</label>
+        <label>Nuevo ingreso</label>
         <input
           type="number"
-          value={ingreso}
-          placeholder="nuevo ingreso"
+          value={income}
+          placeholder="income"
           onChange={(e) => handleChange(e.target.value)}
         />
         <input type="submit" value="add" />
@@ -198,7 +203,7 @@ function CashFlow() {
       //   <li>Cerrar Caja</li>
       // </ul> 
       */}
-      <NavBarApp />;
+      <NavBarApp />
     </div>
   );
 }

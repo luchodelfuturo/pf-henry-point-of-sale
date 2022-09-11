@@ -122,7 +122,8 @@ export function StoreProvider({ children }) {
   let order = {
     comments: "",
     productsOrder: productsOrder,
-    totals: totals,
+    totalOrder: totals,
+    methodPayment: "cash",
   };
   const ls = JSON.parse(window.localStorage.getItem("items"));
   useEffect(() => {

@@ -71,11 +71,18 @@ export const updateStatusFinished = (status, orderNumber) => (dispatch) => {
 
 export const getFinishedOrdersAction = () => (dispatch) => {
   axios
-    .get("http://localhost:3001/orders/ready/finished/")
+    .get("http://localhost:3001/cash/payment-cash")
     .then((res) => dispatch(ordersFinished(res.data)))
     .catch((e) => console.log(e));
 };
 
 export const cleanReadyAction = () => (dispatch) => {
   dispatch(cleanReady());
+};
+
+export const addIngresoAction = (income) => {
+  console.log(income);
+  return axios
+    .post("http://localhost:3001/cash/addIncome", { income: income })
+    .then((res) => console.log(res));
 };

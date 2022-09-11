@@ -43,8 +43,12 @@ module.exports = (sequelize) => {
       productsOrder: {
         type: DataTypes.ARRAY(DataTypes.JSONB),
       },
-      totals: {
-        type: DataTypes.DECIMAL,
+      methodPayment: {
+        type: DataTypes.ENUM("cash", "paypal"),
+        defaultValue: "cash",
+      },
+      totalOrder: {
+        type: DataTypes.FLOAT,
       },
     },
     {
