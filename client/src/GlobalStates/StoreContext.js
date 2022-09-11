@@ -65,6 +65,7 @@ export function StoreProvider({ children }) {
   const { categories } = useSelector((state) => state.categories);
   const [state, dispatch] = useReducer(reducer, reducer());
   const [comments, setComments] = useState("");
+  const [methodPayment, setMethodPayment] = useState("cash");
 
   function qtyIncr(id) {
     dispatch({ type: "INCREMENT", payload: id });
@@ -124,6 +125,7 @@ export function StoreProvider({ children }) {
     comments: comments,
     productsOrder: productsOrder,
     totals: totals,
+    methodPayment: methodPayment,
   };
   const ls = JSON.parse(window.localStorage.getItem("items"));
   useEffect(() => {
@@ -154,6 +156,7 @@ export function StoreProvider({ children }) {
         order,
         totals,
         setComments,
+        setMethodPayment,
       }}
     >
       {children}

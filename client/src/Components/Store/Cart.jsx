@@ -7,32 +7,32 @@ import { postOrdersAction } from "../../redux/actions/ordersActions";
 import { useDispatch } from "react-redux";
 import Modal from "../Modal";
 import { colors } from "../../theme/variables";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBasketShopping, faTrashCan } from '@fortawesome/free-solid-svg-icons'
-import { faCommentDots } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faBasketShopping,
+  faTrashCan,
+} from "@fortawesome/free-solid-svg-icons";
+import { faCommentDots } from "@fortawesome/free-solid-svg-icons";
 
 function Cart({ products }) {
-  const { deleteAll, order, totals, setComments } = useContext(StoreContext);
+  const { deleteAll, order, totals, setComments, setMethodPayment } = useContext(StoreContext);
   const [checkout, setCheckout] = useState(false);
   useEffect(() => {}, [products]);
 
   let dispatch = useDispatch();
-  let confirmMessage = "";
 
   function handleCheckoutModal() {
     setCheckout(true);
   }
 
   function postOrder() {
-   //e.preventDefault();
     //setCheckout(true)
     try {
       dispatch(postOrdersAction(order));
-     // confirmMessage = "Se ha realizado el pedido correctamente";
       deleteAll();
     } catch (error) {
-      console.error(error)
-      //confirmMessage = "Se ha producido un error";
+      console.error(error);
+
     }
   }
 
@@ -43,7 +43,14 @@ function Cart({ products }) {
   return (
     <div className="cart-cont">
       {checkout && (
-        <Modal total={totals} checkout={checkout} sch={setCheckout} setComments={setComments} postOrder={postOrder}/>
+        <Modal
+          total={totals}
+          checkout={checkout}
+          sch={setCheckout}
+          setComments={setComments}
+          postOrder={postOrder}
+          setMethodPayment={setMethodPayment}
+        />
       )}
       <div className="cart">
         <div className="items">
@@ -59,10 +66,10 @@ function Cart({ products }) {
         {products.length ? (
           <Checkout>
             <button className="delete-cart" onClick={() => handleDeleteAll()}>
-            <FontAwesomeIcon
-                  icon={faTrashCan}
-                  style={{ width: 25, height: 25 }}
-                />
+              <FontAwesomeIcon
+                icon={faTrashCan}
+                style={{ width: 25, height: 25 }}
+              />
             </button>
             <div className="pay-btn">
               <button
@@ -70,15 +77,14 @@ function Cart({ products }) {
                 onClick={() => handleCheckoutModal()}
               >
                 {" "}
-                Checkout <FontAwesomeIcon
+                Checkout{" "}
+                <FontAwesomeIcon
                   icon={faBasketShopping}
                   style={{ width: 35, height: 35 }}
                 />
               </button>
-              {!confirmMessage ? null : <p>{confirmMessage}</p>}
             </div>
             <div className="totals">
-            
               <div className="total-label">Total</div>
               <div className="total-price">${totals}</div>
             </div>

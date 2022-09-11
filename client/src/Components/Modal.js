@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { ButtonCart } from "../theme/styled-componets";
 import { colors } from "../theme/variables";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import PayPal from "./PayPal/PayPal";
 import {
   faCommentDots,
   faDeleteLeft,
@@ -11,7 +12,8 @@ import {
 import { faPaypal } from "@fortawesome/free-brands-svg-icons";
 import Swal from "sweetalert2";
 
-const Modal = ({ total, checkout, sch, setComments, postOrder }) => {
+const Modal = ({ total, sch, setComments, postOrder, setMethodPayment }) => {
+  const [payment, setPayment] = useState("cash");
   const [cash, setCash] = useState("0");
   const [change, setChange] = useState(0);
   const [disc, setDisc] = useState(0);
@@ -32,6 +34,11 @@ const Modal = ({ total, checkout, sch, setComments, postOrder }) => {
 
     calcChange();
   }, [calcChange, cash]);
+
+  function handlePayment(e) {
+    setPayment(e.target.value);
+    setMethodPayment(e.target.value);
+  }
 
   function handleClick(e) {
     if (cash === "0") {
@@ -117,14 +124,14 @@ const Modal = ({ total, checkout, sch, setComments, postOrder }) => {
       <Overlay id="overlay" onClick={(e) => handleClose(e)}>
         <ModalContainer>
           <ModalHeader>
-            <TabBtn>
+            <TabBtn value="cash" onClick={(e) => handlePayment(e)}>
               <FontAwesomeIcon
                 icon={faMoneyBill}
                 style={{ width: 30, height: 30 }}
               />{" "}
               Cash
             </TabBtn>
-            <TabBtn>
+            <TabBtn value="paypal" onClick={(e) => handlePayment(e)}>
               <FontAwesomeIcon
                 icon={faPaypal}
                 style={{ width: 30, height: 30 }}
@@ -132,38 +139,127 @@ const Modal = ({ total, checkout, sch, setComments, postOrder }) => {
               Paypal
             </TabBtn>
           </ModalHeader>
-          <PaymentBody>
-            <div className="operations">
-              <div className="display-sum">
-                <Sum>
-                  <div className="titles">
-                    <div>Total</div>
-                    <div className="cash">Cash</div>
-                    {/* <div>Discount</div> */}
-                    <div>Change</div>
-                  </div>
-
-                  <div className="vulues-cont">
-                    <div className="signs">
-                      <div>$</div>
-                      <div className="cash">$</div>
-                      {/* <div>%</div> */}
-                      <div>$</div>
+          {payment === "cash" ? (
+            <PaymentBody>
+              <div className="operations">
+                <div className="display-sum">
+                  <Sum>
+                    <div className="titles">
+                      <div>Total</div>
+                      <div className="cash">Cash</div>
+                      {/* <div>Discount</div> */}
+                      <div>Change</div>
                     </div>
-                    <div className="totals">
-                      <div className="total">{total.toFixed(2)}</div>
-                      <div className="cash">{Number(cash).toFixed(2)}</div>
-                      {/* <input
+
+                    <div className="vulues-cont">
+                      <div className="signs">
+                        <div>$</div>
+                        <div className="cash">$</div>
+                        {/* <div>%</div> */}
+                        <div>$</div>
+                      </div>
+                      <div className="totals">
+                        <div className="total">{total.toFixed(2)}</div>
+                        <div className="cash">{Number(cash).toFixed(2)}</div>
+                        {/* <input
                         type="text"
                         value={disc}
                         className="discount"
                         onChange={handleDisc}
                       ></input> */}
-                      <div className="change">{change}</div>
+                        <div className="change">{change}</div>
+                      </div>
                     </div>
-                  </div>
-                </Sum>
-                <ButtonCart className="desc">
+                  </Sum>
+                  <ButtonCart className="desc">
+                    <FontAwesomeIcon
+                      onClick={() => openComments()}
+                      icon={faCommentDots}
+                      style={{ width: 35, height: 35 }}
+                    />
+                  </ButtonCart>
+                </div>
+                <div>
+                  <Buttons>
+                    <div className="spacer">
+                      <NumBtn value="1" onClick={(e) => handleClick(e)}>
+                        1
+                      </NumBtn>
+                      <NumBtn value="2" onClick={(e) => handleClick(e)}>
+                        2
+                      </NumBtn>
+                      <NumBtn value="3" onClick={(e) => handleClick(e)}>
+                        3
+                      </NumBtn>
+                    </div>
+                    <div className="spacer">
+                      <NumBtn value="4" onClick={(e) => handleClick(e)}>
+                        4
+                      </NumBtn>
+                      <NumBtn value="5" onClick={(e) => handleClick(e)}>
+                        5
+                      </NumBtn>
+                      <NumBtn value="6" onClick={(e) => handleClick(e)}>
+                        6
+                      </NumBtn>
+                    </div>
+                    <div className="spacer">
+                      <NumBtn value="7" onClick={(e) => handleClick(e)}>
+                        7
+                      </NumBtn>
+                      <NumBtn value="8" onClick={(e) => handleClick(e)}>
+                        8
+                      </NumBtn>
+                      <NumBtn value="9" onClick={(e) => handleClick(e)}>
+                        9
+                      </NumBtn>
+                    </div>
+                    <div className="spacer">
+                      <NumBtn value="." onClick={(e) => handleClick(e)}>
+                        .
+                      </NumBtn>
+                      <NumBtn value="0" onClick={(e) => handleClick(e)}>
+                        0
+                      </NumBtn>
+
+                      <FontAwesomeIcon
+                        className="eraser"
+                        icon={faDeleteLeft}
+                        style={{ width: 30, height: 30 }}
+                        onClick={() => handleErase()}
+                      />
+                    </div>
+                  </Buttons>
+                </div>
+              </div>
+
+              <div className="footer-buttons">
+                <ButtonCart
+                  className="close"
+                  value="close"
+                  onClick={(e) => handleClose(e)}
+                >
+                  Cancel
+                </ButtonCart>
+                <ButtonCart className="pay" onClick={() => handlePost()}>
+                  PAY
+                </ButtonCart>
+              </div>
+            </PaymentBody>
+          ) : (
+            <PaymentBody className="paypal-body">
+              <div className="paypal-cont">
+                <PayPal />
+              </div>
+              <div className="footer-buttons">
+                <ButtonCart
+                  className="close"
+                  value="close"
+                  onClick={(e) => handleClose(e)}
+                >
+                  Cancel
+                </ButtonCart>
+                <ButtonCart className="desc-relative">
                   <FontAwesomeIcon
                     onClick={() => openComments()}
                     icon={faCommentDots}
@@ -171,73 +267,8 @@ const Modal = ({ total, checkout, sch, setComments, postOrder }) => {
                   />
                 </ButtonCart>
               </div>
-              <div>
-                <Buttons>
-                  <div className="spacer">
-                    <NumBtn value="1" onClick={(e) => handleClick(e)}>
-                      1
-                    </NumBtn>
-                    <NumBtn value="2" onClick={(e) => handleClick(e)}>
-                      2
-                    </NumBtn>
-                    <NumBtn value="3" onClick={(e) => handleClick(e)}>
-                      3
-                    </NumBtn>
-                  </div>
-                  <div className="spacer">
-                    <NumBtn value="4" onClick={(e) => handleClick(e)}>
-                      4
-                    </NumBtn>
-                    <NumBtn value="5" onClick={(e) => handleClick(e)}>
-                      5
-                    </NumBtn>
-                    <NumBtn value="6" onClick={(e) => handleClick(e)}>
-                      6
-                    </NumBtn>
-                  </div>
-                  <div className="spacer">
-                    <NumBtn value="7" onClick={(e) => handleClick(e)}>
-                      7
-                    </NumBtn>
-                    <NumBtn value="8" onClick={(e) => handleClick(e)}>
-                      8
-                    </NumBtn>
-                    <NumBtn value="9" onClick={(e) => handleClick(e)}>
-                      9
-                    </NumBtn>
-                  </div>
-                  <div className="spacer">
-                    <NumBtn value="." onClick={(e) => handleClick(e)}>
-                      .
-                    </NumBtn>
-                    <NumBtn value="0" onClick={(e) => handleClick(e)}>
-                      0
-                    </NumBtn>
-
-                    <FontAwesomeIcon
-                      className="eraser"
-                      icon={faDeleteLeft}
-                      style={{ width: 30, height: 30 }}
-                      onClick={() => handleErase()}
-                    />
-                  </div>
-                </Buttons>
-              </div>
-            </div>
-
-            <div className="footer-buttons">
-              <ButtonCart
-                className="close"
-                value="close"
-                onClick={(e) => handleClose(e)}
-              >
-                Cancel
-              </ButtonCart>
-              <ButtonCart className="pay" onClick={() => handlePost()}>
-                PAY
-              </ButtonCart>
-            </div>
-          </PaymentBody>
+            </PaymentBody>
+          )}
         </ModalContainer>
       </Overlay>
     </>
@@ -321,11 +352,29 @@ const PaymentBody = styled.div`
     }
   }
 
+  .paypal-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .paypal-cont {
+    margin: auto;
+  }
+
   .desc {
     background-color: ${colors.blue};
     width: 83px;
     height: 71px;
     position: absolute;
+    bottom: 10px;
+    left: 10px;
+    color: white;
+  }
+  .desc-relative {
+    background-color: ${colors.blue};
+    width: 83px;
+    height: 71px;
     bottom: 10px;
     left: 10px;
     color: white;
