@@ -74,7 +74,7 @@ const CardWrapper = styled.div`
     margin-top: 147px;
     margin-left: 10px;
     position: relative;
-    background-color: ${colors.orange};
+    background-color: ${colors.lgreen};
     box-shadow: 4px 2px 9px -1px rgba(0, 0, 0, 0.25);
     border-radius: 26px;
     width: 84px;

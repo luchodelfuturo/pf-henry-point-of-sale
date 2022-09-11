@@ -127,6 +127,7 @@ export function StoreProvider({ children }) {
     totalOrder: totals,
     methodPayment: methodPayment,
   };
+
   const ls = JSON.parse(window.localStorage.getItem("items"));
   useEffect(() => {
     if (state.length > 0) {
