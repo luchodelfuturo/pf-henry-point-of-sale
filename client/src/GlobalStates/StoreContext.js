@@ -124,7 +124,7 @@ export function StoreProvider({ children }) {
   let order = {
     comments: comments,
     productsOrder: productsOrder,
-    totals: totals,
+    totalOrder: totals,
     methodPayment: methodPayment,
   };
   const ls = JSON.parse(window.localStorage.getItem("items"));
