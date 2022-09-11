@@ -41,34 +41,69 @@ router.get("/", async (req, res) => {
 router.post("/add", async (req, res) => {
   let { name, price, image, description, active, idcategory } = req.body;
 
-  try {
-    const newProduct = await Product.findOrCreate({
-      where: {
-        name: name,
-        price: price,
-        image: image,
-        description: description,
-        active: active,
-        idcategory: idcategory,
-      },
-    });
+  const searchProduct = await Product.findOne({where: {name: name}})
+  
+  if(searchProduct === null) { //en caso de que no exista
+    try {
+      const newProduct = await Product.findOrCreate({
+        where: {
+          name: name,
+          price: price,
+          image: image,
+          description: description,
+          active: active,
+          idcategory: idcategory,
+        },
+      });
 
-    const categoryN = await Category.findOne({
-      where: {
-        id: idcategory,
-      },
-    });
+      const categoryN = await Category.findOne({
+        where: {
+          id: idcategory,
+        },
+      });
 
-    await newProduct[0].addCategory(categoryN);
+      await newProduct[0].addCategory(categoryN);
 
-    res.status(200).json({ message: "Product succefully created" });
-  } catch (error) {
-    console.log(error);
+      res.status(200).json({ message: "Product succefully created" });
+    } catch (error) {
+      console.log(error);
 
-    res.status(404).json({ message: "Cant create product" });
+      res.status(404).json({ message: "Cant create product" });
+    }
+  } else {
+
+    await Product.update({
+      name: name, 
+      price: price,
+      image: image, 
+      description: description,
+      active: active,
+      idcategory: idcategory
+    }, {where: {name: name}})
+
   }
 });
 
+router.put("/disable/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    await Product.update({ active: false }, { where: {id: id} });
+    return res.status(200).json(id);
+  } 
+  catch(error) {
+    console.log("error: ", error)
+    res.status(404).json({ message: "Cant disable product"})
+  }
+});
 
+router.put("/edit/:id", async (req, res) => {
+  const { id } = req.params;
+  const { data } = req.body;
+
+  //puede llegar a estar mal
+
+  await Order.update({ data }, { where: { id } });
+  return res.send("Product edited");
+});
 
 module.exports = router;

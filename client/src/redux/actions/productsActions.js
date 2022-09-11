@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getAllProducts, filterByCategory } from "../slices/productsSlice";
+import { getAllProducts, filterByCategory, disableProduct, sortProducts } from "../slices/productsSlice";
 
 export const getProducts = () => (dispatch) => {
   axios
@@ -21,3 +21,15 @@ export const filterByCategoryAction = (category) => (dispatch) => {
   console.log("Haciendo filter by category action");
   dispatch(filterByCategory(category));
 };
+
+export const sortProductsAction = (order) => (dispatch) => {
+  dispatch(sortProducts(order))
+}
+
+export const disableProductAction = (id) => (dispatch) => {
+
+  console.log("llega a la action")
+  axios.put(`http://localhost:3001/products/disable/${id}`)
+  .then((res) => {dispatch(disableProduct(res.data))})
+  .catch((e) => console.log(e))
+}
