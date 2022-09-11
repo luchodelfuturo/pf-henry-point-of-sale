@@ -13,7 +13,7 @@ const paymentCash = async () => {
     for (let value of result) {
       totalCash += value;
     }
-    await Cash.create({ cashPayment: totalCash });
+    await Cash.create({ cashPayment: totalCash })
 
     return totalCash;
     // res.json(totalCash)
