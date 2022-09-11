@@ -9,17 +9,21 @@ import {
   faMoneyBill,
 } from "@fortawesome/free-solid-svg-icons";
 import { faPaypal } from "@fortawesome/free-brands-svg-icons";
-import Swal from 'sweetalert2'
-
+import Swal from "sweetalert2";
 
 const Modal = ({ total, checkout, sch, setComments, postOrder }) => {
   const [cash, setCash] = useState("0");
   const [change, setChange] = useState(0);
+  const [disc, setDisc] = useState(0);
 
   const calcChange = useCallback(
     () => setChange((cash - total).toFixed(2)),
-    [cash, total]
+    [cash, total, disc]
   );
+  //   const calcChange = useCallback(
+  //     () => setChange((cash - total - (disc * total) / 100).toFixed(2)),
+  //     [cash, total, disc]
+  //   );
 
   useEffect(() => {
     if (cash === "") {
@@ -59,29 +63,54 @@ const Modal = ({ total, checkout, sch, setComments, postOrder }) => {
     }
   }
 
-
-  const openComments = async ()=>{
+  const openComments = async () => {
     const { value: text } = await Swal.fire({
-        input: 'textarea',
-        inputLabel: 'Message',
-        inputPlaceholder: 'Type your message here...',
-        inputAttributes: {
-          'aria-label': 'Type your message here'
-        },
-        showCancelButton: true,
-        confirmButtonColor: '#31d159',
-      })
-      
-      if (text) {
-        setComments(text)
-        Swal.fire("Message: "+text)
-      }
-  }
-function handlePost() {
-    postOrder()
-    
-}
+      input: "textarea",
+      inputLabel: "Message",
+      inputPlaceholder: "Type your message here...",
+      inputAttributes: {
+        "aria-label": "Type your message here",
+      },
+      showCancelButton: true,
+      confirmButtonColor: "#31d159",
+    });
 
+    if (text) {
+      setComments(text);
+      Swal.fire("Message: " + text);
+    }
+  };
+
+  const postToast = () => {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener("mouseenter", Swal.stopTimer);
+        toast.addEventListener("mouseleave", Swal.resumeTimer);
+      },
+    });
+
+    Toast.fire({
+      icon: "success",
+      title: "Order placed",
+    });
+  };
+
+  function handlePost() {
+    sch(false);
+    postOrder();
+    setTimeout(() => {
+      postToast();
+    }, 500);
+  }
+
+  //   function handleDisc(e) {
+  //     setDisc(e.target.value);
+  //   }
 
   return (
     <>
@@ -110,7 +139,7 @@ function handlePost() {
                   <div className="titles">
                     <div>Total</div>
                     <div className="cash">Cash</div>
-                    {/* <div>Cupon</div> */}
+                    {/* <div>Discount</div> */}
                     <div>Change</div>
                   </div>
 
@@ -118,19 +147,25 @@ function handlePost() {
                     <div className="signs">
                       <div>$</div>
                       <div className="cash">$</div>
-                      {/* <div>$</div> */}
+                      {/* <div>%</div> */}
                       <div>$</div>
                     </div>
                     <div className="totals">
-                      <div className="total">{total}</div>
-                      <div className="cash">{cash}</div>
-                      {/* <div className="cupon">0</div> */}
+                      <div className="total">{total.toFixed(2)}</div>
+                      <div className="cash">{Number(cash).toFixed(2)}</div>
+                      {/* <input
+                        type="text"
+                        value={disc}
+                        className="discount"
+                        onChange={handleDisc}
+                      ></input> */}
                       <div className="change">{change}</div>
                     </div>
                   </div>
                 </Sum>
                 <ButtonCart className="desc">
-                  <FontAwesomeIcon onClick={()=> openComments()}
+                  <FontAwesomeIcon
+                    onClick={() => openComments()}
                     icon={faCommentDots}
                     style={{ width: 35, height: 35 }}
                   />
@@ -198,7 +233,9 @@ function handlePost() {
               >
                 Cancel
               </ButtonCart>
-              <ButtonCart className="pay" onClick={() => handlePost()}>PAY</ButtonCart>
+              <ButtonCart className="pay" onClick={() => handlePost()}>
+                PAY
+              </ButtonCart>
             </div>
           </PaymentBody>
         </ModalContainer>
@@ -319,7 +356,7 @@ const PaymentBody = styled.div`
 const Sum = styled.div`
   display: flex;
   justify-content: space-between;
-  overflow-x: auto;
+  overflow-x: hidden;
   width: 484px;
   height: 250px;
   padding-top: 10px;
@@ -335,8 +372,9 @@ const Sum = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    width: 100px;
-    padding-right: 30px;
+    width: 130px;
+    padding-right: 10px;
+    margin-right: 10px;
     text-align: right;
     font-size: 32px;
     //height: 250px;
@@ -362,6 +400,14 @@ const Sum = styled.div`
   .total {
   }
   .change {
+    border-top: 1px dashed #7c7b7b;
+    width: 130px;
+  }
+  .discount {
+    font-size: 32px;
+    background-color: inherit;
+    border: none;
+    text-align: right;
   }
 `;
 

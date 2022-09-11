@@ -147,7 +147,7 @@ export const Tag = styled.div`
   font-size: 18px;
   text-align: center;
   //vertical-align: middle;
-  
+
   //width: 100px;
   padding-left: 7px;
   padding-right: 7px;
@@ -155,3 +155,40 @@ export const Tag = styled.div`
   background-color: ${colors.lgreen};
   border-radius: 25px;
 `;
+
+export const SearchInput = styled.input`
+  padding-left: 15px;
+  margin-top: 10px;
+  font-size: 16px;
+  width: 250px;
+  height: 40px;
+  border-radius: 10px;
+  margin-left: 10px;
+  box-shadow: 4px 6px 9px -4px rgba(0, 0, 0, 0.25);
+  border:none;
+`;
+export const SearchBtn = styled.button`
+  margin-top: 10px;
+  margin-left: 5px;
+  padding-bottom: 2px;
+  font-size: 16px;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: none;
+  background-color: ${colors.blue};
+  color: white;
+  box-shadow: 4px 6px 9px -4px rgba(0, 0, 0, 0.25);
+`;
+
+export const Select = styled.select`
+padding-left: 5px;
+margin-top: 10px;
+margin-right: 30px;
+height: 40px;
+font-size: 16px;
+background-color: white;
+border-radius: 10px;
+border: none;
+box-shadow: 4px 6px 9px -4px rgba(0, 0, 0, 0.25);
+`

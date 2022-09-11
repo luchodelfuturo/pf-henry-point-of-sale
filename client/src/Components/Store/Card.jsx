@@ -74,13 +74,13 @@ const CardWrapper = styled.div`
     margin-top: 147px;
     margin-left: 10px;
     position: relative;
-    background-color: ${colors.aqua};
+    background-color: ${colors.orange};
     box-shadow: 4px 2px 9px -1px rgba(0, 0, 0, 0.25);
     border-radius: 26px;
     width: 84px;
     height: 28px;
     text-align: center;
-  position: absolute;
+    position: absolute;
     .sign {
       font-size: 15px;
       padding-bottom: 6px;

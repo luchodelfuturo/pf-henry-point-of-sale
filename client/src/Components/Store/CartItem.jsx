@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { colors } from "../../theme/variables";
 import { Tag } from "../../theme/styled-componets";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCaretUp, faCaretDown } from '@fortawesome/free-solid-svg-icons'
+import { faCaretUp, faCaretDown, faArrowRight } from '@fortawesome/free-solid-svg-icons'
 
 const CartItem = ({ AllProducts }) => {
   const { qtyIncr, qtyDecr, itemDelete } = useContext(StoreContext);
@@ -35,7 +35,7 @@ const CartItem = ({ AllProducts }) => {
 
   return (
     <>
-      {products &&
+      {products && products.length > 0 ?
         products.map((p, i) => (
           <Item key={i}>
             <div className="div-container">
@@ -78,7 +78,10 @@ const CartItem = ({ AllProducts }) => {
               </div>
             </div>
           </Item>
-        ))}
+        )):<EmptyCart>Select a product <FontAwesomeIcon
+                  icon={faArrowRight}
+                  style={{ width: 20, height: 20 }}
+                /></EmptyCart>}
     </>
   );
 };
@@ -173,3 +176,12 @@ const Item = styled.div`
     text-align: center;
   }
 `;
+
+const EmptyCart = styled.div`
+margin-top: 20px;
+margin-left: 50px;
+font-size: 24px;
+font-weight: 600;
+font-style: italic;
+color: #adadad;
+`
