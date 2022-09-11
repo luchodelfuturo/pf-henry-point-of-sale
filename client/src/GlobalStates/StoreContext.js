@@ -126,6 +126,7 @@ export function StoreProvider({ children }) {
     productsOrder: productsOrder,
     totalOrder: totals,
     methodPayment: methodPayment,
+
   };
 
   const ls = JSON.parse(window.localStorage.getItem("items"));
