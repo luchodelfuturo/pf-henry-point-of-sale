@@ -6,11 +6,11 @@ module.exports = (sequelize) => {
     sequelize.define('cash', {
         initialCash: {
             type: DataTypes.DECIMAL,
-            allowNull: false,
+            // allowNull: false,
         },
         cashPayment: {
             type: DataTypes.DECIMAL,
-            allowNull: false
+            // allowNull: false
         },
         paypalPayment: {
             type: DataTypes.DECIMAL,

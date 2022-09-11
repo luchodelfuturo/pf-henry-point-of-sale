@@ -26,7 +26,7 @@ router.get("/history", async (req, res) => {
   }
 });
 
-router.get("/payment-cash", async (req, res) => {
+router.post("/payment-cash", async (req, res) => {
   const {income, expanses} = req.body
   try {
     let cash = await Order.findAll({
@@ -40,7 +40,7 @@ router.get("/payment-cash", async (req, res) => {
         totalCash+=value
       }
       const condition = income ? totalCash + income : totalCash - expanses
-      // await Cash.update({cashPayment:totalCash})
+      // await Cash.update({cashPayment:totalCash},{where:{cashPayment:null}})
       res.json([{totalCash: condition}]);
       // res.json(totalCash)
     }else{
