@@ -4,14 +4,13 @@ import Store from "./Components/Store";
 import Counter from "./Components/Counter/counter";
 import AdminProducts from "./Components/AdminProducts/AdminProducts";
 import { StoreProvider } from "./GlobalStates/StoreContext";
-import GlobalStyle from './theme/globalStyle.js';
-
+import GlobalStyle from "./theme/globalStyle.js";
+import CashFlow from "./Components/CashFlow/index.jsx";
 
 function App() {
-
   return (
     <div className="App">
-    <GlobalStyle/>
+      <GlobalStyle />
       <Route exact path="/kitchen" component={Kitchen} />
 
       <StoreProvider>
@@ -21,6 +20,8 @@ function App() {
       <Route exact path="/counter" component={Counter} />
 
       <Route exact path="/adminProducts" component={AdminProducts} />
+
+      <Route exact path="/cashFlow" component={CashFlow} />
     </div>
   );
 }
