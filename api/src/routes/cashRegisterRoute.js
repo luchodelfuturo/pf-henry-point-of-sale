@@ -1,7 +1,10 @@
 const { Router } = require("express");
 const router = Router();
 const { Cash, Order, Op } = require("../db.js");
-
+const {
+  paymentCash,
+  paymentPayPal,
+} = require("../controllers/cashControlers.js");
 router.post("/close", async (req, res) => {
   try {
     let cashClose = await Cash.create(req.body);
@@ -25,57 +28,64 @@ router.get("/history", async (req, res) => {
     res.json(error);
   }
 });
-
-router.post("/payment-cash", async (req, res) => {
-  const {income, expanses} = req.body
+router.get("/", async (req, res) => {
   try {
-    let cash = await Order.findAll({
-      where: {methodPayment: "cash" },
-      attributes:["totalOrder"]
-    });
-    if(cash.length > 0){
-      let totalCash = 0;
-      let result = cash.map((e) => e.totalOrder)
-      for(let value of result){
-        totalCash+=value
-      }
-      const condition = income ? totalCash + income : totalCash - expanses
-      // await Cash.update({cashPayment:totalCash},{where:{cashPayment:null}})
-      res.json([{totalCash: condition}]);
-      // res.json(totalCash)
-    }else{
-      res.send("No hay Resultados");
-    }
+    res.send(await Cash.findAll());
   } catch (error) {
-    res.send(error)
+    console.log(error);
   }
 });
 
 router.get("/payment-paypal", async (req, res) => {
   try {
-    let paypal = await Order.findAll({
-      where: {methodPayment: "paypal" },
-      attributes:["totalOrder"]
-    });
-    if(paypal.length > 0){
-    let totalPayment = 0;
-    let result = paypal.map((e) => e.totalOrder)
-    for(let value of result){
-      totalPayment+=value
-    }
-  // await Cash.create(
-  //  {paypalPayment: totalPayment},
-  //  {where:{
-  //   paypalPayment: null
-  //  }}
-  // )
-    res.json([{totalPayPal:totalPayment}]);
-    
-  }else{
-    res.send("No hay Resultados");
-  }
+    let result = await paymentPayPal();
+    res.json(result);
   } catch (error) {
-    res.send(error)
+    res.send(error);
+  }
+});
+
+router.get("/payment-cash", async (req, res) => {
+  try {
+    let result = await Cash.findAll({ where: { id: 33 } });
+    // const cash = Cash.build({ cashPayment: result });
+    // await cash.save();
+    res.json(result);
+  } catch (error) {
+    res.send(error);
+  }
+});
+
+router.post("/addIncome", async (req, res) => {
+  const { income } = req.body;
+  console.log(req.body);
+  if (income) {
+    try {
+      await Cash.create({ income: income });
+      let result = await paymentCash();
+      let incomes = income + result;
+      await Cash.create({ cashPayment: incomes });
+      res.status(200).json(incomes);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+});
+
+router.post("/addExpense", async (req, res) => {
+  const { expenses } = req.body;
+  if (expenses) {
+    try {
+      await Cash.create({ expenses: expenses });
+      let result = await paymentCash();
+      // let result = Cash.findOne({ where: cashPayment });
+      let expense = result - expenses;
+      // await Cash.update({ cashPayment: expense });
+      await Cash.create({ cashPayment: expense });
+      return res.status(200).json(expense);
+    } catch (error) {
+      console.log(error);
+    }
   }
 });
 
