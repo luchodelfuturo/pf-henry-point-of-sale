@@ -10,6 +10,7 @@ export const ordersSlice = createSlice({
     filteredOrders: [],
     ordersReady: [],
 
+    finishedOrders: [],
   },
   reducers: {
     getOrders: (state, action) => {
@@ -61,6 +62,9 @@ export const ordersSlice = createSlice({
     ordersReadyReducer: (state, action) => {
       state.ordersReady = action.payload;
     },
+    ordersFinished: (state, action) => {
+      state.finishedOrders = action.payload;
+    },
     cleanReady: (state, action) => {
       state.ordersReady = action.payload;
     },
@@ -99,6 +103,7 @@ export const {
   getAllOrders,
   postOrders,
   ordersReadyReducer,
+  ordersFinished,
   cleanReady,
   filterFromDate,
   filterToDate,

@@ -13,7 +13,8 @@ import {
   filterFromDate,
   filterToDate,
   disableOrder,
-  filterStatus
+  filterStatus,
+  ordersFinished,
 } from "../slices/ordersSlice";
 
 export const getOrdersAction = () => (dispatch) => {
@@ -63,7 +64,7 @@ export const postOrdersAction = (order) => (dispatch) => {
     .then((res) => res.json())
     .then((r) => dispatch(postOrders(r.data)));
 };
-//---------------new actions
+
 export const ordersReadyAction = () => (dispatch) => {
   axios
     .get("http://localhost:3001/orders/ready/")
@@ -77,6 +78,13 @@ export const updateStatusFinished = (status, orderNumber) => (dispatch) => {
       status: status,
     })
     .then((res) => dispatch(updateStatus(res.data)));
+};
+
+export const getFinishedOrdersAction = () => (dispatch) => {
+  axios
+    .get("http://localhost:3001/cash/payment-cash")
+    .then((res) => dispatch(ordersFinished(res.data)))
+    .catch((e) => console.log(e));
 };
 
 export const cleanReadyAction = () => (dispatch) => {
@@ -101,3 +109,9 @@ export const disableOrderAction = (orderNumber) => (dispatch) => {
 export const filterStatusAction = (status) => (dispatch) => {
   dispatch(filterStatus(status));
 }
+export const addIngresoAction = (income) => {
+  console.log(income);
+  return axios
+    .post("http://localhost:3001/cash/addIncome", { income: income })
+    .then((res) => console.log(res));
+};

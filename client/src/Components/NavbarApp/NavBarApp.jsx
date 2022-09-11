@@ -20,6 +20,7 @@ export default function NavBarApp() {
       <Button onClick={() => history.push("/historialPedidos")}>
         Historial
       </Button>
+      <Button onClick={() => history.push("/cashFlow")}>Cash Flow</Button>
       <Time>{time}</Time>
     </NavBar>
   );

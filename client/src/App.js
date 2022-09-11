@@ -5,11 +5,10 @@ import HistorialPedidos from "./Components/HistorialPedidos/HistorialPedidos";
 import Counter from "./Components/Counter/counter";
 import AdminProducts from "./Components/AdminProducts/AdminProducts";
 import { StoreProvider } from "./GlobalStates/StoreContext";
-import GlobalStyle from './theme/globalStyle.js';
-
+import GlobalStyle from "./theme/globalStyle.js";
+import CashFlow from "./Components/CashFlow/index.jsx";
 
 function App() {
-
   return (
     <div className="App">
       <GlobalStyle />
@@ -23,6 +22,8 @@ function App() {
 
       <Route exact path="/adminProducts" component={AdminProducts} />
       <Route exact path="/historialPedidos" component={HistorialPedidos} />
+
+      <Route exact path="/cashFlow" component={CashFlow} />
     </div>
   );
 }

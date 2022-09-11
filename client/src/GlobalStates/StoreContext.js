@@ -1,4 +1,4 @@
-import { createContext, useEffect, useReducer } from "react";
+import { createContext, useEffect, useReducer, useState } from "react";
 import { useSelector } from "react-redux";
 
 const StoreContext = createContext();
@@ -64,6 +64,8 @@ export function StoreProvider({ children }) {
   const { products } = useSelector((state) => state.products);
   const { categories } = useSelector((state) => state.categories);
   const [state, dispatch] = useReducer(reducer, reducer());
+  const [comments, setComments] = useState("");
+  const [methodPayment, setMethodPayment] = useState("cash");
 
   function qtyIncr(id) {
     dispatch({ type: "INCREMENT", payload: id });
@@ -120,9 +122,11 @@ export function StoreProvider({ children }) {
   sendOrder();
 
   let order = {
-    comments: "",
+    comments: comments,
     productsOrder: productsOrder,
-    totals: totals,
+    totalOrder: totals,
+    methodPayment: methodPayment,
+
   };
   const ls = JSON.parse(window.localStorage.getItem("items"));
   useEffect(() => {
@@ -152,6 +156,8 @@ export function StoreProvider({ children }) {
         sendOrder,
         order,
         totals,
+        setComments,
+        setMethodPayment,
       }}
     >
       {children}
