@@ -1,13 +1,13 @@
 const { Router } = require("express");
 const router = Router();
-const { Cash, Order } = require("../db.js");
+const { Cash, Order, Op } = require("../db.js");
 
 router.post("/close", async (req, res) => {
   try {
     let cashClose = await Cash.create(req.body);
-    res.json({msg:"Cierre de Caja Exitoso"});
+    res.json({ msg: "Cierre de Caja Exitoso" });
   } catch (error) {
-    res.json(error)
+    res.json(error);
   }
 });
 
@@ -26,19 +26,57 @@ router.get("/history", async (req, res) => {
   }
 });
 
-router.get("/payment-cash", async(req,res)=>{
-  let cash = await Order.findAll({
-    where:{methodPayment: "cash"}
-  })
-  res.json(cash.length > 0 ? cash : "No hay Resultados")
-})
+router.get("/payment-cash", async (req, res) => {
+  const {income, expanses} = req.body
+  try {
+    let cash = await Order.findAll({
+      where: {methodPayment: "cash" },
+      attributes:["totalOrder"]
+    });
+    if(cash.length > 0){
+      let totalCash = 0;
+      let result = cash.map((e) => e.totalOrder)
+      for(let value of result){
+        totalCash+=value
+      }
+      const condition = income ? totalCash + income : totalCash - expanses
+      // await Cash.update({cashPayment:totalCash})
+      res.json([{totalCash: condition}]);
+      // res.json(totalCash)
+    }else{
+      res.send("No hay Resultados");
+    }
+  } catch (error) {
+    res.send(error)
+  }
+});
 
-router.get("/payment-paypal", async(req,res)=>{
-  let paypal = await Order.findAll({
-    where:{methodPayment: "paypal"}
-  })
-  res.json(paypal.length > 0 ? paypal : "No hay Resultados")
-})
-
+router.get("/payment-paypal", async (req, res) => {
+  try {
+    let paypal = await Order.findAll({
+      where: {methodPayment: "paypal" },
+      attributes:["totalOrder"]
+    });
+    if(paypal.length > 0){
+    let totalPayment = 0;
+    let result = paypal.map((e) => e.totalOrder)
+    for(let value of result){
+      totalPayment+=value
+    }
+  // await Cash.create(
+  //  {paypalPayment: totalPayment},
+  //  {where:{
+  //   paypalPayment: null
+  //  }}
+  // )
+    res.json([{totalPayPal:totalPayment}]);
+    
+  }else{
+    res.send("No hay Resultados");
+  }
+  } catch (error) {
+    res.send(error)
+  }
+});
 
 module.exports = router;
