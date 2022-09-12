@@ -53,7 +53,7 @@ export const ordersSlice = createSlice({
       state.ordersReady = action.payload;
     },
     ordersFinished: (state, action) => {
-      state.finishedOrders = action.payload;
+      state.finishedOrders = [action.payload];
     },
     cleanReady: (state, action) => {
       state.ordersReady = action.payload;

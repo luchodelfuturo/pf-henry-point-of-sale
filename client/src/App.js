@@ -21,6 +21,7 @@ function App() {
 
       <Route exact path="/adminProducts" component={AdminProducts} />
 
+      {/* <Route exact path="/cashFlow" component={CashFlow} /> */}
       <Route exact path="/cashFlow" component={CashFlow} />
     </div>
   );

@@ -71,7 +71,7 @@ export const updateStatusFinished = (status, orderNumber) => (dispatch) => {
 
 export const getFinishedOrdersAction = () => (dispatch) => {
   axios
-    .get("http://localhost:3001/cash/payment-cash")
+    .get("http://localhost:3001/cash/payment-cash/1")
     .then((res) => dispatch(ordersFinished(res.data)))
     .catch((e) => console.log(e));
 };
