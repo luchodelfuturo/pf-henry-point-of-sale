@@ -13,7 +13,7 @@ export default function SearchNav() {
     const handleSubmit = (e) => {
       e.preventDefault();
       dispatch(searchByName(searchName));
-      setCurrentPage(1);
+      //setCurrentPage(1);
       setSearchName("");
     };
 

@@ -89,66 +89,75 @@ function Orders() {
                         className="Card"
                       >
                         <div id="head">
-                          <div id="orderNumber">#{o.orderNumber}</div>
-                          <div id="time">{o.timeInit}</div>
-                          <div>
-                            {delay - o.timeInit.split(":").join("") > 59
-                              ? "over 1 hour!"
-                              : "delay: "}
+                          <div className="order-header">
+                            <div id="orderNumber">#{o.orderNumber}</div>
+                            <div id="time">{o.timeInit}</div>
                           </div>
-                          <p>
-                            {delay - o.timeInit.split(":").join("") > 59 ? (
-                              <div>PLEASE HURRY UP, THE CLsIENT IS WAITING</div>
-                            ) : (
-                              delay -
-                              o.timeInit.split(":").join("") +
-                              " minutes"
-                            )}
-                          </p>
+                          <div className="order-delay">
+                            <div>
+                              {delay - o.timeInit.split(":").join("") > 59
+                                ? "Over 1 hour!"
+                                : "delay: "}
+                            </div>
+                            <div>
+                              {delay - o.timeInit.split(":").join("") > 59 ? (
+                                <div className="hurry">
+                                  PLEASE HURRY UP, THE CLIENT IS WAITING
+                                </div>
+                              ) : (
+                                delay -
+                                o.timeInit.split(":").join("") +
+                                " minutes"
+                              )}
+                            </div>
+                          </div>
                         </div>
-
-                        <div id="prodYcant">
+                        <div className="list-cont" id="prodYcant">
                           <div id="prod">
-                            <h4 id="title">Order:</h4>
+                            <div id="title">Order:</div>
                             {o.productsOrder.map((p) => (
-                              <p id="products"> {p.nameProduct}</p>
+                              <div id="products"> {p.nameProduct}</div>
                             ))}
                           </div>
                           <div id="cant">
-                            <h4 id="cantidad">Cantidad</h4>
+                            <div id="cantidad">Qty</div>
                             {o.productsOrder.map((p) => (
-                              <p id="qty">{p.qty}</p>
+                              <div id="qty">{p.qty}</div>
                             ))}
                           </div>
+                        </div>{" "}
+                        {o.comments && (
+                          <div className="comments" id="comments">
+                            {o.comments && (
+                              <div>
+                                Comments: <br />
+                                {o.comments}
+                              </div>
+                            )}
+                          </div>
+                        )}
+                        <div className="select-cont">
+                          <select
+                            className="status-select"
+                            name="status"
+                            id="status"
+                            onChange={(e) => handleChange(e, o.orderNumber)}
+                          >
+                            <option value={o.status}>{o.status}</option>
+                            {o.status !== "pending" && (
+                              <option value="pending">pending</option>
+                            )}
+                            {o.status !== "doing" && (
+                              <option value="doing">doing</option>
+                            )}
+                            <option value="ready">ready</option>
+                          </select>
                         </div>
-                        <div className="comments">
-                          {o.comments && (
-                            <p id="comments">
-                              Comments: <br />
-                              {o.comments}
-                            </p>
-                          )}
-                        </div>
-
-                        <label id="status">status:</label>
-                        <select
-                          name="status"
-                          id="status"
-                          onChange={(e) => handleChange(e, o.orderNumber)}
-                        >
-                          <option value={o.status}>{o.status}</option>
-                          {o.status !== "pending" && (
-                            <option value="pending">pending</option>
-                          )}
-                          {o.status !== "doing" && (
-                            <option value="doing">doing</option>
-                          )}
-                          <option value="ready">ready</option>
-                        </select>
                       </div>
                     );
                   })
-                : orders && orders.map((o) => {
+                : orders &&
+                  orders.map((o) => {
                     return o.status === "ready" ||
                       o.status === "finished" ? null : (
                       <div

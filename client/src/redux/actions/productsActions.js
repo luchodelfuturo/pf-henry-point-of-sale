@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getAllProducts, filterByCategory, disableProduct, sortProducts } from "../slices/productsSlice";
+import { getAllProducts, filterByCategory, disableProduct, sortProducts, searchProducts } from "../slices/productsSlice";
 
 export const getProducts = () => (dispatch) => {
   axios
@@ -32,4 +32,9 @@ export const disableProductAction = (id) => (dispatch) => {
   axios.put(`http://localhost:3001/products/disable/${id}`)
   .then((res) => {dispatch(disableProduct(res.data))})
   .catch((e) => console.log(e))
+}
+
+export const searchProductsName = (name) => (dispatch) => {
+  console.log("Entra a search");
+  dispatch(searchProducts(name));
 }
