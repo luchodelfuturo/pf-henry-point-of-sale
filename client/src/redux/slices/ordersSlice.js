@@ -70,11 +70,13 @@ export const ordersSlice = createSlice({
     },
     filterFromDate: (state, action) => {
       const orders = state.orders;
+      const { from, to } = action.payload
 
       // console.log(dateFrom, "dateFrom");
       // console.log("dateTo:", dateTo);
-
-      state.allOrders = orders.filter(o => o.date >= action.payload.dateFrom)
+      console.log("date1:", from)
+      console.log("date2:", to)
+      state.allOrders = orders.filter(o => o.date >= from && o.date <= to)
     },
     filterToDate: (state, action) => {
       const orders = state.orders

@@ -91,8 +91,8 @@ export const cleanReadyAction = () => (dispatch) => {
   dispatch(cleanReady());
 };
 
-export const filterFromDateAction = (dateFrom, toFrom) => (dispatch) => {
-  dispatch(filterFromDate(dateFrom, toFrom));
+export const filterFromDateAction = (dates) => (dispatch) => {
+  dispatch(filterFromDate(dates));
 };
 export const filterToDateAction = (dateTo) => (dispatch) => {
   dispatch(filterToDate(dateTo));

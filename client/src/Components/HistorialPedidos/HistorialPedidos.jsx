@@ -15,6 +15,7 @@ export default function HistorialPedidos() {
   //   const orderAllOrders = allOrders.sort((a, b) => {
   //     return a.date - b.date;
   //   });
+
   const [mostrarForm, setMostrarForm] = useState(false);
   const [orderEdit, setOrderEdit] = useState({});
   const colores = {
@@ -31,11 +32,16 @@ export default function HistorialPedidos() {
     dispatch(getAllOrdersAction());
   }, [dispatch, mostrarForm]);
 
-  const [totalSuma, setTotalSuma] = useState(0);
+  var totalSuma = 0;
+
   const handleChangeFromDate = (e) => {
     e.preventDefault();
-    console.log("from:", fromToFilter.from, "to:", fromToFilter.to);
-    dispatch(filterFromDateAction(fromToFilter.from, fromToFilter.to));
+    setFromToFilter({
+      ...fromToFilter,
+      from: e.target.value,
+    });
+    // console.log("from:", fromToFilter.from, "to:", fromToFilter.to);
+    dispatch(filterFromDateAction(fromToFilter));
   };
 
   const desactivateOrder = (orderEdit) => {
@@ -45,12 +51,18 @@ export default function HistorialPedidos() {
   const handleChangeToDate = (e) => {
     e.preventDefault();
 
-    dispatch(filterToDateAction(fromToFilter.to));
+    setFromToFilter({
+      ...fromToFilter,
+      to: e.target.value,
+    });
+
+    dispatch(filterFromDateAction(fromToFilter));
 
     // Action filter From
   };
   const handleChangeFilter = (e) => {
     e.preventDefault();
+
     dispatch(filterStatusAction(e.target.value));
   };
 
@@ -90,7 +102,7 @@ export default function HistorialPedidos() {
           onChange={(e) => {
             setFromToFilter({
               ...fromToFilter,
-              [e.target.name]: e.target.value,
+              from: e.target.value,
             });
 
             handleChangeFromDate(e);
@@ -105,7 +117,7 @@ export default function HistorialPedidos() {
           onChange={(e) => {
             setFromToFilter({
               ...fromToFilter,
-              [e.target.name]: e.target.value,
+              to: e.target.value,
             });
 
             handleChangeToDate(e);
@@ -142,8 +154,8 @@ export default function HistorialPedidos() {
         >
           {allOrders &&
             allOrders.map((order) => {
-              // setTotalSuma(totalSuma + order.totalOrder);
-              console.log(order.totalOrder);
+              //setTotalSuma(...totalSuma, totalSuma + order.totalOrder);
+              totalSuma += order.totalOrder;
               return (
                 <div
                   style={{
