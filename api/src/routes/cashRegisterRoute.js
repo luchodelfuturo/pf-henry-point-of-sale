@@ -1,7 +1,14 @@
 const { Router } = require("express");
 const router = Router();
-const { Cash, Order, Op } = require("../db.js");
-
+const { Cash } = require("../db.js");
+const {
+  paymentCash,
+  paymentPayPal,
+  cashUpdated,
+  addIncome,
+  addExpense,
+  totalSells
+} = require("../controllers/cashControlers.js");
 router.post("/close", async (req, res) => {
   try {
     let cashClose = await Cash.create(req.body);
@@ -25,82 +32,56 @@ router.get("/history", async (req, res) => {
     res.json(error);
   }
 });
-router.get("/", async (req, res) => {
+router.get("/:id", async (req, res) => {
+  const { id }=req.params
   try {
-    res.send(await Cash.findAll());
+    // res.json(await cashUpdated(id))
+      let totalSales = await totalSells(id)
+      await Cash.update({ totalSales: totalSales},{where: {id:id}});
+      res.json(totalSales)
   } catch (error) {
     console.log(error);
   }
 });
 
-router.get("/payment-cash", async (req, res) => {
+router.get("/payment-paypal/:id", async (req, res) => {
+  const { id } = req.params; 
   try {
-    let cash = await Order.findAll({
-      where: { methodPayment: "cash" },
-      attributes: ["totalOrder", "status"],
-    });
-    cash = cash.filter((o) => o.status === "finished");
-
-    if (cash.length > 0) {
-      let totalCash = 0;
-      let result = cash.map((e) => e.totalOrder);
-      for (let value of result) {
-        totalCash += value;
-      }
-      const condition =
-        //  income
-        // ? totalCash + income
-        // : expenses
-        // ? totalCash - expenses
-        // :
-        totalCash;
-      // await Cash.update({cashPayment:totalCash})
-      res.json([{ totalCash: condition }]);
-      // res.json(totalCash)
-    } else {
-      res.send("No hay Resultados");
-    }
+    res.json(await paymentPayPal(id));
   } catch (error) {
     res.send(error);
   }
 });
 
-router.get("/payment-paypal", async (req, res) => {
-  try {
-    let paypal = await Order.findAll({
-      where: { methodPayment: "paypal" },
-      attributes: ["totalOrder"],
-    });
-    if (paypal.length > 0) {
-      let totalPayment = 0;
-      let result = paypal.map((e) => e.totalOrder);
-      for (let value of result) {
-        totalPayment += value;
-      }
-      // await Cash.create(
-      //  {paypalPayment: totalPayment},
-      //  {where:{
-      //   paypalPayment: null
-      //  }}
-      // )
-      res.json([{ totalPayPal: totalPayment }]);
-    } else {
-      res.send("No hay Resultados");
-    }
-  } catch (error) {
-    res.send(error);
-  }
+router.get("/payment-cash/:id", async (req, res) => { //llamar a esta ruta cada que se efectua una venta
+  const {id} = req.params
+  // let totalSales = await totalSells(id)
+
+  res.json(await paymentCash(id));
+ 
 });
 
-router.post("/addIncome", async (req, res) => {
+router.post("/addIncome/:id", async (req, res) => {
   const { income } = req.body;
-  console.log(req.body);
-  try {
-    const addIncome = await Cash.create({ where: { income: income } });
+  const {id} = req.params
+  if (income) {
+    try {
+      res.status(200).json(await addIncome(id, income));
+    } catch (error) {
+      console.log(error);
+    }
+  }
+});
 
-    res.status(200).send(addIncome + "New Income added");
-  } catch (error) {
-    console.log(error);
+router.post("/addExpense/:id", async (req, res) => {
+  const { expenses } = req.body;
+  const { id } = req.params;
+  if (expenses) {
+    try {
+      return res.status(200).json(await addExpense(id, expenses));
+    } catch (error) {
+      console.log(error);
+    }
   }
 });
 

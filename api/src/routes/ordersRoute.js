@@ -21,17 +21,23 @@ router.put("/put/:orderNumber", async (req, res) => {
   return res.send("status updated");
 });
 
+router.put("/put/disable/:orderNumber", async (req, res) => {
+  const { orderNumber } = req.params;
+  await Order.update({ active: false }, { where: { orderNumber: orderNumber } })
+  return res.send("active updated");
+})
+
 //deleted route ready here
 
 router.post("/", async (req, res) => {
   console.log(req.body)
   try {
     const order = await Order.create(req.body);
-    for(let i = 0; i < req.body.productsOrder.length; i++){
-      let product = await Product.findOne({where: {name: req.body.productsOrder[i].nameProduct}})
+    for (let i = 0; i < req.body.productsOrder.length; i++) {
+      let product = await Product.findOne({ where: { name: req.body.productsOrder[i].nameProduct } })
       let selled = product.dataValues.sellCount
       selled = selled + req.body.productsOrder[i].qty
-      await Product.update({sellCount: selled}, {where: {name: req.body.productsOrder[i].nameProduct}})
+      await Product.update({ sellCount: selled }, { where: { name: req.body.productsOrder[i].nameProduct } })
     }
     res.json(order);
   } catch (error) {

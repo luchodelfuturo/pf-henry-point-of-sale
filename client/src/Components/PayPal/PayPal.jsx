@@ -2,29 +2,38 @@ import React, { useContext } from "react";
 import { useDispatch } from "react-redux";
 import { postOrdersAction } from "../../redux/actions/ordersActions";
 import StoreContext from "../../GlobalStates/StoreContext";
+import Swal from "sweetalert2";
 import ReactDOM from "react-dom";
+import { icon } from "@fortawesome/fontawesome-svg-core";
 const PayPalButton = window.paypal.Buttons.driver("react", { React, ReactDOM });
 export default function PayPal() {
-  const { order } = useContext(StoreContext);
+  const { order, totals } = useContext(StoreContext);
   const dispatch = useDispatch();
   function createOrder(data, actions) {
     return actions.order.create({
       purchase_units: [
         {
           amount: {
-            value: "50", //aqui el valor total de la orden
+            value: totals, //aqui el valor total de la orden
+  
           },
         },
       ],
     });
   }
   function onApprove(data, actions) {
-    return actions.order.capture().then((data) => console.log(data));
+    return actions.order.capture().then(()=>modal());
   }
 
   function onSubmitPayPal(e) {
     // e.preventDefault();
     dispatch(postOrdersAction(order)); //la misma action que se usa en el componente Cart
+  }
+  function modal(){
+    Swal.fire({
+      icon:'success',
+      title:'Successful Payment',
+  })
   }
   return (
     <div>

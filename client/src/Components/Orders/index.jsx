@@ -8,7 +8,7 @@ import {
   getOrdersAction,
   updateStatusAction,
 } from "../../redux/actions/ordersActions";
-import Swal from "sweetalert2";
+import {NavBarSup} from '../../theme/styled-componets' 
 
 function Orders() {
   const dispatch = useDispatch();
@@ -62,14 +62,17 @@ function Orders() {
 
   return (
     <div className="Container">
-      {/* <button
+      <NavBarSup>
+      <button
         className="button"
         onClick={() => {
           window.location.reload();
         }}
-      >
-        Refresh
-      </button> */}
+
+      >Refresh</button>
+      <FilterSort />
+      </NavBarSup>
+
       {orders.length < 1 ? (
         <div id="empty">
           <h2>There are not orders !</h2>

@@ -111,6 +111,20 @@ export const NavBar = styled.nav`
   padding-left: 2rem;
 `;
 
+export const NavBarSup = styled.nav`
+    background-color: ${colors.grey2};
+    position: fixed;
+    top: 0;
+    height: 3rem;
+    width: 100%;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-top: 1rem;
+    padding-left: 2rem;
+`
+
 export const Time = styled.h2`
   font-family: "Century Gothic";
   font-weight: bold;

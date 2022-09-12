@@ -48,7 +48,12 @@ module.exports = (sequelize) => {
         defaultValue: "cash",
       },
       totalOrder: {
-        type: DataTypes.FLOAT,
+        type: DataTypes.FLOAT
+      },
+      active: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true
       },
     },
     {
