@@ -6,7 +6,7 @@ import Counter from "./Components/Counter/counter";
 import AdminProducts from "./Components/AdminProducts/AdminProducts";
 import { StoreProvider } from "./GlobalStates/StoreContext";
 import GlobalStyle from "./theme/globalStyle.js";
-import CashFlow from "./Components/CashFlow/index.jsx";
+import CashFlow from "./Components/CashFlow/CashFlow.jsx";
 
 function App() {
   return (
@@ -23,7 +23,8 @@ function App() {
       <Route exact path="/adminProducts" component={AdminProducts} />
       <Route exact path="/historialPedidos" component={HistorialPedidos} />
 
-      <Route exact path="/cashFlow" component={CashFlow} />
+      {/* <Route exact path="/cashFlow" component={CashFlow} /> */}
+      <Route exact path='/cashFlow' component={CashFlow}/>
     </div>
   );
 }
