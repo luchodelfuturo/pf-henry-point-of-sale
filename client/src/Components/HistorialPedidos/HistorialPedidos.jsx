@@ -24,23 +24,20 @@ export default function HistorialPedidos() {
     doing: "yellow",
     pending: "gray",
   };
+
   const [fromToFilter, setFromToFilter] = useState({
     from: new Date(),
     to: new Date(),
   });
-  useEffect(() => {
-    dispatch(getAllOrdersAction());
-  }, [dispatch, mostrarForm]);
-
   var totalSuma = 0;
 
   const handleChangeFromDate = (e) => {
     e.preventDefault();
-    setFromToFilter({
-      ...fromToFilter,
-      from: e.target.value,
-    });
-    // console.log("from:", fromToFilter.from, "to:", fromToFilter.to);
+    // setFromToFilter({
+    //   ...fromToFilter,
+    //   from: e.target.value,
+    // });
+    console.log("from:", fromToFilter.from, "to:", fromToFilter.to);
     dispatch(filterFromDateAction(fromToFilter));
   };
 
@@ -51,10 +48,10 @@ export default function HistorialPedidos() {
   const handleChangeToDate = (e) => {
     e.preventDefault();
 
-    setFromToFilter({
-      ...fromToFilter,
-      to: e.target.value,
-    });
+    // setFromToFilter({
+    //   ...fromToFilter,
+    //   to: e.target.value,
+    // });
 
     dispatch(filterFromDateAction(fromToFilter));
 
@@ -102,7 +99,7 @@ export default function HistorialPedidos() {
           onChange={(e) => {
             setFromToFilter({
               ...fromToFilter,
-              from: e.target.value,
+              [e.target.name]: e.target.value,
             });
 
             handleChangeFromDate(e);
@@ -117,7 +114,7 @@ export default function HistorialPedidos() {
           onChange={(e) => {
             setFromToFilter({
               ...fromToFilter,
-              to: e.target.value,
+              [e.target.name]: e.target.value,
             });
 
             handleChangeToDate(e);
