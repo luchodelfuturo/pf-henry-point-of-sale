@@ -171,6 +171,13 @@ export const productsSlice = createSlice({
       });
       console.log("Product disabled");
     },
+    searchProducts: (state, action) => {
+      const results = state.allProducts.filter((f) =>
+        f.name.toLowerCase().includes(action.payload.toLowerCase())
+      );
+      state.products = results.length > 0 ? results : [];
+    },
+
     searchByName: (state, action) => {
       state.products = action.payload.rows;
     }
@@ -183,6 +190,7 @@ export const {
   filterByCategory,
   sortProducts,
   disableProduct,
+  searchProducts,
   searchByName,
 } = productsSlice.actions;
 
