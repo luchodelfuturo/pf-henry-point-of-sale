@@ -6,7 +6,6 @@ export default function Cards({ products }) {
   const { addProductById } = useContext(StoreContext);
 
   function handlePickProduct(p) {
-    //e.preventDefault();
     addProductById(p);
   }
 
