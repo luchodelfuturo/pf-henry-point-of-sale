@@ -9,6 +9,7 @@ import {
   updateStatusAction,
 } from "../../redux/actions/ordersActions";
 import {NavBarSup} from '../../theme/styled-componets' 
+import Swal from "sweetalert2";
 
 function Orders() {
   const dispatch = useDispatch();
@@ -62,7 +63,7 @@ function Orders() {
 
   return (
     <div className="Container">
-      <NavBarSup>
+      {/* <NavBarSup>
       <button
         className="button"
         onClick={() => {
@@ -71,11 +72,11 @@ function Orders() {
 
       >Refresh</button>
       <FilterSort />
-      </NavBarSup>
-
-      {orders.length < 1 ? (
+      </NavBarSup> */}
+        <div className="orders-cont">
+          {orders.length < 1 ? (
         <div id="empty">
-          <h2>There are not orders !</h2>
+          <h2>There are not orders!</h2>
         </div>
       ) : (
         <>
@@ -247,6 +248,8 @@ function Orders() {
           </div>
         </>
       )}
+        </div>
+      
     </div>
   );
 }

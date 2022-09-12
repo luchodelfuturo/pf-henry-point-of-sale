@@ -6,7 +6,13 @@
   align-items: center;
   color: #010101;
   margin: 0;
+
 } 
+
+/* .orders-cont{
+    margin-top: 50px;
+    position: absolute;
+} */
 
 .order-header{
     display: flex;
