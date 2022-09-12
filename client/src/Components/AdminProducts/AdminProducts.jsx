@@ -9,7 +9,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCategories } from "../../redux/actions/categoriesActions";
 import axios from "axios";
 import NavBarApp from "../NavbarApp/NavBarApp";
-import { ButtonSave } from '../../theme/styled-componets';
+import { ButtonSave } from "../../theme/styled-componets";
+import SearchNav from "../SearchNav/SearchNav";
 
 export default function AdminProducts() {
   const dispatch = useDispatch();
@@ -81,10 +82,12 @@ export default function AdminProducts() {
         minHeight: "100vh",
         height: "100%",
         display: "flex",
+
         flexDirection: "column",
         justifyContent: "start",
         margin: "0 auto",
         boxSizing: "border-box",
+        position: "relative",
       }}
     >
       <div
@@ -92,7 +95,7 @@ export default function AdminProducts() {
           boxSizing: "border-box",
           minHeight: "90vh",
           width: "90%",
-          margin: "auto",
+          margin: "0 auto",
           height: "90vh",
           backgroundColor: "white",
           display: "flex",
@@ -113,8 +116,12 @@ export default function AdminProducts() {
             alignItems: "center",
           }}
         >
-          <span>Buscar Productos </span>
-          <ButtonSave onClick={() => setShowFormProducts(!showFormProducts)}>Agregar Productos</ButtonSave>
+          <span>
+            <SearchNav />{" "}
+          </span>
+          <ButtonSave onClick={() => setShowFormProducts(!showFormProducts)}>
+            Agregar Productos
+          </ButtonSave>
           <span>Admin Page</span>
         </div>
         <div
@@ -375,7 +382,6 @@ export default function AdminProducts() {
       </div>
 
       <NavBarApp />
-
     </div>
   );
 }
