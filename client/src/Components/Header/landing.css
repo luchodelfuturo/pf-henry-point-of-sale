@@ -1,0 +1,27 @@
+#button{
+    background-color: #7f5af0;
+    border-radius: 0.3rem;
+    border-style: none;
+    width: 10rem;
+    height: 3rem;
+    font-family: 'Century Gothic';
+    font-weight: bold;
+    color: #fffffe;
+    font-size: 17px;
+    cursor: pointer;
+    transition: all 0.5s ease;
+    margin:0rem 0.5rem;
+
+}
+
+#button:hover{
+    background-color: #16161a;
+}
+
+#contenedor{
+    display: flex;
+    flex-direction: column;
+    height: 90vh;
+    align-items: center;
+    margin: 0;
+}

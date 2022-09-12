@@ -5,13 +5,31 @@ import HistorialPedidos from "./Components/HistorialPedidos/HistorialPedidos";
 import Counter from "./Components/Counter/counter";
 import AdminProducts from "./Components/AdminProducts/AdminProducts";
 import { StoreProvider } from "./GlobalStates/StoreContext";
+
+import WelcomePage from './Components/Header/Header';
+import Login from './Components/auth/LogIn';
+import Register from './Components/auth/Register';
+import ActivationEmail from './Components/auth/ActivationEmail'
+
 import GlobalStyle from "./theme/globalStyle.js";
 import CashFlow from "./Components/CashFlow/CashFlow.jsx";
+
 
 function App() {
   return (
     <div className="App">
-      <GlobalStyle />
+
+      <GlobalStyle/>
+
+      <Route exact path="/" component={WelcomePage} />
+
+      <Route exact path="/login" component={Login} />
+
+      <Route exact path="/register" component={Register} />
+
+      <Route exact path="/user/activate/:activation_token" component={ActivationEmail} />
+
+
       <Route exact path="/kitchen" component={Kitchen} />
 
       <StoreProvider>
