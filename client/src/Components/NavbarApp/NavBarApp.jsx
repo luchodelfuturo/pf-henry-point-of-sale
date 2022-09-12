@@ -17,6 +17,9 @@ export default function NavBarApp() {
       <Button onClick={() => history.push("/kitchen")}>Kitchen</Button>
       <Button onClick={() => history.push("/counter")}>Pedidos Ready</Button>
       <Button onClick={() => history.push("/adminProducts")}>Products</Button>
+      <Button onClick={() => history.push("/historialPedidos")}>
+        Historial
+      </Button>
       <Button onClick={() => history.push("/cashFlow")}>Cash Flow</Button>
       <Time>{time}</Time>
     </NavBar>

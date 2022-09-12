@@ -33,8 +33,8 @@ export const productsSlice = createSlice({
         state.category === "all categories"
           ? state.allProducts
           : state.allProducts.filter((prod) =>
-              prod.categories[0].name.toLowerCase().includes(state.category)
-            );
+            prod.categories[0].name.toLowerCase().includes(state.category)
+          );
       !filterProducts.length > 0
         ? (state.products = "No hay productos")
         : (state.products = filterProducts);
@@ -99,8 +99,8 @@ export const productsSlice = createSlice({
         state.category === "all categories"
           ? state.allProducts
           : state.allProducts.filter((prod) =>
-              prod.categories[0].name.toLowerCase().includes(state.category)
-            );
+            prod.categories[0].name.toLowerCase().includes(state.category)
+          );
       !filterProducts.length > 0
         ? (state.products = "No hay productos")
         : (state.products = filterProducts);
@@ -171,6 +171,9 @@ export const productsSlice = createSlice({
       });
       console.log("Product disabled");
     },
+    searchByName: (state, action) => {
+      state.products = action.payload.rows;
+    }
   },
 });
 
@@ -180,6 +183,7 @@ export const {
   filterByCategory,
   sortProducts,
   disableProduct,
+  searchByName,
 } = productsSlice.actions;
 
 export default productsSlice.reducer;
