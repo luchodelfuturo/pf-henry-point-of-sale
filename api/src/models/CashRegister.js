@@ -29,6 +29,9 @@ module.exports = (sequelize) => {
         defaultValue: DataTypes.NOW,
         // This way, the current date/time will be used to populate this column (at the moment of insertion)
       },
+      totalCash: {
+        type: DataTypes.DECIMAL,
+      },
       totalSales: {
         type: DataTypes.DECIMAL,
       },

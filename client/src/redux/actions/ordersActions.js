@@ -82,7 +82,7 @@ export const updateStatusFinished = (status, orderNumber) => (dispatch) => {
 
 export const getFinishedOrdersAction = () => (dispatch) => {
   axios
-    .get("http://localhost:3001/cash/payment-cash")
+    .get("http://localhost:3001/cash/payment-cash/1")
     .then((res) => dispatch(ordersFinished(res.data)))
     .catch((e) => console.log(e));
 };
@@ -99,19 +99,26 @@ export const filterToDateAction = (dateTo) => (dispatch) => {
 };
 
 export const disableOrderAction = (orderNumber) => (dispatch) => {
-
-  console.log("Disable Order ")
-  axios.put(`http://localhost:3001/orders/put/disable/${orderNumber}`)
-    .then((res) => { dispatch(disableOrder(res.data)) })
-    .catch((e) => console.log(e))
-}
+  console.log("Disable Order ");
+  axios
+    .put(`http://localhost:3001/orders/put/disable/${orderNumber}`)
+    .then((res) => {
+      dispatch(disableOrder(res.data));
+    })
+    .catch((e) => console.log(e));
+};
 
 export const filterStatusAction = (status) => (dispatch) => {
   dispatch(filterStatus(status));
-}
+};
 export const addIngresoAction = (income) => {
   console.log(income);
   return axios
     .post("http://localhost:3001/cash/addIncome", { income: income })
     .then((res) => console.log(res));
+};
+
+export const addExpenseAction = (expense) => (dispatch) => {
+  console.log(expense);
+  return axios.post("http://localhost:3001/cash/addExpense", expense);
 };

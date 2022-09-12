@@ -12,7 +12,7 @@ import Register from './Components/auth/Register';
 import ActivationEmail from './Components/auth/ActivationEmail'
 
 import GlobalStyle from "./theme/globalStyle.js";
-import CashFlow from "./Components/CashFlow/CashFlow.jsx";
+import CashFlow from "./Components/CashFlow/index.jsx";
 
 
 function App() {
@@ -42,7 +42,7 @@ function App() {
       <Route exact path="/historialPedidos" component={HistorialPedidos} />
 
       {/* <Route exact path="/cashFlow" component={CashFlow} /> */}
-      <Route exact path='/cashFlow' component={CashFlow}/>
+      <Route exact path="/cashFlow" component={CashFlow} />
     </div>
   );
 }

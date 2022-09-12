@@ -7,7 +7,7 @@ const {
   cashUpdated,
   addIncome,
   addExpense,
-  totalSells
+  totalSells,
 } = require("../controllers/cashControlers.js");
 router.post("/close", async (req, res) => {
   try {
@@ -33,19 +33,19 @@ router.get("/history", async (req, res) => {
   }
 });
 router.get("/:id", async (req, res) => {
-  const { id }=req.params
+  const { id } = req.params;
   try {
     // res.json(await cashUpdated(id))
-      let totalSales = await totalSells(id)
-      await Cash.update({ totalSales: totalSales},{where: {id:id}});
-      res.json(totalSales)
+    let totalSales = await totalSells(id);
+    await Cash.update({ totalSales: totalSales }, { where: { id: id } });
+    res.json(totalSales);
   } catch (error) {
     console.log(error);
   }
 });
 
 router.get("/payment-paypal/:id", async (req, res) => {
-  const { id } = req.params; 
+  const { id } = req.params;
   try {
     res.json(await paymentPayPal(id));
   } catch (error) {
@@ -53,17 +53,20 @@ router.get("/payment-paypal/:id", async (req, res) => {
   }
 });
 
-router.get("/payment-cash/:id", async (req, res) => { //llamar a esta ruta cada que se efectua una venta
-  const {id} = req.params
+router.get("/payment-cash/:id", async (req, res) => {
+  //llamar a esta ruta cada que se efectua una venta
+  const { id } = req.params;
   // let totalSales = await totalSells(id)
-
-  res.json(await paymentCash(id));
- 
+  try {
+    res.json(await paymentCash(id));
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 router.post("/addIncome/:id", async (req, res) => {
   const { income } = req.body;
-  const {id} = req.params
+  const { id } = req.params;
   if (income) {
     try {
       res.status(200).json(await addIncome(id, income));

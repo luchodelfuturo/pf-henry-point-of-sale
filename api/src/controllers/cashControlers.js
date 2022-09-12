@@ -14,15 +14,18 @@ const paymentCash = async (id) => {
     for (let value of result) {
       totalCash += value;
     }
-    console.log(result)
+    console.log(result);
     let update = await cashUpdated(id);
-    update = totalCash
-    await Cash.create({ cashPayment: totalCash, totalCashRegister: update }, { where: { id: id } });
+    update = totalCash;
+    await Cash.create(
+      { cashPayment: totalCash, totalCashRegister: update },
+      { where: { id: id } }
+    );
     // const cash = Cash.build({ cashPayment: result });
     // await cash.save();
-    console.log(update)
-    console.log(totalCash)
-    return totalCash;
+    console.log(update);
+    console.log(totalCash);
+    return { total: totalCash };
   } else if (cash.length > 1) {
     // let update = await cashUpdated(id)
     let totalCash = 0;
@@ -32,18 +35,20 @@ const paymentCash = async (id) => {
     }
     let update = await cashUpdated(id);
     let newBuy = result[result.length - 1];
-    let newUpdateBuy = update + newBuy
-    console.log(update)
-    console.log(newBuy)
-    console.log(newUpdateBuy)
-    
-    await Cash.update({ cashPayment: totalCash, totalCashRegister: newUpdateBuy }, { where: { id: id } });
+    let newUpdateBuy = update + newBuy;
+    console.log(update);
+    console.log(newBuy);
+    console.log(newUpdateBuy);
+
+    await Cash.update(
+      { cashPayment: totalCash, totalCashRegister: newUpdateBuy },
+      { where: { id: id } }
+    );
 
     // return totalCash;
-    return totalCash;
+    return { total: totalCash };
   } else {
-    return 0
-
+    return 0;
   }
 };
 
@@ -60,7 +65,7 @@ const paymentPayPal = async (id) => {
     }
     await Cash.update({ paypalPayment: totalPayment }, { where: { id: id } });
 
-    return totalPayment;
+    return { total: totalPayment };
   } else if (paypal.length > 1) {
     if (paypal.length > 0) {
       let totalPayment = 0;
@@ -70,7 +75,7 @@ const paymentPayPal = async (id) => {
       }
       await Cash.update({ paypalPayment: totalPayment }, { where: { id: id } });
 
-      return totalPayment;
+      return { total: totalPayment };
     }
   } else {
     return 0;
@@ -89,54 +94,57 @@ const cashUpdated = async (id) => {
     // console.log(resultCash)
     return resultCash[0];
   } else {
-    return "No hay resultados"
+    return "No hay resultados";
   }
-}
+};
 
-
-const totalSells = async(id)=>{
+const totalSells = async (id) => {
   let totalCashSells = await Cash.findAll({
     where: { id: id },
     attributes: ["cashPayment"],
   });
-  let cashSells = totalCashSells.map((e)=> parseInt(e.cashPayment));
+  let cashSells = totalCashSells.map((e) => parseInt(e.cashPayment));
 
   let totalPaypalSells = await Cash.findAll({
     where: { id: id },
     attributes: ["paypalPayment"],
   });
-  let paypalSells = totalPaypalSells.map((e)=> parseInt(e.paypalPayment));
- 
-  return cashSells[0] + paypalSells[0];
+  let paypalSells = totalPaypalSells.map((e) => parseInt(e.paypalPayment));
 
+  return cashSells[0] + paypalSells[0];
 };
 
-
-const addIncome = async(id, income)=>{
-  let result = await cashUpdated(id)
+const addIncome = async (id, income) => {
+  let result = await cashUpdated(id);
   let ingresos = income + result;
-      // console.log(incomes)
-  await Cash.update({ totalCashRegister: ingresos, income: income },{where: {id:id}});
-      // await Cash.create({cashPayment:income},{where:{id:id}})
-  return ingresos
-}
+  // console.log(incomes)
+  await Cash.update(
+    { totalCashRegister: ingresos, income: income },
+    { where: { id: id } }
+  );
+  // await Cash.create({cashPayment:income},{where:{id:id}})
+  return ingresos;
+};
 
-const addExpense = async(id, expenses) =>{
-      // await Cash.create({ expenses: expenses });
-  let result = await cashUpdated(id) //lo ultimo que tiene la columna cashPayment de la tabla cash
-  console.log(result)
+const addExpense = async (id, expenses) => {
+  // await Cash.create({ expenses: expenses });
+  let result = await cashUpdated(id); //lo ultimo que tiene la columna cashPayment de la tabla cash
+  console.log(result);
   let retiros = result - expenses;
-  console.log(retiros)
-  await Cash.update({ totalCashRegister: retiros, expenses: expenses },{where: {id:id}});
+  console.log(retiros);
+  await Cash.update(
+    { totalCashRegister: retiros, expenses: expenses },
+    { where: { id: id } }
+  );
   return retiros;
-}
+};
 module.exports = {
   paymentCash,
   paymentPayPal,
   cashUpdated,
   addIncome,
   addExpense,
-  totalSells
+  totalSells,
 };
 
 // let cash = await Order.findAll({
