@@ -16,21 +16,22 @@ router.get("/finished", async (req, res) => {
     where: { status: "finished" },
   });
 
-  let income = await CashRegister.findAll();
-  console.log(income);
-  let totalIncome = 0;
-  income.map((i) => (totalIncome += parseInt(i.income)));
+//   let income = await CashRegister.findAll();
+//   console.log(income);
+//   let totalIncome = 0;
+//   income.map((i) => (totalIncome += parseInt(i.income)));
 
-  let total = 0;
-  totalSells.map((o) => (total += parseInt(o.totals)));
+//   let total = 0;
+//   totalSells.map((o) => (total += parseInt(o.totals)));
 
-  if (totalSells.length === 0) {
-    res.status(404).json("No se encontraron resultados");
-  } else {
-    totalSells.push({ totalSells: total });
-    console.log(totalSells);
-    res.status(200).json(totalSells);
-  }
+//   if (totalSells.length === 0) {
+//     res.status(404).json("No se encontraron resultados");
+//   } else {
+//     totalSells.push({ totalSells: total });
+//     console.log(totalSells);
+//     res.status(200).json(totalSells);
+//   }
+  res.json(totalSells);
 });
 
 router.get("/", async (req, res) => {
