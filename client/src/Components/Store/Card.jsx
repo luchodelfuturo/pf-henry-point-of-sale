@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import { colors } from "../../theme/variables";
+import { Tag } from "../../theme/styled-componets";
 
 const Card = ({ name, cat, image, price }) => {
   return (
@@ -11,7 +13,7 @@ const Card = ({ name, cat, image, price }) => {
         <div className="name">
           <p>{name}</p>
         </div>
-        <div className="cat">{cat}</div>
+        <Tag className="cat">{cat}</Tag>
         <div className="price-cont">
           <div className="sign">$</div>
           <div className="price">{price}</div>
@@ -27,13 +29,13 @@ const CardWrapper = styled.div`
   display: flex;
   flex-direction: column;
   background-color: white;
+  cursor: pointer;
   box-shadow: 4px 9px 17px -11px rgba(0, 0, 0, 0.25);
   border-radius: 25px;
   margin: 10px;
   width: 168px;
   height: 192px;
   overflow: hidden;
-
   position: relative;
   .name {
     color: black;
@@ -53,7 +55,6 @@ const CardWrapper = styled.div`
   .cat {
     font-weight: 600;
     font-size: 18px;
-
     text-align: center;
     //vertical-align: middle;
     position: absolute;
@@ -62,7 +63,7 @@ const CardWrapper = styled.div`
     padding-left: 7px;
     padding-right: 7px;
     height: 28px;
-    background-color: #8ef5b5;
+    background-color: ${colors.lgreen};
     border-radius: 25px;
   }
   .price-cont {
@@ -73,14 +74,13 @@ const CardWrapper = styled.div`
     margin-top: 147px;
     margin-left: 10px;
     position: relative;
-    background-color: #8ef5b5;
+    background-color: ${colors.lgreen};
     box-shadow: 4px 2px 9px -1px rgba(0, 0, 0, 0.25);
     border-radius: 26px;
     width: 84px;
     height: 28px;
     text-align: center;
-  position: absolute;
-
+    position: absolute;
     .sign {
       font-size: 15px;
       padding-bottom: 6px;

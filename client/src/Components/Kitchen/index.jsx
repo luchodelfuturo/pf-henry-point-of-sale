@@ -6,9 +6,7 @@ function Kitchen() {
   return (
     <div>
       <Orders />
-      <div style={{ height: "10vh" }}>
-        <NavBarApp />
-      </div>
+      <NavBarApp />
     </div>
   );
 }

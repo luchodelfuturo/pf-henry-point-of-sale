@@ -1,15 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   cleanAction,
   filterDoingAction,
   filterPendingAction,
+  getOrdersAction,
   sortByOrderNumberAction,
 } from "../../redux/actions/ordersActions";
+import { FiltrosDiv } from "../../theme/styled-componets";
 
 function FilterSort() {
   const dispatch = useDispatch();
   const { orders } = useSelector((state) => state.orders);
+
+  useEffect(() => {
+    dispatch(getOrdersAction());
+  }, [dispatch]);
+
   const handleChange = (e) => {
     if (e.target.value === "orderNumber") dispatch(sortByOrderNumberAction());
 
@@ -17,7 +24,9 @@ function FilterSort() {
 
     if (e.target.value === "sortDefault") return dispatch(cleanAction());
 
-    if (e.target.value === "filterDefault") dispatch(cleanAction());
+    if (e.target.value === "filterDefault") {
+      dispatch(cleanAction());
+    }
 
     if (e.target.value === "pending") dispatch(filterPendingAction());
 
@@ -28,7 +37,7 @@ function FilterSort() {
 
   return (
     <>
-      {!orders.length < 2 && (
+      {orders.length > 1 && (
         <div>
           <label>Filter by status:</label>
           <select name="filter" id="filter" onChange={(e) => handleChange(e)}>

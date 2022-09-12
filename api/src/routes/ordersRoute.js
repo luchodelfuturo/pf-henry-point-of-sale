@@ -21,24 +21,24 @@ router.put("/put/:orderNumber", async (req, res) => {
   return res.send("status updated");
 });
 
-router.get("/ready", async (req, res) => {
-  let results = [];
-  results = await Order.findAll({
-    where: { status: "ready" },
-    include: Product,
-  });
+router.put("/put/disable/:orderNumber", async (req, res) => {
+  const { orderNumber } = req.params;
+  await Order.update({ active: false }, { where: { orderNumber: orderNumber } })
+  return res.send("active updated");
+})
 
-  if (results.length === 0) {
-    res.status(404).json("No se encontraron resultados");
-  } else {
-    res.status(200).json(results);
-  }
-});
+//deleted route ready here
 
 router.post("/", async (req, res) => {
+  console.log(req.body)
   try {
     const order = await Order.create(req.body);
-    //await order.addProducts(req.body.product);
+    for (let i = 0; i < req.body.productsOrder.length; i++) {
+      let product = await Product.findOne({ where: { name: req.body.productsOrder[i].nameProduct } })
+      let selled = product.dataValues.sellCount
+      selled = selled + req.body.productsOrder[i].qty
+      await Product.update({ sellCount: selled }, { where: { name: req.body.productsOrder[i].nameProduct } })
+    }
     res.json(order);
   } catch (error) {
     res.send(error);

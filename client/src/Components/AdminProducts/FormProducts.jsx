@@ -1,5 +1,8 @@
 import React from "react";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { disableProductAction } from "../../redux/actions/productsActions";
+import { ButtonX, ButtonDis,ButtonDelete, ButtonSave } from '../../theme/styled-componets';
 
 export default function FormProducts({
   categories,
@@ -38,6 +41,8 @@ export default function FormProducts({
       "https://media.istockphoto.com/photos/chinese-food-blank-background-picture-id545286388?k=20&m=545286388&s=612x612&w=0&h=1zAWEuV5W6SoYtErOkWasELFcAWMKgQEBUsNOoH5znc=",
   };
 
+  let dispatch = useDispatch()
+
   const handleChange = (e) => {
     const value = e.target.value;
     setState({ ...state, [e.target.name]: value });
@@ -47,6 +52,13 @@ export default function FormProducts({
 
     setState({ ...state, idcategory: value, image: imagenes[value] });
   };
+
+  const handleDelete = (e) => {
+
+    dispatch(disableProductAction(productEdit.id))
+    setProductEdit((oldProduct) => ({...oldProduct, active: false}))
+
+  }
 
   //     "name": "Burger Doble",
   //     "price": 200,
@@ -81,25 +93,18 @@ export default function FormProducts({
         style={{
           width: "80%",
           height: "80%",
-          backgroundColor: "lightgray",
-
+          backgroundColor: "#fffffe",
           margin: "auto",
           position: "relative",
           zIndex: "10",
-          borderRadius: "20px",
+          borderRadius: "0.3rem",
           display: "flex",
           justifyContent: "center",
           alignCenter: "center",
           padding: "10px",
         }}
       >
-        <button
-          style={{
-            position: "absolute",
-            right: "20px",
-            top: "10px",
-            backgroundColor: "red",
-          }}
+        <ButtonX
           onClick={() => {
             setShowFormProducts(false);
             setProductEdit({
@@ -109,9 +114,7 @@ export default function FormProducts({
               desc: "",
             });
           }}
-        >
-          X
-        </button>
+        >X</ButtonX>
         <form
           onSubmit={(e) => handleSubmit(e)}
           style={{
@@ -137,11 +140,7 @@ export default function FormProducts({
               gap: "10px",
             }}
           >
-            <div
-              style={{
-                backgroundColor: "blue",
-              }}
-            >
+            <div>
               <img
                 src={
                   imagenes[state.idcategory]
@@ -149,31 +148,12 @@ export default function FormProducts({
                     : imagenes.default
                 }
                 alt=""
-                style={{ objectFit: "cover", width: "100%", height: "100%" }}
+                style={{ objectFit: "cover", width: "100%", height: "100%", borderRadius: "0.3rem" }}
               />
             </div>
-            <button
-              disabled
-              type="button"
-              style={{
-                border: "2px solid lightblue",
-
-                borderRadius: "5px",
-              }}
-            >
-              Agregar Imagen
-            </button>
-            <button
-              type="button"
-              style={{
-                border: "2px solid red",
-
-                borderRadius: "5px",
-              }}
-            >
-              Eliminar
-            </button>
-            <button
+            <ButtonDis disabled type="button">Agregar Imagen</ButtonDis>
+            <ButtonDelete onClick={(e) => {handleDelete(e)}} type="button">Eliminar</ButtonDelete>
+            <ButtonSave
               disabled={
                 state.name === "" ||
                 state.price === "" ||
@@ -182,24 +162,15 @@ export default function FormProducts({
                 state.idcategory === "Select Category"
               }
               type="submit"
-              style={{
-                border: "2px solid black",
-
-                borderRadius: "5px",
-              }}
-            >
-              Guardar
-            </button>
+            >Guardar</ButtonSave>
           </div>
           {/* right side */}
           <div
             style={{
-              backgroundColor: "pink",
               width: "60%",
               display: "grid",
               gridTemplateColumns: "40% 60%",
               gridTemplateRows: "1fr 2fr 1fr 1fr",
-
               gap: "10px",
               height: "100%",
               margin: "auto",

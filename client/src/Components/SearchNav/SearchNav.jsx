@@ -1,22 +1,21 @@
 import React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { searchByName } from "../../redux/actions";
+import { searchByNameAction } from "../../redux/actions/productsActions";
 export default function SearchNav() {
-    const dispatch = useDispatch();
-    const [searchName, setSearchName] = useState();
-    const handleInputChange = (e) => {
-      e.preventDefault();
-      setSearchName(e.target.value);
-    };
-  
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      dispatch(searchByName(searchName));
-      setCurrentPage(1);
-      setSearchName("");
-    };
+  const dispatch = useDispatch();
+  const [searchName, setSearchName] = useState();
+  const handleInputChange = (e) => {
+    e.preventDefault();
+    setSearchName(e.target.value);
+  };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(searchByNameAction(searchName));
+
+    setSearchName("");
+  };
 
   return (
     <div
@@ -38,7 +37,7 @@ export default function SearchNav() {
         }}
         onChange={(e) => handleInputChange(e)}
         type="text"
-        placeholder="Search Countrys..."
+        placeholder="Search Products..."
         value={searchName}
       />
       <button
