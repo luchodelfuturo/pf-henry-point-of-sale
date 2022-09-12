@@ -3,7 +3,7 @@ const { conn, Category, Product } = require("./src/db.js");
 
 async function precarga() {
   const category = [
-    { name: "All Categories", section: "kitchen" },
+    { name: "All Products", section: "kitchen" },
     { name: "Burgers", section: "kitchen" },
     { name: "Pizzas", section: "kitchen" },
     { name: "Drinks", section: "counter" },
@@ -352,7 +352,7 @@ async function precarga() {
 
 // Syncing all the models at once.
 conn
-  .sync({ force: false })
+  .sync({ force: true })
   .then(() => {
     server.listen(3001, () => {
       console.log("%s listening at 3001"); // eslint-disable-line no-console

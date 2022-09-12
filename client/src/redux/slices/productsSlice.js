@@ -23,14 +23,14 @@ export const productsSlice = createSlice({
       state.detail = action.payload;
     },
     filterByCategory: (state, action) => {
-      if (action.payload !== "all categories") {
+      if (action.payload !== "all products") {
         state.category = action.payload;
       } else {
         //no tiene mucho sentido este else pero sin él, se producen errores
         state.category = "";
       }
       const filterProducts =
-        state.category === "all categories"
+        state.category === "all products"
           ? state.allProducts
           : state.allProducts.filter((prod) =>
             prod.categories[0].name.toLowerCase().includes(state.category)
