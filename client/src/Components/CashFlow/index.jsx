@@ -1,6 +1,7 @@
 import React, { useMemo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  addExpenseAction,
   addIngresoAction,
   getFinishedOrdersAction,
 } from "../../redux/actions/ordersActions";
@@ -18,19 +19,19 @@ function CashFlow() {
     dispatch(getFinishedOrdersAction());
   }, []);
 
-  const EditableCell = ({ value: initialValue }) => {
-    // We need to keep and update the state of the cell normally
-    const [valueI, setValueI] = useState(initialValue);
-    const onChange = (e) => {
-      setValueI(e.target.value);
-    };
+  // const EditableCell = ({ value: initialValue }) => {
+  //   // We need to keep and update the state of the cell normally
+  //   const [valueI, setValueI] = useState(initialValue);
+  //   const onChange = (e) => {
+  //     setValueI(e.target.value);
+  //   };
 
-    // If the initialValue is changed external, sync it up with our state
-    useEffect(() => {
-      setValueI(initialValue);
-    }, [initialValue]);
-    return <input value={valueI} onChange={onChange} />;
-  };
+  // If the initialValue is changed external, sync it up with our state
+  //   useEffect(() => {
+  //     setValueI(initialValue);
+  //   }, [initialValue]);
+  //   return <input value={valueI} onChange={onChange} />;
+  // };
 
   const columns = useMemo(
     () => [
@@ -68,7 +69,6 @@ function CashFlow() {
           {
             Header: "",
             accessor: "ingreso",
-            Cell: EditableCell,
           },
         ],
       },
@@ -99,7 +99,7 @@ function CashFlow() {
             // },
             accessor: "totalCash",
             id: 777,
-            Cell: ({ value }) => <strong>{value}</strong>,
+            Cell: ({ value }) => <strong>{value ? value : null}</strong>,
           },
         ],
       },
@@ -115,15 +115,26 @@ function CashFlow() {
     });
 
   const [income, setIngreso] = useState("");
+  const [expense, setExpense] = useState("");
 
-  const handleChange = (value) => {
+  const handleChangeIncome = (value) => {
     setIngreso(value);
   };
 
-  const handleSubmit = (e) => {
+  const handleChangeExpense = (value) => {
+    setExpense(value);
+  };
+
+  const handleSubmitIncome = (e) => {
     e.preventDefault();
 
     dispatch(addIngresoAction(income));
+  };
+
+  const handleSubmitExpense = (e) => {
+    e.preventDefault();
+
+    dispatch(addExpenseAction(expense));
   };
 
   return (
@@ -174,16 +185,27 @@ function CashFlow() {
           </tr>
         </tbody> */}
       </Table>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmitIncome}>
         <label>Nuevo ingreso</label>
         <input
           type="number"
           value={income}
           placeholder="income"
-          onChange={(e) => handleChange(e.target.value)}
+          onChange={(e) => handleChangeIncome(e.target.value)}
         />
         <input type="submit" value="add" />
       </form>
+      <form onSubmit={handleSubmitExpense}>
+        <label>Nuevo retiro</label>
+        <input
+          type="number"
+          value={expense}
+          placeholder="expense"
+          onChange={(e) => handleChangeExpense(e.target.value)}
+        />
+        <input type="submit" value="add" />
+      </form>
+
       {/*   
        <Table>
        <thead>
@@ -198,7 +220,6 @@ function CashFlow() {
       //   </tbody>
       // </Table>
       // <ul>
-      //   <li>Retiro</li>
       //   <li>Historial de Cierres</li>
       //   <li>Cerrar Caja</li>
       // </ul> 

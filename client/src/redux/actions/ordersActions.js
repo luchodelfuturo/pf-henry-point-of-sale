@@ -80,9 +80,14 @@ export const cleanReadyAction = () => (dispatch) => {
   dispatch(cleanReady());
 };
 
-export const addIngresoAction = (income) => {
+export const addIngresoAction = (income) => (dispatch) => {
   console.log(income);
   return axios
     .post("http://localhost:3001/cash/addIncome", { income: income })
     .then((res) => console.log(res));
+};
+
+export const addExpenseAction = (expense) => (dispatch) => {
+  console.log(expense);
+  return axios.post("http://localhost:3001/cash/addExpense", expense);
 };
