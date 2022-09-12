@@ -282,7 +282,7 @@ export default function HistorialPedidos() {
                 borderRadius: "20px 20px 0 0 ",
                 boxSizing: "border-box",
 
-                backgroundColor: colores.doing,
+                backgroundColor: colores[orderEdit.status],
               }}
             >
               <span>N°:{orderEdit.orderNumber} </span>
