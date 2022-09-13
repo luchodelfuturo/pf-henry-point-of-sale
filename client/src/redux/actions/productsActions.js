@@ -1,11 +1,6 @@
 import axios from "axios";
-import {
-  getAllProducts,
-  filterByCategory,
-  disableProduct,
-  sortProducts,
-  searchByName,
-} from "../slices/productsSlice";
+import { getAllProducts, filterByCategory, disableProduct, sortProducts, searchProducts, searchByName } from "../slices/productsSlice";
+
 
 export const getProducts = () => (dispatch) => {
   axios
@@ -51,3 +46,9 @@ export const searchByNameAction = (name) => (dispatch) => {
     })
     .catch((e) => console.log(e));
 };
+
+
+export const searchProductsName = (name) => (dispatch) => {
+  console.log("Entra a search");
+  dispatch(searchProducts(name));
+}

@@ -43,6 +43,7 @@ export default function HistorialPedidos() {
 
   const desactivateOrder = (orderEdit) => {
     dispatch(disableOrderAction(orderEdit.orderNumber));
+    dispatch(getAllOrdersAction());
     setMostrarForm(false);
   };
   const handleChangeToDate = (e) => {
@@ -65,7 +66,7 @@ export default function HistorialPedidos() {
 
   useEffect(() => {
     dispatch(getAllOrdersAction());
-  }, [dispatch]);
+  }, [dispatch, mostrarForm]);
   return (
     <div
       style={{
@@ -401,7 +402,11 @@ export default function HistorialPedidos() {
                 gap: "20px",
               }}
             >
-              <button onClick={() => desactivateOrder(orderEdit)}>
+              <button
+                onClick={() => {
+                  desactivateOrder(orderEdit);
+                }}
+              >
                 Borrar
               </button>
               {/* <button>Guardar</button> */}

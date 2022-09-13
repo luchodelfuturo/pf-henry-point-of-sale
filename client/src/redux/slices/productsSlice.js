@@ -23,14 +23,14 @@ export const productsSlice = createSlice({
       state.detail = action.payload;
     },
     filterByCategory: (state, action) => {
-      if (action.payload !== "all categories") {
+      if (action.payload !== "all products") {
         state.category = action.payload;
       } else {
         //no tiene mucho sentido este else pero sin él, se producen errores
         state.category = "";
       }
       const filterProducts =
-        state.category === "all categories"
+        state.category === "all products"
           ? state.allProducts
           : state.allProducts.filter((prod) =>
             prod.categories[0].name.toLowerCase().includes(state.category)
@@ -171,6 +171,13 @@ export const productsSlice = createSlice({
       });
       console.log("Product disabled");
     },
+    searchProducts: (state, action) => {
+      const results = state.allProducts.filter((f) =>
+        f.name.toLowerCase().includes(action.payload.toLowerCase())
+      );
+      state.products = results.length > 0 ? results : [];
+    },
+
     searchByName: (state, action) => {
       state.products = action.payload.rows;
     }
@@ -183,6 +190,7 @@ export const {
   filterByCategory,
   sortProducts,
   disableProduct,
+  searchProducts,
   searchByName,
 } = productsSlice.actions;
 

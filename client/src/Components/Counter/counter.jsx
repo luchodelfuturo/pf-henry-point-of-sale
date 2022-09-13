@@ -8,15 +8,39 @@ import {
 } from "../../redux/actions/ordersActions";
 import NavBarApp from "../NavbarApp/NavBarApp";
 import s from "../Counter/counter.module.css";
+import Swal from "sweetalert2";
+
 function Counter() {
   const { ordersReady, status } = useSelector((state) => state.orders);
   console.log("original", ordersReady);
 
   const dispatch = useDispatch();
 
+
+  const postToast = () => {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener("mouseenter", Swal.stopTimer);
+        toast.addEventListener("mouseleave", Swal.resumeTimer);
+      },
+    });
+
+    Toast.fire({
+      icon: "success",
+      title: "Order finished",
+    });
+  };
+
+
   const handleEnded = (e, n) => {
     // e.preventDefault();
     dispatch(updateStatusFinished(e.target.value, n));
+    postToast();
     if (ordersReady.length === 1) {
       dispatch(cleanAction());
     }

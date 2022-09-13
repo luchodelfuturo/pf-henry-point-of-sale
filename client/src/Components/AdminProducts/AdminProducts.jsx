@@ -93,10 +93,10 @@ export default function AdminProducts() {
       <div
         style={{
           boxSizing: "border-box",
-          minHeight: "90vh",
+          minHeight: "85vh",
           width: "90%",
           margin: "0 auto",
-          height: "90vh",
+          height: "85vh",
           backgroundColor: "white",
           display: "flex",
           flexDirection: "column",
