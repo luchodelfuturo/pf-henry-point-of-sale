@@ -133,6 +133,7 @@ export const Time = styled.h2`
   margin-right: 5rem;
   margin-left: 2rem;
   margin-top: 0.3rem;
+  min-width: 100px;
 `;
 
 export const contenedorEmergentes = styled.div`

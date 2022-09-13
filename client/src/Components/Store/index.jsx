@@ -4,6 +4,7 @@ import {
   getProducts,
   filterByCategoryAction,
   sortProductsAction,
+  searchProductsName,
 } from "../../redux/actions/productsActions";
 import { getCategories } from "../../redux/actions/categoriesActions";
 import NavBarApp from "../NavbarApp/NavBarApp";
@@ -15,6 +16,7 @@ import { colors, BtnRounded } from "../../theme/variables";
 import { SearchInput, SearchBtn, Select } from "../../theme/styled-componets";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import Card from "./Card";
 
 function Store() {
   const dispatch = useDispatch();
@@ -36,7 +38,9 @@ function Store() {
     dispatch(sortProductsAction(e.target.value));
   }
 
-  function handleInput(params) {}
+  function handleInput(e) {
+    dispatch(searchProductsName(e.target.value));
+  }
 
   function handleSearchBtn(params) {}
 
@@ -60,7 +64,7 @@ function Store() {
                       onChange={(e) => handleInput(e)}
                     ></SearchInput>
 
-                    <SearchBtn
+                    {/* <SearchBtn
                       id="find"
                       type="submit"
                       onClick={(e) => handleSearchBtn(e)}
@@ -69,7 +73,7 @@ function Store() {
                 icon={faMagnifyingGlass}
                 style={{ width: 15, height: 15 }}
               />
-                    </SearchBtn>
+                    </SearchBtn> */}
                   </div>
                   <div></div>
                 </div>
@@ -103,7 +107,7 @@ function Store() {
                   })}
               </div>
               <div className="cards-container">
-                <Cards products={products} />
+                {<Cards products={products} />}
               </div>
             </div>
           </div>

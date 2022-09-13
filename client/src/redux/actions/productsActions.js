@@ -4,6 +4,7 @@ import {
   filterByCategory,
   disableProduct,
   sortProducts,
+  searchProducts,
   searchByName,
 } from "../slices/productsSlice";
 
@@ -50,4 +51,9 @@ export const searchByNameAction = (name) => (dispatch) => {
       dispatch(searchByName(res.data));
     })
     .catch((e) => console.log(e));
+};
+
+export const searchProductsName = (name) => (dispatch) => {
+  console.log("Entra a search");
+  dispatch(searchProducts(name));
 };
