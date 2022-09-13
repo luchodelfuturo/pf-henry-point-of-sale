@@ -26,18 +26,16 @@ export default function HistorialPedidos() {
   };
 
   const [fromToFilter, setFromToFilter] = useState({
-    from: new Date(),
-    to: new Date(),
+    from: "",
+    to: "",
   });
   var totalSuma = 0;
 
   const handleChangeFromDate = (e) => {
-    e.preventDefault();
-    // setFromToFilter({
-    //   ...fromToFilter,
-    //   from: e.target.value,
-    // });
-    console.log("from:", fromToFilter.from, "to:", fromToFilter.to);
+    setFromToFilter({
+      ...fromToFilter,
+      [e.target.name]: e.target.value,
+    });
     dispatch(filterFromDateAction(fromToFilter));
   };
 
@@ -47,13 +45,10 @@ export default function HistorialPedidos() {
     setMostrarForm(false);
   };
   const handleChangeToDate = (e) => {
-    e.preventDefault();
-
-    // setFromToFilter({
-    //   ...fromToFilter,
-    //   to: e.target.value,
-    // });
-
+    setFromToFilter({
+      ...fromToFilter,
+      [e.target.name]: e.target.value,
+    });
     dispatch(filterFromDateAction(fromToFilter));
 
     // Action filter From
@@ -62,6 +57,11 @@ export default function HistorialPedidos() {
     e.preventDefault();
 
     dispatch(filterStatusAction(e.target.value));
+  };
+
+  const desactivateOrder = (orderEdit) => {
+    dispatch(disableOrderAction(orderEdit.orderNumber));
+    setMostrarForm(false);
   };
 
   useEffect(() => {
@@ -98,11 +98,6 @@ export default function HistorialPedidos() {
           name="from"
           value={fromToFilter.from}
           onChange={(e) => {
-            setFromToFilter({
-              ...fromToFilter,
-              [e.target.name]: e.target.value,
-            });
-
             handleChangeFromDate(e);
           }}
         />
@@ -113,11 +108,6 @@ export default function HistorialPedidos() {
           name="to"
           value={fromToFilter.to}
           onChange={(e) => {
-            setFromToFilter({
-              ...fromToFilter,
-              [e.target.name]: e.target.value,
-            });
-
             handleChangeToDate(e);
           }}
         />
