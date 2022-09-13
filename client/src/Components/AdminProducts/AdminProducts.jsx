@@ -57,7 +57,7 @@ export default function AdminProducts() {
   };
 
   const addCategory = async (category) => {
-    await axios.post("http://localhost:3001/category/add", category);
+    await axios.post("/category/add", category);
     setInputCategory("");
     dispatch(getCategories());
   };
