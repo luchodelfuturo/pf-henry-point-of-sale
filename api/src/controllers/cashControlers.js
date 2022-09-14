@@ -98,21 +98,36 @@ const cashUpdated = async (id) => {
   }
 };
 
-const totalSells = async (id) => {
+const totalCash = async (id) => {
   let totalCashSells = await Cash.findAll({
     where: { id: id },
     attributes: ["cashPayment"],
   });
-  let cashSells = totalCashSells.map((e) => parseInt(e.cashPayment));
 
+  if(totalCashSells.length){
+  let cashSells = totalCashSells.map((e) => parseInt(e.cashPayment));
+  // console.log(cashSells)
+  return cashSells[0]
+}else{
+  return 0;
+}
+};
+
+const totalPaypal = async(id) =>{
   let totalPaypalSells = await Cash.findAll({
     where: { id: id },
     attributes: ["paypalPayment"],
   });
+  // console.log(totalPaypalSells)
+  if(totalPaypalSells.length){
   let paypalSells = totalPaypalSells.map((e) => parseInt(e.paypalPayment));
+  return paypalSells[0]
+  }else{
+    return 0
+  }
+}
 
-  return cashSells[0] + paypalSells[0];
-};
+
 
 const addIncome = async (id, income) => {
   let result = await cashUpdated(id);
@@ -144,7 +159,8 @@ module.exports = {
   cashUpdated,
   addIncome,
   addExpense,
-  totalSells,
+  totalCash,
+  totalPaypal
 };
 
 // let cash = await Order.findAll({
