@@ -32,6 +32,8 @@ router.get("/history", async (req, res) => {
     res.json(error);
   }
 });
+
+// total sells
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {

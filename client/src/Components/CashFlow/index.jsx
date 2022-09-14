@@ -1,10 +1,6 @@
 import React, { useMemo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addExpenseAction,
-  addIngresoAction,
-  getFinishedOrdersAction,
-} from "../../redux/actions/ordersActions";
+import { getTotalCashAction } from "../../redux/actions/ordersActions";
 import { useTable } from "react-table";
 import { Table } from "./styledTable";
 import NavBarApp from "../NavbarApp/NavBarApp";
@@ -14,7 +10,7 @@ function CashFlow() {
 
   const { finishedOrders } = useSelector((state) => state.orders);
   useEffect(() => {
-    dispatch(getFinishedOrdersAction());
+    dispatch(getTotalCashAction());
   }, []);
 
   const columns = useMemo(
