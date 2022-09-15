@@ -68,6 +68,12 @@ export function StoreProvider({ children }) {
   const [methodPayment, setMethodPayment] = useState("cash");
 
   function qtyIncr(id) {
+
+    // let incr = state.find((e) => e.product.id === id)
+
+    // if (incr.stock === ){
+
+    // }
     dispatch({ type: "INCREMENT", payload: id });
   }
   function qtyDecr(id) {
@@ -91,7 +97,7 @@ export function StoreProvider({ children }) {
       dispatch({ type: "INCREMENT", payload: added });
     } else {
       aux = () => {
-        let { id, name, price, active, categories } = products.find(
+        let { id, name, price, active, categories, stock } = products.find(
           (f) => f.id === added
         );
 
@@ -101,6 +107,7 @@ export function StoreProvider({ children }) {
           price,
           active,
           categories: categories.map((e) => e.name).toString(),
+          stock,
         };
       };
 

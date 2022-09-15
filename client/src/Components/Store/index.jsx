@@ -16,25 +16,25 @@ import { colors, BtnRounded } from "../../theme/variables";
 import { SearchInput, SearchBtn, Select } from "../../theme/styled-componets";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import Card from "./Card";
 
 function Store() {
   const dispatch = useDispatch();
-  const { state, products, categories } = useContext(StoreContext);
-
+  const { state, products, categories, order } = useContext(StoreContext);
+  const [update, setUpdate] = useState(0)
+      
   useEffect(() => {
     dispatch(getCategories());
     dispatch(getProducts());
-  }, [dispatch]);
+  }, [dispatch, update]);
 
-  console.log(products);
+  //console.log(products);
 
   const filterCategory = async (category) => {
     await dispatch(filterByCategoryAction(category));
   };
 
   function sort(e) {
-    console.log(e.target.value);
+   // console.log(e.target.value);
     dispatch(sortProductsAction(e.target.value));
   }
 
@@ -51,7 +51,7 @@ function Store() {
           {/* <div className="clients-tabs">Clients</div> */}
           <div className="store-container">
             <div className="cart-container">
-              <Cart products={state} />
+              <Cart products={state} setUpdate={setUpdate} update={update} />
             </div>
             <div className="products-container">
               <div className="searchnsort">

@@ -35,11 +35,13 @@
   margin-top: 10px;
   margin-bottom: 10px;
   margin-left: 10px;
-}
+ 
+  }
 
 .searchnsort{
   display: flex;
   justify-content: space-between;
+  
 }
 
 .search-cont{

@@ -5,7 +5,8 @@ import styled from "styled-components";
 import "./cart.css";
 import { postOrdersAction } from "../../redux/actions/ordersActions";
 import { useDispatch } from "react-redux";
-import Modal from "../Modal";
+import Modal from "../Modals/Modal";
+import SimpleModal from '../Modals/SimpleModal'
 import { colors } from "../../theme/variables";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -13,10 +14,15 @@ import {
   faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
 import { faCommentDots } from "@fortawesome/free-solid-svg-icons";
+import { ButtonCart } from "../../theme/styled-componets";
+import Swal from "sweetalert2";
 
-function Cart({ products }) {
-  const { deleteAll, order, totals, setComments, setMethodPayment } = useContext(StoreContext);
+
+function Cart({ products, setUpdate, update }) {
+  const { deleteAll, order, totals, setComments, setMethodPayment } =
+    useContext(StoreContext);
   const [checkout, setCheckout] = useState(false);
+
   useEffect(() => {}, [products]);
 
   let dispatch = useDispatch();
@@ -30,9 +36,9 @@ function Cart({ products }) {
     try {
       dispatch(postOrdersAction(order));
       deleteAll();
+      setUpdate(update + 1);
     } catch (error) {
       console.error(error);
-
     }
   }
 
@@ -52,6 +58,7 @@ function Cart({ products }) {
           setMethodPayment={setMethodPayment}
         />
       )}
+<SimpleModal/>
       <div className="cart">
         <div className="items">
           <div className="items-header">
@@ -72,7 +79,7 @@ function Cart({ products }) {
               />
             </button>
             <div className="pay-btn">
-              <button
+              <ButtonCart
                 className="checkout-btn"
                 onClick={() => handleCheckoutModal()}
               >
@@ -82,7 +89,7 @@ function Cart({ products }) {
                   icon={faBasketShopping}
                   style={{ width: 35, height: 35 }}
                 />
-              </button>
+              </ButtonCart>
             </div>
             <div className="totals">
               <div className="total-label">Total</div>
@@ -109,7 +116,7 @@ const Checkout = styled.div`
   width: 610px;
   height: 100px;
   .checkout-btn {
-    font-weight: 600;
+    font-weight: 700;
     font-size: 32px;
     cursor: pointer;
     width: 280px;
