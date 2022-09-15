@@ -7,7 +7,8 @@ const {
   cashUpdated,
   addIncome,
   addExpense,
-  totalSells,
+  totalCash,
+  totalPaypal,
 } = require("../controllers/cashControlers.js");
 router.post("/close", async (req, res) => {
   try {
@@ -36,9 +37,15 @@ router.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
     // res.json(await cashUpdated(id))
-    let totalSales = await totalSells(id);
-    await Cash.update({ totalSales: totalSales }, { where: { id: id } });
-    res.json(totalSales);
+    let totalP = await totalPaypal(id);
+    let totalC = await totalCash(id)
+    // console.log(totalC)
+    // console.log(totalP)
+    let condition = isNaN(totalP) ? totalC + 0 : isNaN(totalC) ? totalP + 0 : totalC + totalP
+    console.log(condition)
+    await Cash.update({ totalSales: condition }, { where: { id: id } });
+    // res.json(totals);
+    res.json(condition)
   } catch (error) {
     console.log(error);
   }
