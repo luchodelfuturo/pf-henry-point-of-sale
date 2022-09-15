@@ -40,14 +40,18 @@ router.get("/:id", async (req, res) => {
   try {
     // res.json(await cashUpdated(id))
     let totalP = await totalPaypal(id);
-    let totalC = await totalCash(id)
+    let totalC = await totalCash(id);
     // console.log(totalC)
     // console.log(totalP)
-    let condition = isNaN(totalP) ? totalC + 0 : isNaN(totalC) ? totalP + 0 : totalC + totalP
-    console.log(condition)
+    let condition = isNaN(totalP)
+      ? totalC + 0
+      : isNaN(totalC)
+      ? totalP + 0
+      : totalC + totalP;
+    console.log(condition);
     await Cash.update({ totalSales: condition }, { where: { id: id } });
     // res.json(totals);
-    res.json(condition)
+    res.json(condition);
   } catch (error) {
     console.log(error);
   }
@@ -78,6 +82,7 @@ router.post("/addIncome/:id", async (req, res) => {
   const { id } = req.params;
   if (income) {
     try {
+      console.log(income);
       res.status(200).json(await addIncome(id, income));
     } catch (error) {
       console.log(error);

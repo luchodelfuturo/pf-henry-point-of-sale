@@ -27,6 +27,8 @@ function Kitchen() {
   };
   return (
     <div>
+      <p>s</p>
+      <br />
       <form>
         <input
           type="number"
@@ -35,11 +37,13 @@ function Kitchen() {
           placeholder="probando pipii"
         />
       </form>
+      <p>s</p>
+      <br />
       <p>total with cash: {totalCash?.totalCash}</p>
       <p>total with paypal:{totalPaypal?.totalPaypal}</p>
       <p>income:</p>
       <p>expense:</p>
-      <p>total :</p>
+      <p>total : {totalCash?.totalCash + totalPaypal?.totalPaypal}</p>
       <Orders />
       <NavBarApp />
     </div>
