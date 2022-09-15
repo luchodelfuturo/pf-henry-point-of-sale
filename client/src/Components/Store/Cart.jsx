@@ -6,6 +6,7 @@ import "./cart.css";
 import { postOrdersAction } from "../../redux/actions/ordersActions";
 import { useDispatch } from "react-redux";
 import Modal from "../Modals/Modal";
+import SimpleModal from '../Modals/SimpleModal'
 import { colors } from "../../theme/variables";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -15,6 +16,7 @@ import {
 import { faCommentDots } from "@fortawesome/free-solid-svg-icons";
 import { ButtonCart } from "../../theme/styled-componets";
 import Swal from "sweetalert2";
+
 
 function Cart({ products, setUpdate, update }) {
   const { deleteAll, order, totals, setComments, setMethodPayment } =
@@ -56,6 +58,7 @@ function Cart({ products, setUpdate, update }) {
           setMethodPayment={setMethodPayment}
         />
       )}
+<SimpleModal/>
       <div className="cart">
         <div className="items">
           <div className="items-header">

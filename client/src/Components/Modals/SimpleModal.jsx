@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { ButtonCart } from "../../theme/styled-componets";
+import { colors } from "../../theme/variables";
 import Swal from "sweetalert2";
 
 export default function Comments() {
@@ -27,7 +28,11 @@ export default function Comments() {
   return (
     <Overlay>
       <CommentsModal>
-        
+        <div></div>
+        <div className="btns">
+          <ButtonCart className="close">Cancel</ButtonCart>
+          <ButtonCart className="ok">Ok</ButtonCart>
+        </div>
       </CommentsModal>
     </Overlay>
   );
@@ -55,5 +60,31 @@ const CommentsModal = styled.div`
   box-shadow: -5px 0px 9px 2px rgba(0, 0, 0, 0.25);
   border-radius: 25px;
   font-family: "Lato";
-`;
 
+  .btns {
+    margin-top: 10px;
+    width: 400px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding-bottom: 10px;
+  }
+
+  .close {
+    background-color: ${colors.red};
+    font-weight: 600;
+    color: ${colors.dred};
+    font-size: 16px;
+    width: 150px;
+    height: 40px;
+  }
+  .ok {
+    background-color: ${colors.lgreen};
+    font-weight: 600;
+    color: ${colors.dgreen};
+    font-size: 16px;
+    width: 150px;
+    height: 40px;
+  }
+`;
