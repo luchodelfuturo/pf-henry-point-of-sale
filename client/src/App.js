@@ -12,14 +12,15 @@ import Register from './Components/auth/Register';
 import ActivationEmail from './Components/auth/ActivationEmail'
 
 import GlobalStyle from "./theme/globalStyle.js";
-import CashFlow from "./Components/CashFlow/index.jsx";
+import CashFlow from "./Components/CashFlow/CashFlow";
+import HistorialsCashFlow from "./Components/CashFlow/HistorialsCashFlow";
 
 
 function App() {
   return (
     <div className="App">
 
-      <GlobalStyle/>
+      <GlobalStyle />
 
       <Route exact path="/" component={WelcomePage} />
 
@@ -43,6 +44,7 @@ function App() {
 
       {/* <Route exact path="/cashFlow" component={CashFlow} /> */}
       <Route exact path="/cashFlow" component={CashFlow} />
+      <Route exact path="/cashFlow/historialCashFlow" component={HistorialsCashFlow} />
     </div>
   );
 }
