@@ -37,6 +37,12 @@ const CardWrapper = styled.div`
   height: 192px;
   overflow: hidden;
   position: relative;
+  &:active {
+    transition: all 0.1s ease;
+    transform: scale(0.95);
+    //background: rgba(47, 238, 63, 0.418);
+
+  }
   .name {
     color: black;
     margin-top: -20px;

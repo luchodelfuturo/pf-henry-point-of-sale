@@ -3,8 +3,12 @@ import StoreContext from "../../GlobalStates/StoreContext";
 import styled from "styled-components";
 import { colors } from "../../theme/variables";
 import { Tag } from "../../theme/styled-componets";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCaretUp, faCaretDown, faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCaretUp,
+  faCaretDown,
+  faArrowRight,
+} from "@fortawesome/free-solid-svg-icons";
 
 const CartItem = ({ AllProducts }) => {
   const { qtyIncr, qtyDecr, itemDelete } = useContext(StoreContext);
@@ -35,7 +39,7 @@ const CartItem = ({ AllProducts }) => {
 
   return (
     <>
-      {products && products.length > 0 ?
+      {products && products.length > 0 ? (
         products.map((p, i) => (
           <Item key={i}>
             <div className="div-container">
@@ -51,19 +55,19 @@ const CartItem = ({ AllProducts }) => {
                   onClick={() => handleDecr(p.product.id)}
                 >
                   <FontAwesomeIcon
-                  icon={faCaretDown}
-                  style={{ width: 25, height: 25 }}
-                />
+                    icon={faCaretDown}
+                    style={{ width: 25, height: 25 }}
+                  />
                 </button>
                 <button
                   className="btn-incr"
                   id={p.product.id}
-                  
+                  onClick={() => handleIncr(p.product.id)}
                 >
                   <FontAwesomeIcon
-                  icon={faCaretUp}
-                  style={{ width: 25, height: 25 }} onClick={() => handleIncr(p.product.id)}
-                />
+                    icon={faCaretUp}
+                    style={{ width: 25, height: 25 }}
+                  />
                 </button>
               </div>
               <div className="price-cont">
@@ -78,10 +82,16 @@ const CartItem = ({ AllProducts }) => {
               </div>
             </div>
           </Item>
-        )):<EmptyCart>Select a product <FontAwesomeIcon
-                  icon={faArrowRight}
-                  style={{ width: 20, height: 20 }}
-                /></EmptyCart>}
+        ))
+      ) : (
+        <EmptyCart>
+          Select a product{" "}
+          <FontAwesomeIcon
+            icon={faArrowRight}
+            style={{ width: 20, height: 20 }}
+          />
+        </EmptyCart>
+      )}
     </>
   );
 };
@@ -133,6 +143,9 @@ const Item = styled.div`
   .qty-changer {
     display: flex;
     width: 166px;
+
+    color: white;
+
     .btn-decr {
       width: 83px;
       height: 83px;
@@ -141,6 +154,11 @@ const Item = styled.div`
       font-weight: 500;
       font-size: 28px;
       padding-bottom: 5px;
+
+      &:active {
+        color: white;
+        background-color: #6044b3;
+      }
     }
     .btn-incr {
       width: 83px;
@@ -149,7 +167,10 @@ const Item = styled.div`
       border: none;
       font-weight: 500;
       font-size: 28px;
-
+      &:active {
+        color: white;
+        background-color: #6044b3;
+      }
     }
     .btn-incr :hover {
       background-color: ${colors.violet};
@@ -178,10 +199,10 @@ const Item = styled.div`
 `;
 
 const EmptyCart = styled.div`
-margin-top: 20px;
-margin-left: 50px;
-font-size: 24px;
-font-weight: 600;
-font-style: italic;
-color: #adadad;
-`
+  margin-top: 20px;
+  margin-left: 50px;
+  font-size: 24px;
+  font-weight: 600;
+  font-style: italic;
+  color: #adadad;
+`;

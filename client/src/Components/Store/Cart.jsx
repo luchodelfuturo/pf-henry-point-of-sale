@@ -13,9 +13,11 @@ import {
   faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
 import { faCommentDots } from "@fortawesome/free-solid-svg-icons";
+import { ButtonCart } from "../../theme/styled-componets";
 
 function Cart({ products }) {
-  const { deleteAll, order, totals, setComments, setMethodPayment } = useContext(StoreContext);
+  const { deleteAll, order, totals, setComments, setMethodPayment } =
+    useContext(StoreContext);
   const [checkout, setCheckout] = useState(false);
   useEffect(() => {}, [products]);
 
@@ -32,7 +34,6 @@ function Cart({ products }) {
       deleteAll();
     } catch (error) {
       console.error(error);
-
     }
   }
 
@@ -72,7 +73,7 @@ function Cart({ products }) {
               />
             </button>
             <div className="pay-btn">
-              <button
+              <ButtonCart
                 className="checkout-btn"
                 onClick={() => handleCheckoutModal()}
               >
@@ -82,7 +83,7 @@ function Cart({ products }) {
                   icon={faBasketShopping}
                   style={{ width: 35, height: 35 }}
                 />
-              </button>
+              </ButtonCart>
             </div>
             <div className="totals">
               <div className="total-label">Total</div>
@@ -109,7 +110,7 @@ const Checkout = styled.div`
   width: 610px;
   height: 100px;
   .checkout-btn {
-    font-weight: 600;
+    font-weight: 700;
     font-size: 32px;
     cursor: pointer;
     width: 280px;

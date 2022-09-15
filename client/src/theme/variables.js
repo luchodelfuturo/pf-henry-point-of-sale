@@ -4,6 +4,7 @@ import styled from "styled-components";
 export const colors = {
   violet: "#7f5af0",
   green: "#2cb67d",
+  vlgreen: "#8eff65",
   lgreen: "#C4FFAF",
   dgreen: "#2AA300",
   aqua: "#81FD8D",
@@ -30,6 +31,7 @@ export const colors = {
 };
 
 export const BtnRounded = styled.button`
+  transition: all 0.1s ease;
   font-family: "Lato", sans-serif;
   background: #fff;
   width: 87px;
@@ -40,4 +42,12 @@ export const BtnRounded = styled.button`
   font-weight: 600;
   font-size: 18px;
   margin-right: 10px;
+  cursor: pointer;
+
+  
+  &:active {
+    transition: all 0.1s ease;
+    transform: scale(0.95);
+    background: rgba(92, 92, 92, 0.144);
+  }
 `;
