@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useState, useRef } from "react";
 import styled from "styled-components";
-import { ButtonCart, Select } from "../theme/styled-componets";
-import { colors } from "../theme/variables";
+import { ButtonCart, Select } from "../../theme/styled-componets";
+import { colors } from "../../theme/variables";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import PayPal from "./PayPal/PayPal";
+import PayPal from "../PayPal/PayPal";
 import {
   faCommentDots,
   faDeleteLeft,
@@ -13,8 +13,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faPaypal } from "@fortawesome/free-brands-svg-icons";
 import Swal from "sweetalert2";
-import Comments from "./Store/Comments";
-import { discounts, cupons } from "./Store/vars";
+import Comments from "../Store/Comments";
+import { discounts, cupons } from "../Store/vars";
 
 const Modal = ({
   total,

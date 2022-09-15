@@ -5,7 +5,7 @@ import styled from "styled-components";
 import "./cart.css";
 import { postOrdersAction } from "../../redux/actions/ordersActions";
 import { useDispatch } from "react-redux";
-import Modal from "../Modal";
+import Modal from "../Modals/Modal";
 import { colors } from "../../theme/variables";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -14,11 +14,13 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faCommentDots } from "@fortawesome/free-solid-svg-icons";
 import { ButtonCart } from "../../theme/styled-componets";
+import Swal from "sweetalert2";
 
-function Cart({ products }) {
+function Cart({ products, setUpdate, update }) {
   const { deleteAll, order, totals, setComments, setMethodPayment } =
     useContext(StoreContext);
   const [checkout, setCheckout] = useState(false);
+
   useEffect(() => {}, [products]);
 
   let dispatch = useDispatch();
@@ -32,6 +34,7 @@ function Cart({ products }) {
     try {
       dispatch(postOrdersAction(order));
       deleteAll();
+      setUpdate(update + 1);
     } catch (error) {
       console.error(error);
     }

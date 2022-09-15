@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { colors } from "../../theme/variables";
 import { Tag } from "../../theme/styled-componets";
 
-const Card = ({ name, cat, image, price }) => {
+const Card = ({ name, cat, image, price, stock }) => {
   return (
     <>
       <CardWrapper>
@@ -18,6 +18,7 @@ const Card = ({ name, cat, image, price }) => {
           <div className="sign">$</div>
           <div className="price">{price}</div>
         </div>
+        {stock < 25 ? <div className="stock">{stock}</div> : null}
       </CardWrapper>
     </>
   );
@@ -41,7 +42,6 @@ const CardWrapper = styled.div`
     transition: all 0.1s ease;
     transform: scale(0.95);
     //background: rgba(47, 238, 63, 0.418);
-
   }
   .name {
     color: black;
@@ -97,5 +97,21 @@ const CardWrapper = styled.div`
       margin-left: 5px;
       padding-bottom: 6px;
     }
+  }
+  .stock {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0px 0px 1px 0px;
+    margin-top: 150px;
+    right: 10px;
+    position: relative;
+    background-color: ${colors.red};
+    //box-shadow: 4px 2px 9px -1px rgba(0, 0, 0, 0.25);
+    border-radius: 26px;
+    width: 28px;
+    height: 28px;
+    text-align: center;
+    position: absolute;
   }
 `;

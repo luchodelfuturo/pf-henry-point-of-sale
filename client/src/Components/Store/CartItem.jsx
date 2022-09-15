@@ -28,7 +28,10 @@ const CartItem = ({ AllProducts }) => {
   const products = AllProducts.sort(nab);
 
   function handleIncr(p) {
-    qtyIncr(p);
+    let incr = products.find((e) => e.product.id === p);
+    if (incr.product.stock > incr.qty) {
+      qtyIncr(p);
+    }
   }
   function handleDecr(p) {
     qtyDecr(p);
@@ -40,49 +43,70 @@ const CartItem = ({ AllProducts }) => {
   return (
     <>
       {products && products.length > 0 ? (
-        products.map((p, i) => (
-          <Item key={i}>
-            <div className="div-container">
-              <div className="qty">{p.qty}</div>
-              <div className="product-info">
-                <Tag className="cat">{p.product.categories}</Tag>
-                <div className="name">{p.product.name}</div>
-              </div>
-              <div className="qty-changer">
-                <button
-                  className="btn-decr"
-                  id={p.product.id}
-                  onClick={() => handleDecr(p.product.id)}
+        products.map((p, i) => {
+          return (
+            <Item key={i}>
+              <div className="div-container">
+                <div className="qty">{p.qty}</div>
+                <div className="product-info">
+                  <Tag className="cat">{p.product.categories}</Tag>
+                  <div className="name">{p.product.name}</div>
+                </div>
+                <div className="qty-changer">
+                  {p.qty > 1 ? (
+                    <button
+                      className="btn-decr"
+                      id={p.product.id}
+                      onClick={() => handleDecr(p.product.id)}
+                    >
+                      <FontAwesomeIcon
+                        icon={faCaretDown}
+                        style={{ width: 25, height: 25 }}
+                      />
+                    </button>
+                  ) : (
+                    <button className="btn-qty-disable" id={p.product.id}>
+                      <FontAwesomeIcon
+                        icon={faCaretDown}
+                        style={{ width: 25, height: 25 }}
+                      />
+                    </button>
+                  )}
+
+                  {p.product.stock > p.qty ? (
+                    <button
+                      className="btn-incr"
+                      id={p.product.id}
+                      onClick={() => handleIncr(p.product.id)}
+                    >
+                      <FontAwesomeIcon
+                        icon={faCaretUp}
+                        style={{ width: 25, height: 25 }}
+                      />
+                    </button>
+                  ) : (
+                    <button className="btn-qty-disable" id={p.product.id}>
+                      <FontAwesomeIcon
+                        icon={faCaretUp}
+                        style={{ width: 25, height: 25 }}
+                      />
+                    </button>
+                  )}
+                </div>
+                <div className="price-cont">
+                  <div className="sign">$</div>
+                  <div className="price">{p.subTotal}</div>
+                </div>
+                <div
+                  className="delete-item"
+                  onClick={() => handleDelete(p.product.id)}
                 >
-                  <FontAwesomeIcon
-                    icon={faCaretDown}
-                    style={{ width: 25, height: 25 }}
-                  />
-                </button>
-                <button
-                  className="btn-incr"
-                  id={p.product.id}
-                  onClick={() => handleIncr(p.product.id)}
-                >
-                  <FontAwesomeIcon
-                    icon={faCaretUp}
-                    style={{ width: 25, height: 25 }}
-                  />
-                </button>
+                  X
+                </div>
               </div>
-              <div className="price-cont">
-                <div className="sign">$</div>
-                <div className="price">{p.subTotal}</div>
-              </div>
-              <div
-                className="delete-item"
-                onClick={() => handleDelete(p.product.id)}
-              >
-                X
-              </div>
-            </div>
-          </Item>
-        ))
+            </Item>
+          );
+        })
       ) : (
         <EmptyCart>
           Select a product{" "}
@@ -122,6 +146,15 @@ const Item = styled.div`
     width: 57px;
     text-align: center;
   }
+  .btn-qty-disable {
+    width: 83px;
+    height: 83px;
+    background-color: ${colors.dviolet};
+    border: none;
+    font-weight: 500;
+    font-size: 28px;
+    color: ${colors.grey2};
+  }
   .product-info {
     text-align: start;
     min-width: 255px;
@@ -143,7 +176,6 @@ const Item = styled.div`
   .qty-changer {
     display: flex;
     width: 166px;
-
     color: white;
 
     .btn-decr {
@@ -154,6 +186,7 @@ const Item = styled.div`
       font-weight: 500;
       font-size: 28px;
       padding-bottom: 5px;
+      position: relative;
 
       &:active {
         color: white;
@@ -167,6 +200,7 @@ const Item = styled.div`
       border: none;
       font-weight: 500;
       font-size: 28px;
+      //border-left: 1px solid ${colors.lviolet};
       &:active {
         color: white;
         background-color: #6044b3;

@@ -3,6 +3,8 @@ import styled from "styled-components";
 // Variables
 export const colors = {
   violet: "#7f5af0",
+  dviolet: "#544b6e",
+  lviolet: "#8d6cf0",
   green: "#2cb67d",
   vlgreen: "#8eff65",
   lgreen: "#C4FFAF",
@@ -11,6 +13,7 @@ export const colors = {
   red: "#FFB9AF",
   dred: "#FF6A6A",
   blue: "#5263FA",
+  blue2: "#005FF0",
   white: "#fffffe",
   black: "#010101",
   grey1: "#16161a",
@@ -44,7 +47,6 @@ export const BtnRounded = styled.button`
   margin-right: 10px;
   cursor: pointer;
 
-  
   &:active {
     transition: all 0.1s ease;
     transform: scale(0.95);
