@@ -9,7 +9,11 @@ const {
   addExpense,
   totalCash,
   totalPaypal,
+  updatedIncome,
+  updatedExpenses
 } = require("../controllers/cashControlers.js");
+
+
 router.post("/close", async (req, res) => {
   try {
     let cashClose = await Cash.create(req.body);
@@ -33,7 +37,7 @@ router.get("/history", async (req, res) => {
     res.json(error);
   }
 });
-router.get("/:id", async (req, res) => {
+router.get("/totalSales/:id", async (req, res) => {
   const { id } = req.params;
   try {
     // res.json(await cashUpdated(id))
@@ -45,9 +49,19 @@ router.get("/:id", async (req, res) => {
     console.log(condition)
     await Cash.update({ totalSales: condition }, { where: { id: id } });
     // res.json(totals);
-    res.json(condition)
+    res.json({totalSales: condition})
   } catch (error) {
     console.log(error);
+  }
+});
+
+router.get('/totalCash-register/:id', async(req,res)=>{
+  const { id } = req.params
+  try{
+    let totals = await cashUpdated(id)
+    res.json({totalCashRegister: totals})
+  }catch(error){
+    res.josn(error)
   }
 });
 
@@ -58,7 +72,7 @@ router.get("/payment-paypal/:id", async (req, res) => {
   } catch (error) {
     res.send(error);
   }
-});
+})
 
 router.get("/payment-cash/:id", async (req, res) => {
   //llamar a esta ruta cada que se efectua una venta
@@ -92,6 +106,27 @@ router.post("/addExpense/:id", async (req, res) => {
     } catch (error) {
       console.log(error);
     }
+  }
+});
+
+
+router.get("/showIncome/:id", async(req,res)=>{
+  const { id } = req.params;
+  try {
+    let showIncome = await updatedIncome(id);
+    res.json({totalIncome: showIncome})
+  } catch (error) {
+    res.josn(error)
+  }
+});
+
+router.get("/showExpense/:id", async(req,res)=>{
+  const { id } = req.params;
+  try {
+    let showExpenses = await updatedExpenses(id);
+    res.json({totalExpenses: showExpenses})
+  } catch (error) {
+    res.josn(error)
   }
 });
 
