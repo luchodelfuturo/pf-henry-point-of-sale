@@ -141,19 +141,24 @@ const Item = styled.div`
     position: relative;
   }
   .qty {
+    //justify-content: center;
+    //align-content: center;
     font-weight: 600;
     font-size: 20px;
     width: 57px;
+    height: 70px;
     text-align: center;
+    line-height: 70px;
+    border-right: 1px dashed #a1a1a1;
   }
   .btn-qty-disable {
     width: 83px;
     height: 83px;
-    background-color: ${colors.dviolet};
+    background-color: ${colors.grey8};
     border: none;
     font-weight: 500;
     font-size: 28px;
-    color: ${colors.grey2};
+    color: ${colors.grey5};
   }
   .product-info {
     text-align: start;
@@ -163,14 +168,14 @@ const Item = styled.div`
       font-weight: 400;
       position: absolute;
       top: 12px;
-      left: 42px;
+      left: 52px;
     }
     .name {
       font-weight: 600;
       font-size: 18px;
       position: absolute;
       top: 42px;
-      left: 42px;
+      left: 52px;
     }
   }
   .qty-changer {

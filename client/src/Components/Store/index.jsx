@@ -19,7 +19,7 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 function Store() {
   const dispatch = useDispatch();
-  const { state, products, categories, order } = useContext(StoreContext);
+  const { state, products, categories } = useContext(StoreContext);
   const [update, setUpdate] = useState(0)
       
   useEffect(() => {
@@ -107,7 +107,7 @@ function Store() {
                   })}
               </div>
               <div className="cards-container">
-                {<Cards products={products} />}
+                {<Cards products={products} allProducts={state} />}
               </div>
             </div>
           </div>

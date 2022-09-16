@@ -126,6 +126,7 @@ export const NavBar = styled.nav`
   justify-content: center;
   padding-top: 1rem;
   padding-left: 2rem;
+  z-index: 5;
 `;
 
 export const NavBarSup = styled.nav`

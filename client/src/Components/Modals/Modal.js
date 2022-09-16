@@ -360,7 +360,7 @@ const Overlay = styled.div`
   align-items: center;
   justify-content: center;
   //padding: 40px;
-  z-index: 1;
+  z-index: 6;
 `;
 
 const ModalContainer = styled.div`
@@ -370,7 +370,7 @@ const ModalContainer = styled.div`
   box-shadow: -5px 0px 9px 2px rgba(0, 0, 0, 0.25);
   border-radius: 35px;
   font-family: "Lato";
-  z-index: 2;
+  z-index: 7;
 `;
 
 const ModalHeader = styled.div`
