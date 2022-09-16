@@ -35,7 +35,6 @@ function Cart({ products, setUpdate, update }) {
     try {
       dispatch(postOrdersAction(order));
       deleteAll();
-      setUpdate(update + 1);
     } catch (error) {
       console.error(error);
     }

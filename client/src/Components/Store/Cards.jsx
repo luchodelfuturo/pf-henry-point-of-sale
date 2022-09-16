@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import StoreContext from "../../GlobalStates/StoreContext";
 import Card from "./Card";
 
@@ -6,12 +6,6 @@ export default function Cards({ products, allProducts }) {
   const { addProductById } = useContext(StoreContext);
 
   function handlePickProduct(p) {
-    console.log(
-      "%cCards.jsx line:10 products",
-      "color: white; background-color: #007acc;",
-      products
-    );
-
     let incr = products.find((e) => e.id === p);
     let incrQty = allProducts.find((e) => e.product.id === p);
 

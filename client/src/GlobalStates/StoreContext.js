@@ -63,17 +63,12 @@ function reducer(state = initialState, action = {}) {
 export function StoreProvider({ children }) {
   const { products } = useSelector((state) => state.products);
   const { categories } = useSelector((state) => state.categories);
+
   const [state, dispatch] = useReducer(reducer, reducer());
   const [comments, setComments] = useState("");
   const [methodPayment, setMethodPayment] = useState("cash");
 
   function qtyIncr(id) {
-
-    // let incr = state.find((e) => e.product.id === id)
-
-    // if (incr.stock === ){
-
-    // }
     dispatch({ type: "INCREMENT", payload: id });
   }
   function qtyDecr(id) {
@@ -133,7 +128,6 @@ export function StoreProvider({ children }) {
     productsOrder: productsOrder,
     totalOrder: totals,
     methodPayment: methodPayment,
-
   };
 
   const ls = JSON.parse(window.localStorage.getItem("items"));

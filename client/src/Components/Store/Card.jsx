@@ -19,7 +19,7 @@ const Card = ({ name, cat, image, price, stock }) => {
             <div className="sign">$</div>
             <div className="price">{price}</div>
           </div>
-          {stock < 11 ? <div className="stock">{stock}</div> : null}
+          {stock < 20 ? <div className="stock">{stock}</div> : null}
         </CardWrapper>
       ) : (
         <CardWrapper>

@@ -32,7 +32,10 @@ const Modal = ({
   const [cupon, setCupon] = useState(0);
 
   const calcChange = useCallback(
-    () => setChange(((cash - total) + ((total*cupon)/100) + ((total*disc)/100)).toFixed(2)),
+    () =>
+      setChange(
+        (cash - total + (total * cupon) / 100 + (total * disc) / 100).toFixed(2)
+      ),
     [cash, total, disc, cupon]
   );
   //   const calcChange = useCallback(
@@ -371,6 +374,12 @@ const ModalContainer = styled.div`
   border-radius: 35px;
   font-family: "Lato";
   z-index: 7;
+  /* transform: scale(0.9);
+  transition: all 0.3s ease;
+  &:focus {
+    transform: scale(0.9);
+    transition: all 0.3s ease;
+  } */
 `;
 
 const ModalHeader = styled.div`

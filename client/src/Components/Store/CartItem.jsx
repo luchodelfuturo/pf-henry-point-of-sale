@@ -149,6 +149,7 @@ const Item = styled.div`
     height: 70px;
     text-align: center;
     line-height: 70px;
+    border-left: 3px solid ${colors.violet};
     border-right: 1px dashed #a1a1a1;
   }
   .btn-qty-disable {
