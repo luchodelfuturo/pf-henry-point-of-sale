@@ -19,7 +19,8 @@ const Modals = () => {
   const [isOpenModalExpense, openModalExpense, closeModalExpense] =
     useModal(false);
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     dispatch(addIncomeAction(ingreso.amount));
   };
 
@@ -57,7 +58,11 @@ const Modals = () => {
               }
             />
           </label>
-          <input type="submit" value="Agregar ingreso" />
+          <input
+            type="submit"
+            value="Agregar ingreso"
+            onClick={closeModalIncome}
+          />
         </form>
       </Modal>
       <button onClick={openModalExpense}>Egreso</button>

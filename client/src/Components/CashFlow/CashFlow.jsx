@@ -14,7 +14,9 @@ import Modals from "./Modals";
 export default function CashFlow() {
   const history = useHistory();
   const dispatch = useDispatch();
-  const { totalCash, totalPaypal } = useSelector((state) => state.orders);
+  const { totalCash, totalPaypal, totalIncome } = useSelector(
+    (state) => state.orders
+  );
 
   useEffect(() => {
     dispatch(getTotalCashAction());
@@ -66,9 +68,13 @@ export default function CashFlow() {
             />
             <BoxesCashFlow
               title={"Total de Ventas"}
-              value={totalCash.totalCash + totalPaypal.totalPaypal}
+              value={
+                totalCash.totalCash + totalPaypal.totalPaypal < 1
+                  ? 0
+                  : totalCash.totalCash + totalPaypal.totalPaypal
+              }
             />
-            <BoxesCashFlow title={"Ingresos"} value={0} />
+            <BoxesCashFlow title={"Ingresos"} value={totalIncome.totalIncome} />
             <BoxesCashFlow title={"Egresos"} value={0} />
             <BoxesCashFlow title={"Total de Efectivo"} value={0} />
           </div>

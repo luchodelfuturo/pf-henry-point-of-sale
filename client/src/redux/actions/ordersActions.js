@@ -120,7 +120,7 @@ export const disableOrderAction = (orderNumber) => (dispatch) => {
 export const filterStatusAction = (status) => (dispatch) => {
   dispatch(filterStatus(status));
 };
-export const addIncomeAction = (income) => {
+export const addIncomeAction = (income) => (dispatch) => {
   console.log(income);
   return axios
     .post("/cash/addIncome/1", { income: income })

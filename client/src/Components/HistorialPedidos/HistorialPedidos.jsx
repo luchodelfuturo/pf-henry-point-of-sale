@@ -59,10 +59,10 @@ export default function HistorialPedidos() {
     dispatch(filterStatusAction(e.target.value));
   };
 
-  const desactivateOrder = (orderEdit) => {
-    dispatch(disableOrderAction(orderEdit.orderNumber));
-    setMostrarForm(false);
-  };
+  // const desactivateOrder = (orderEdit) => {
+  //   dispatch(disableOrderAction(orderEdit.orderNumber));
+  //   setMostrarForm(false);
+  // };
 
   useEffect(() => {
     dispatch(getAllOrdersAction());
