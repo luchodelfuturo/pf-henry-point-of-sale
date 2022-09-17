@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { disableProductAction } from "../../redux/actions/productsActions";
 import { ButtonX, ButtonDis,ButtonDelete, ButtonSave } from '../../theme/styled-componets';
+import Swal from 'sweetalert2'
 
 export default function FormProducts({
   categories,
@@ -30,6 +31,7 @@ export default function FormProducts({
           idcategory: productEdit.idcategory,
           active: productEdit.active,
           image: productEdit.image,
+          id: productEdit.id
         }
   );
   console.log("STATE edit:", state.idcategory);
@@ -53,20 +55,54 @@ export default function FormProducts({
     setState({ ...state, idcategory: value, image: imagenes[value] });
   };
 
-  const handleDelete = (e) => {
+  const deleteAlert = (e) => {
 
-    dispatch(disableProductAction(productEdit.id))
-    setProductEdit((oldProduct) => ({...oldProduct, active: false}))
+    Swal.fire({
+      title: 'Advertencia',
+      text: 'Estás seguro que deseas eliminar este producto?',
+      icon: 'warning',
+      showDenyButton: true,
+      denyButtonText: 'No',
+      confirmButtonText: 'Sí'
+    }).then(res => {
+      if(res.isConfirmed){
+        handleDelete(e)
+      }
+    })
 
   }
 
-  //     "name": "Burger Doble",
-  //     "price": 200,
-  //     "image": "",
-  //     "description": "veggie burger",
-  //     "active": true,
-  //     "idcategory": 1
-  //
+  const handleDelete = (e) => {
+
+    //Hace la funcion
+    dispatch(disableProductAction(productEdit.id))
+    setProductEdit((oldProduct) => ({...oldProduct, active: false}))
+
+    // Cierra la pestaña
+    setShowFormProducts(false);
+    setProductEdit({
+      name: "",
+      price: "",
+      categorias: "",
+      desc: "",
+    });
+
+  }
+
+  //const saveAlert = (e) => {
+  //  Swal.fire({
+  //    title: 'Advertencia',
+  //    text: 'Estás seguro que deseas guardar este producto?',
+  //    icon: 'warning',
+  //    showDenyButton: true,
+  //    denyButtonText: 'No',
+  //    confirmButtonText: 'Sí'
+  //  }).then(res => {
+  //    if(res.isConfirmed){
+  //      handleSubmit(e)
+  //    }
+  //  })
+  //}
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -152,7 +188,7 @@ export default function FormProducts({
               />
             </div>
             <ButtonDis disabled type="button">Agregar Imagen</ButtonDis>
-            <ButtonDelete onClick={(e) => {handleDelete(e)}} type="button">Eliminar</ButtonDelete>
+            <ButtonDelete onClick={(e) => {deleteAlert(e)}} type="button">Eliminar</ButtonDelete>
             <ButtonSave
               disabled={
                 state.name === "" ||
