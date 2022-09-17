@@ -25,7 +25,7 @@ const paymentCash = async (id) => {
     // await cash.save();
     console.log(update);
     console.log(totalCash);
-    return { total: totalCash };
+    return { totalCash: totalCash };
   } else if (cash.length > 1) {
     // let update = await cashUpdated(id)
     let totalCash = 0;
@@ -46,9 +46,9 @@ const paymentCash = async (id) => {
     );
 
     // return totalCash;
-    return { total: totalCash };
+    return { totalCash: totalCash };
   } else {
-    return 0;
+    return { totalCash: 0 };
   }
 };
 
@@ -65,7 +65,7 @@ const paymentPayPal = async (id) => {
     }
     await Cash.update({ paypalPayment: totalPayment }, { where: { id: id } });
 
-    return { total: totalPayment };
+    return { totalPaypal: totalPayment };
   } else if (paypal.length > 1) {
     if (paypal.length > 0) { ///checar despues
       let totalPayment = 0;
@@ -75,10 +75,10 @@ const paymentPayPal = async (id) => {
       }
       await Cash.update({ paypalPayment: totalPayment }, { where: { id: id } });
 
-      return { total: totalPayment };
+      return { totalPaypal: totalPayment };
     }
   } else {
-    return 0;
+    return { totalPaypal: 0 };
   }
 };
 

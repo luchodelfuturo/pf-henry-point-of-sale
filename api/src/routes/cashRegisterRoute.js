@@ -10,9 +10,8 @@ const {
   totalCash,
   totalPaypal,
   updatedIncome,
-  updatedExpenses
+  updatedExpenses,
 } = require("../controllers/cashControlers.js");
-
 
 router.post("/close", async (req, res) => {
   try {
@@ -42,26 +41,30 @@ router.get("/totalSales/:id", async (req, res) => {
   try {
     // res.json(await cashUpdated(id))
     let totalP = await totalPaypal(id);
-    let totalC = await totalCash(id)
+    let totalC = await totalCash(id);
     // console.log(totalC)
     // console.log(totalP)
-    let condition = isNaN(totalP) ? totalC + 0 : isNaN(totalC) ? totalP + 0 : totalC + totalP
-    console.log(condition)
+    let condition = isNaN(totalP)
+      ? totalC + 0
+      : isNaN(totalC)
+      ? totalP + 0
+      : totalC + totalP;
+    console.log(condition);
     await Cash.update({ totalSales: condition }, { where: { id: id } });
     // res.json(totals);
-    res.json({totalSales: condition})
+    res.json({ totalSales: condition });
   } catch (error) {
     console.log(error);
   }
 });
 
-router.get('/totalCash-register/:id', async(req,res)=>{
-  const { id } = req.params
-  try{
-    let totals = await cashUpdated(id)
-    res.json({totalCashRegister: totals})
-  }catch(error){
-    res.josn(error)
+router.get("/totalCash-register/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    let totals = await cashUpdated(id);
+    res.json({ totalCashRegister: totals });
+  } catch (error) {
+    res.josn(error);
   }
 });
 
@@ -72,7 +75,7 @@ router.get("/payment-paypal/:id", async (req, res) => {
   } catch (error) {
     res.send(error);
   }
-})
+});
 
 router.get("/payment-cash/:id", async (req, res) => {
   //llamar a esta ruta cada que se efectua una venta
@@ -90,6 +93,7 @@ router.post("/addIncome/:id", async (req, res) => {
   const { id } = req.params;
   if (income) {
     try {
+      console.log(income);
       res.status(200).json(await addIncome(id, income));
     } catch (error) {
       console.log(error);
@@ -109,24 +113,23 @@ router.post("/addExpense/:id", async (req, res) => {
   }
 });
 
-
-router.get("/showIncome/:id", async(req,res)=>{
+router.get("/showIncome/:id", async (req, res) => {
   const { id } = req.params;
   try {
     let showIncome = await updatedIncome(id);
-    res.json({totalIncome: showIncome})
+    res.json({ totalIncome: showIncome });
   } catch (error) {
-    res.josn(error)
+    res.josn(error);
   }
 });
 
-router.get("/showExpense/:id", async(req,res)=>{
+router.get("/showExpense/:id", async (req, res) => {
   const { id } = req.params;
   try {
     let showExpenses = await updatedExpenses(id);
-    res.json({totalExpenses: showExpenses})
+    res.json({ totalExpenses: showExpenses });
   } catch (error) {
-    res.josn(error)
+    res.josn(error);
   }
 });
 

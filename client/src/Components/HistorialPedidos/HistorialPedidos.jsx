@@ -39,6 +39,11 @@ export default function HistorialPedidos() {
     dispatch(filterFromDateAction(fromToFilter));
   };
 
+  const desactivateOrder = (orderEdit) => {
+    dispatch(disableOrderAction(orderEdit.orderNumber));
+    dispatch(getAllOrdersAction());
+    setMostrarForm(false);
+  };
   const handleChangeToDate = (e) => {
     setFromToFilter({
       ...fromToFilter,
@@ -54,14 +59,14 @@ export default function HistorialPedidos() {
     dispatch(filterStatusAction(e.target.value));
   };
 
-  const desactivateOrder = (orderEdit) => {
-    dispatch(disableOrderAction(orderEdit.orderNumber));
-    setMostrarForm(false);
-  };
+  // const desactivateOrder = (orderEdit) => {
+  //   dispatch(disableOrderAction(orderEdit.orderNumber));
+  //   setMostrarForm(false);
+  // };
 
   useEffect(() => {
     dispatch(getAllOrdersAction());
-  }, [dispatch]);
+  }, [dispatch, mostrarForm]);
   return (
     <div
       style={{
@@ -93,6 +98,11 @@ export default function HistorialPedidos() {
           name="from"
           value={fromToFilter.from}
           onChange={(e) => {
+            setFromToFilter({
+              ...fromToFilter,
+              [e.target.name]: e.target.value,
+            });
+
             handleChangeFromDate(e);
           }}
         />
@@ -387,7 +397,11 @@ export default function HistorialPedidos() {
                 gap: "20px",
               }}
             >
-              <button onClick={() => desactivateOrder(orderEdit)}>
+              <button
+                onClick={() => {
+                  desactivateOrder(orderEdit);
+                }}
+              >
                 Borrar
               </button>
               {/* <button>Guardar</button> */}

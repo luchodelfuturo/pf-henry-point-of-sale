@@ -1,10 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
 import NavBarApp from "../NavbarApp/NavBarApp";
 import BoxesCashFlow from "./BoxesCashFlow";
 import { useHistory } from "react-router-dom";
+import {
+  getTotalCashAction,
+  getTotalPaypalAction,
+  getTotalIncomeAction,
+} from "../../redux/actions/ordersActions";
+import { useDispatch, useSelector } from "react-redux";
+import Modal from "./Modal";
+import Modals from "./Modals";
 
 export default function CashFlow() {
   const history = useHistory();
+  const dispatch = useDispatch();
+  const { totalCash, totalPaypal, totalIncome } = useSelector(
+    (state) => state.orders
+  );
+
+  useEffect(() => {
+    dispatch(getTotalCashAction());
+    dispatch(getTotalPaypalAction());
+    dispatch(getTotalIncomeAction());
+  }, [dispatch]);
+
   return (
     <div style={{ width: "100%", height: "100vh", backgroundColor: "gray" }}>
       <div style={{ height: "90vh", backgroundColor: "white", width: "100%" }}>
@@ -39,10 +58,23 @@ export default function CashFlow() {
             }}
           >
             <BoxesCashFlow title={"Inicio de Caja"} value={0} />
-            <BoxesCashFlow title={"Ventas Efectivo"} value={0} />
-            <BoxesCashFlow title={"Ventas Tarjeta"} value={0} />
-            <BoxesCashFlow title={"Total de Ventas"} value={0} />
-            <BoxesCashFlow title={"Ingresos"} value={0} />
+            <BoxesCashFlow
+              title={"Ventas Efectivo"}
+              value={totalCash.totalCash}
+            />
+            <BoxesCashFlow
+              title={"Ventas Tarjeta"}
+              value={totalPaypal.totalPaypal}
+            />
+            <BoxesCashFlow
+              title={"Total de Ventas"}
+              value={
+                totalCash.totalCash + totalPaypal.totalPaypal < 1
+                  ? 0
+                  : totalCash.totalCash + totalPaypal.totalPaypal
+              }
+            />
+            <BoxesCashFlow title={"Ingresos"} value={totalIncome.totalIncome} />
             <BoxesCashFlow title={"Egresos"} value={0} />
             <BoxesCashFlow title={"Total de Efectivo"} value={0} />
           </div>
@@ -60,8 +92,7 @@ export default function CashFlow() {
               alignContent: "start",
             }}
           >
-            <button>Ingreso</button>
-            <button>Egreso</button>
+            <Modals />
             <button onClick={() => history.push("/cashFlow/historialCashFlow")}>
               Historial De Cierres
             </button>
