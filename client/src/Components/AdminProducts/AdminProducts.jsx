@@ -33,7 +33,7 @@ export default function AdminProducts() {
     active: true,
     idcategory: "",
     image: "",
-    id:
+    
   });
 
   const [addCatShow, setAddCatShow] = useState(false);
