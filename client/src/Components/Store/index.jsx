@@ -20,11 +20,13 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 function Store() {
   const dispatch = useDispatch();
   const { state, products, categories } = useContext(StoreContext);
+  const [update, setUpdate] = useState(false)
+
 
   useEffect(() => {
     dispatch(getCategories());
     dispatch(getProducts());
-  }, [dispatch, state.length]);
+  }, [dispatch, update]);
 
   const filterCategory = async (category) => {
     await dispatch(filterByCategoryAction(category));
@@ -39,8 +41,6 @@ function Store() {
     dispatch(searchProductsName(e.target.value));
   }
 
-  function handleSearchBtn(params) {}
-
   return (
     <>
       <div className="container">
@@ -48,7 +48,7 @@ function Store() {
           {/* <div className="clients-tabs">Clients</div> */}
           <div className="store-container">
             <div className="cart-container">
-              <Cart products={state} />
+              <Cart products={state} update={update} setUpdate={setUpdate} />
             </div>
             <div className="products-container">
               <div className="searchnsort">

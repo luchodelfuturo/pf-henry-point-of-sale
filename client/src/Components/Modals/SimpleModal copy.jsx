@@ -4,7 +4,7 @@ import { ButtonCart } from "../../theme/styled-componets";
 import { colors } from "../../theme/variables";
 import Swal from "sweetalert2";
 
-export default function SimpleModal({ setClose }) {
+export default function Comments() {
   const mensaje = () => {
     Swal.fire({
       position: "top-end",
@@ -21,19 +21,16 @@ export default function SimpleModal({ setClose }) {
     // Opcional -- Mensaje luego de confirm
     mensaje();
   }
-
   function handleCancelBtn() {
-    setClose(false);
+    // Acciones para el boton OK
   }
 
   return (
-    <Overlay onClick={() => handleCancelBtn()}>
+    <Overlay>
       <CommentsModal>
         <div></div>
         <div className="btns">
-          <ButtonCart className="close" onClick={() => handleCancelBtn()}>
-            Cancel
-          </ButtonCart>
+          <ButtonCart className="close">Cancel</ButtonCart>
           <ButtonCart className="ok">Ok</ButtonCart>
         </div>
       </CommentsModal>

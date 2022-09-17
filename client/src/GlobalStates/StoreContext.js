@@ -68,6 +68,8 @@ export function StoreProvider({ children }) {
   const [comments, setComments] = useState("");
   const [methodPayment, setMethodPayment] = useState("cash");
 
+  console.log('%cStoreContext.js line:71 state', 'color: #007acc;', state);
+
   function qtyIncr(id) {
     dispatch({ type: "INCREMENT", payload: id });
   }
@@ -130,6 +132,7 @@ export function StoreProvider({ children }) {
     methodPayment: methodPayment,
   };
 
+  
   const ls = JSON.parse(window.localStorage.getItem("items"));
   useEffect(() => {
     if (state.length > 0) {

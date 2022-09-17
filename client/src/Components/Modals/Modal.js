@@ -23,6 +23,7 @@ const Modal = ({
   setComments,
   postOrder,
   setMethodPayment,
+  df,
 }) => {
   const [payment, setPayment] = useState("cash");
   const [cash, setCash] = useState("0");
@@ -38,10 +39,6 @@ const Modal = ({
       ),
     [cash, total, disc, cupon]
   );
-  //   const calcChange = useCallback(
-  //     () => setChange((cash - total - (disc * total) / 100).toFixed(2)),
-  //     [cash, total, disc]
-  //   );
 
   const inputEl = useRef();
 
@@ -86,6 +83,7 @@ const Modal = ({
     if (e.target.id === "overlay") {
       sch(false);
     }
+    df("all products")
   }
 
   function handleComments() {
