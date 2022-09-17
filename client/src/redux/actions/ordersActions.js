@@ -16,6 +16,7 @@ import {
   filterStatus,
   ordersFinishedPaypal,
   ordersFinishedCash,
+  getTotalIncome,
 } from "../slices/ordersSlice";
 
 export const getOrdersAction = () => (dispatch) => {
@@ -119,7 +120,7 @@ export const disableOrderAction = (orderNumber) => (dispatch) => {
 export const filterStatusAction = (status) => (dispatch) => {
   dispatch(filterStatus(status));
 };
-export const addIngresoAction = (income) => {
+export const addIncomeAction = (income) => {
   console.log(income);
   return axios
     .post("/cash/addIncome/1", { income: income })
@@ -129,4 +130,11 @@ export const addIngresoAction = (income) => {
 export const addExpenseAction = (expense) => (dispatch) => {
   console.log(expense);
   return axios.post("/cash/addExpense/1", expense);
+};
+
+export const getTotalIncomeAction = () => (dispatch) => {
+  return axios
+    .get("/cash/showIncome/1")
+    .then((res) => dispatch(getTotalIncome(res.data)))
+    .catch((e) => console.log(e));
 };

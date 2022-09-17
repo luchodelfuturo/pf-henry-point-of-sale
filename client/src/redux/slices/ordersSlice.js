@@ -12,6 +12,8 @@ export const ordersSlice = createSlice({
     finishedOrders: [],
     totalCash: [],
     totalPaypal: [],
+    totalIncome: [],
+    totalExpenses: [],
   },
   reducers: {
     getOrders: (state, action) => {
@@ -110,6 +112,9 @@ export const ordersSlice = createSlice({
           ? state.orders
           : orders.filter((order) => order.status === action.payload);
     },
+    getTotalIncome: (state, action) => {
+      state.totalIncome = action.payload;
+    },
   },
 });
 
@@ -130,5 +135,6 @@ export const {
   filterToDate,
   disableOrder,
   filterStatus,
+  getTotalIncome,
 } = ordersSlice.actions;
 export default ordersSlice.reducer;

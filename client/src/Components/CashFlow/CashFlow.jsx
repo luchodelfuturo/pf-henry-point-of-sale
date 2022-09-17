@@ -5,9 +5,11 @@ import { useHistory } from "react-router-dom";
 import {
   getTotalCashAction,
   getTotalPaypalAction,
+  getTotalIncomeAction,
 } from "../../redux/actions/ordersActions";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "./Modal";
+import Modals from "./Modals";
 
 export default function CashFlow() {
   const history = useHistory();
@@ -17,6 +19,7 @@ export default function CashFlow() {
   useEffect(() => {
     dispatch(getTotalCashAction());
     dispatch(getTotalPaypalAction());
+    dispatch(getTotalIncomeAction());
   }, [dispatch]);
 
   return (
@@ -83,7 +86,7 @@ export default function CashFlow() {
               alignContent: "start",
             }}
           >
-            <Modal />
+            <Modals />
             <button onClick={() => history.push("/cashFlow/historialCashFlow")}>
               Historial De Cierres
             </button>
