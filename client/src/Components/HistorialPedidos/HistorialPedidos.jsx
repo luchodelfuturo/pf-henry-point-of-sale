@@ -39,6 +39,11 @@ export default function HistorialPedidos() {
     dispatch(filterFromDateAction(fromToFilter));
   };
 
+  const desactivateOrder = (orderEdit) => {
+    dispatch(disableOrderAction(orderEdit.orderNumber));
+    dispatch(getAllOrdersAction());
+    setMostrarForm(false);
+  };
   const handleChangeToDate = (e) => {
     setFromToFilter({
       ...fromToFilter,
