@@ -4,37 +4,41 @@ import { ButtonCart } from "../../theme/styled-componets";
 import { colors } from "../../theme/variables";
 import Swal from "sweetalert2";
 
-export default function SimpleModal({ setClose }) {
+export default function ClearCart({ setClearCart, deleteAll }) {
   const mensaje = () => {
     Swal.fire({
-      position: "top-end",
+      position: "center",
       icon: "success",
-      title: "Your work has been saved",
+      title: "Cart cleared",
       showConfirmButton: false,
-      timer: 1500,
+      timer: 1000,
     });
   };
 
   function handleConfirmBtn() {
-    // Acciones para el boton OK
 
-    // Opcional -- Mensaje luego de confirm
+    deleteAll()
+    setClearCart(false);
     mensaje();
   }
-
-  function handleCancelBtn() {
-    setClose(false);
+  function handleCancelBtn(e) {
+    if (e.target.value === "close") {
+      setClearCart(false);
+    }
+    if (e.target.id === "overlay") {
+      setClearCart(false);
+    }
   }
 
   return (
-    <Overlay onClick={() => handleCancelBtn()}>
+    <Overlay id="overlay" onClick={(e) => handleCancelBtn(e)}>
       <CommentsModal>
-        <div></div>
+        <div className="message"><h2>Are you sure you want to clear the cart?</h2></div>
         <div className="btns">
-          <ButtonCart className="close" onClick={() => handleCancelBtn()}>
-            Cancel
+          <ButtonCart className="close" value="close" onClick={(e) => handleCancelBtn(e)}>
+            No
           </ButtonCart>
-          <ButtonCart className="ok">Ok</ButtonCart>
+          <ButtonCart className="ok" onClick={()=> handleConfirmBtn()}>Yes</ButtonCart>
         </div>
       </CommentsModal>
     </Overlay>
@@ -44,25 +48,35 @@ export default function SimpleModal({ setClose }) {
 const Overlay = styled.div`
   width: 100vw;
   height: 100vh;
-  position: fixed;
+  position: absolute;
   background: rgba(33, 33, 33, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1;
+  z-index: 5;
 `;
 
 const CommentsModal = styled.div`
   width: 550px;
-  height: 400px;
+  height: 300px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  align-self: center;
+  background-color: blue;
   flex-direction: column;
   align-items: center;
   background: #f6f6f6;
   box-shadow: -5px 0px 9px 2px rgba(0, 0, 0, 0.25);
   border-radius: 25px;
   font-family: "Lato";
+
+  .message{
+    //font-size: 22px;
+    font-weight: 600;
+    height: 200px;
+    line-height: 200px;
+  }
 
   .btns {
     margin-top: 10px;

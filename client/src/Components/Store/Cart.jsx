@@ -3,10 +3,10 @@ import StoreContext from "../../GlobalStates/StoreContext";
 import CartItem from "./CartItem";
 import styled from "styled-components";
 import "./cart.css";
+import { filterByCategoryAction } from "../../redux/actions/productsActions";
 import { postOrdersAction } from "../../redux/actions/ordersActions";
 import { useDispatch } from "react-redux";
 import Modal from "../Modals/Modal";
-import SimpleModal from '../Modals/SimpleModal'
 import { colors } from "../../theme/variables";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -16,38 +16,79 @@ import {
 import { faCommentDots } from "@fortawesome/free-solid-svg-icons";
 import { ButtonCart } from "../../theme/styled-componets";
 import Swal from "sweetalert2";
-
+import ClearCart from "../Modals/ClearCart";
+import AddDrinks from "../Modals/AddDrinks";
 
 function Cart({ products, setUpdate, update }) {
   const { deleteAll, order, totals, setComments, setMethodPayment } =
     useContext(StoreContext);
   const [checkout, setCheckout] = useState(false);
+  const [clearCart, setClearCart] = useState(false);
+  const [addDrinks, setAddDrinks] = useState(false);
 
   useEffect(() => {}, [products]);
 
   let dispatch = useDispatch();
 
-  function handleCheckoutModal() {
-    setCheckout(true);
+  function checkDrinks() {
+    let foundDrinks = products.find((d) => d.product.categories === "Drinks");
+    return foundDrinks !== undefined ? true : false;
   }
+
+  function handleCheckoutModal() {
+    if (checkDrinks()) {
+      setCheckout(true);
+    } else {
+      setAddDrinks(true);
+    }
+  }
+
+  // function sureDelete() {
+  //   Swal.fire({
+  //     title: "Are you sure?",
+  //     text: "You won't be able to revert this!",
+  //     icon: "warning",
+  //     showCancelButton: true,
+  //     confirmButtonColor: "#3085d6",
+  //     cancelButtonColor: "#d33",
+  //     confirmButtonText: "Yes, delete it!",
+  //   }).then((result) => {
+  //     if (result.isConfirmed) {
+  //       //deleteAll();
+  //     }
+  //   });
+  // }
 
   function postOrder() {
     //setCheckout(true)
     try {
       dispatch(postOrdersAction(order));
+      setUpdate(update ? false : true);
       deleteAll();
-      setUpdate(update + 1);
+      dispatch(filterByCategoryAction("all"))
     } catch (error) {
       console.error(error);
     }
   }
 
   function handleDeleteAll() {
-    deleteAll();
+    //deleteAll();
+    //sureDelete();
+    setClearCart(true);
+  }
+
+  function drinksFilter(filter){
+    dispatch(filterByCategoryAction(filter))
   }
 
   return (
     <div className="cart-cont">
+      {addDrinks ? (
+        <AddDrinks setModalState={setAddDrinks} setCheckout={setCheckout} df={drinksFilter}/>
+      ) : null}
+      {clearCart ? (
+        <ClearCart setClearCart={setClearCart} deleteAll={deleteAll} />
+      ) : null}
       {checkout && (
         <Modal
           total={totals}
@@ -56,9 +97,9 @@ function Cart({ products, setUpdate, update }) {
           setComments={setComments}
           postOrder={postOrder}
           setMethodPayment={setMethodPayment}
+          df={drinksFilter}
         />
       )}
-<SimpleModal/>
       <div className="cart">
         <div className="items">
           <div className="items-header">

@@ -23,6 +23,7 @@ const Modal = ({
   setComments,
   postOrder,
   setMethodPayment,
+  df,
 }) => {
   const [payment, setPayment] = useState("cash");
   const [cash, setCash] = useState("0");
@@ -32,13 +33,12 @@ const Modal = ({
   const [cupon, setCupon] = useState(0);
 
   const calcChange = useCallback(
-    () => setChange(((cash - total) + ((total*cupon)/100) + ((total*disc)/100)).toFixed(2)),
+    () =>
+      setChange(
+        (cash - total + (total * cupon) / 100 + (total * disc) / 100).toFixed(2)
+      ),
     [cash, total, disc, cupon]
   );
-  //   const calcChange = useCallback(
-  //     () => setChange((cash - total - (disc * total) / 100).toFixed(2)),
-  //     [cash, total, disc]
-  //   );
 
   const inputEl = useRef();
 
@@ -83,6 +83,7 @@ const Modal = ({
     if (e.target.id === "overlay") {
       sch(false);
     }
+    df("all products")
   }
 
   function handleComments() {
@@ -360,7 +361,7 @@ const Overlay = styled.div`
   align-items: center;
   justify-content: center;
   //padding: 40px;
-  z-index: 1;
+  z-index: 6;
 `;
 
 const ModalContainer = styled.div`
@@ -370,7 +371,13 @@ const ModalContainer = styled.div`
   box-shadow: -5px 0px 9px 2px rgba(0, 0, 0, 0.25);
   border-radius: 35px;
   font-family: "Lato";
-  z-index: 2;
+  z-index: 7;
+  /* transform: scale(0.9);
+  transition: all 0.3s ease;
+  &:focus {
+    transform: scale(0.9);
+    transition: all 0.3s ease;
+  } */
 `;
 
 const ModalHeader = styled.div`
