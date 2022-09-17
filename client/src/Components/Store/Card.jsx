@@ -6,20 +6,38 @@ import { Tag } from "../../theme/styled-componets";
 const Card = ({ name, cat, image, price, stock }) => {
   return (
     <>
-      <CardWrapper>
-        <div className="img">
-          <img className="image" src={image} alt="img" width="168px" />
-        </div>
-        <div className="name">
-          <p>{name}</p>
-        </div>
-        <Tag className="cat">{cat}</Tag>
-        <div className="price-cont">
-          <div className="sign">$</div>
-          <div className="price">{price}</div>
-        </div>
-        {stock < 25 ? <div className="stock">{stock}</div> : null}
-      </CardWrapper>
+      {stock > 0 ? (
+        <CardWrapper className="active">
+          <div className="img">
+            <img className="image" src={image} alt="img" width="168px" />
+          </div>
+          <div className="name">
+            <p>{name}</p>
+          </div>
+          <Tag className="cat">{cat}</Tag>
+          <div className="price-cont">
+            <div className="sign">$</div>
+            <div className="price">{price}</div>
+          </div>
+          {stock < 20 ? <div className="stock">{stock}</div> : null}
+        </CardWrapper>
+      ) : (
+        <CardWrapper>
+          <div className="img">
+            <img className="image" src={image} alt="img" width="168px" />
+          </div>
+          <div className="name">
+            <p>{name}</p>
+          </div>
+          <Tag className="cat">{cat}</Tag>
+          <div className="price-cont">
+            <div className="sign">$</div>
+            <div className="price">{price}</div>
+          </div>
+          {stock < 10 ? <div className="nostock">{stock}</div> : null}
+          <div className="inactive"></div>
+        </CardWrapper>
+      )}
     </>
   );
 };
@@ -38,10 +56,22 @@ const CardWrapper = styled.div`
   height: 192px;
   overflow: hidden;
   position: relative;
+  z-index: 1;
   &:active {
     transition: all 0.1s ease;
     transform: scale(0.95);
     //background: rgba(47, 238, 63, 0.418);
+  }
+
+  .inactive {
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 25px;
+    width: 168px;
+    height: 192px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 2;
   }
   .name {
     color: black;
@@ -106,6 +136,23 @@ const CardWrapper = styled.div`
     margin-top: 150px;
     right: 10px;
     position: relative;
+    background-color: ${colors.orange};
+    //box-shadow: 4px 2px 9px -1px rgba(0, 0, 0, 0.25);
+    border-radius: 26px;
+    width: 28px;
+    height: 28px;
+    text-align: center;
+    position: absolute;
+    z-index: 3;
+  }
+  .nostock {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0px 0px 1px 0px;
+    margin-top: 150px;
+    right: 10px;
+    position: relative;
     background-color: ${colors.red};
     //box-shadow: 4px 2px 9px -1px rgba(0, 0, 0, 0.25);
     border-radius: 26px;
@@ -113,5 +160,6 @@ const CardWrapper = styled.div`
     height: 28px;
     text-align: center;
     position: absolute;
+    z-index: 3;
   }
 `;

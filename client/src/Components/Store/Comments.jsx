@@ -112,7 +112,7 @@ const Overlay = styled.div`
   align-items: center;
   justify-content: center;
   //padding: 40px;
-  z-index: 3;
+  z-index: 10;
 `;
 
 const CommentsModal = styled.div`
@@ -126,7 +126,7 @@ const CommentsModal = styled.div`
   box-shadow: 4px 0px 9px 3px rgba(0, 0, 0, 0.25);
   border-radius: 25px;
   font-family: "Lato";
-  z-index: 4;
+  z-index: 11;
   .select-cont {
     display: flex;
     align-self: flex-end;
