@@ -22,6 +22,7 @@ export const colors = {
   grey4: "#94a1b2",
   grey5: "#636363",
   grey7: "#777777",
+  grey8: "#a5a5a5",
   yellow: "#E7D576",
   orange: "#FFB775",
   sky: "#B5FFED",
