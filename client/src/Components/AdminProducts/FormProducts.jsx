@@ -31,6 +31,7 @@ export default function FormProducts({
           idcategory: productEdit.idcategory,
           active: productEdit.active,
           image: productEdit.image,
+          id: productEdit.id
         }
   );
   console.log("STATE edit:", state.idcategory);
