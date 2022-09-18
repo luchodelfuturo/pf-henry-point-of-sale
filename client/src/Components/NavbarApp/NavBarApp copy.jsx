@@ -13,14 +13,14 @@ export default function NavBarApp() {
 
   return (
     <NavBar>
-      <Button onClick={() => history.push("/store")}>Ventas</Button>
+      <Button onClick={() => history.push("/store")}>Store</Button>
       <Button onClick={() => history.push("/kitchen")}>Kitchen</Button>
-      <Button onClick={() => history.push("/counter")}>Pedidos Ready</Button>
+      <Button onClick={() => history.push("/counter")}>Ready orders</Button>
       <Button onClick={() => history.push("/adminProducts")}>Products</Button>
       <Button onClick={() => history.push("/historialPedidos")}>
-        Historial
+        Orders history
       </Button>
-      <Button onClick={() => history.push("/cashFlow")}>Cash Flow</Button>
+      {/* <Button onClick={() => history.push("/cashFlow")}>Cash Flow</Button> */}
       <Time>{time}</Time>
     </NavBar>
   );

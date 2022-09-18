@@ -8,6 +8,7 @@ import {
 import "./auth.css";
 import { dispatchLogin } from "../../redux/actions/authAction";
 import { useDispatch } from "react-redux";
+import { Textinput, MainButton } from "../../theme/styled-componets";
 import LogInGoogle from "./LogInGoogle.jsx";
 // import { GoogleLogin } from 'react-google-login';
 
@@ -55,6 +56,7 @@ function Login() {
                 <div id="henry-login">HENRY</div>
                 <div id="bar-login">BAR</div>
               </div>
+              <div id="pos-login">Point of sale</div>
             </div>
           </div>
         </div>
@@ -65,10 +67,10 @@ function Login() {
           <h2>Log In</h2>
           {err && showErrMsg(err)}
           {success && showSuccessMsg(success)}
-          <form onSubmit={handleSubmit}>
+          <form className="form" onSubmit={handleSubmit}>
             <div>
               <label htmlFor="email">Email Address</label>
-              <input
+              <Textinput
                 type="text"
                 placeholder="Enter email address"
                 id="email"
@@ -80,7 +82,7 @@ function Login() {
 
             <div>
               <label htmlFor="password">Password</label>
-              <input
+              <Textinput
                 type="password"
                 placeholder="Enter password"
                 id="password"
@@ -89,17 +91,18 @@ function Login() {
                 onChange={handleChangeInput}
               />
             </div>
-
-            <div className="row">
-              <button type="submit">Login</button>
+            <div id="forgot">
               <Link to="/forgot_password">Forgot your password?</Link>
             </div>
+            <div className="row">
+              <LogInGoogle/>
+              <MainButton type="submit">Log in</MainButton>
+            </div>
           </form>
-          <LogInGoogle />
-          <p>
-            New to Point of Sale? <Link to="/register">Register</Link>
-          </p>
         </div>
+      </div>
+      <div className="register">
+        New to Point of Sale? <Link className="register-link" to="/register">Register</Link>
       </div>
     </div>
   );

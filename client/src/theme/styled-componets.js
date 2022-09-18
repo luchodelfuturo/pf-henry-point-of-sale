@@ -232,6 +232,16 @@ export const SearchInput = styled.input`
   box-shadow: 4px 6px 9px -4px rgba(0, 0, 0, 0.25);
   border: none;
 `;
+export const Textinput = styled.input`
+  padding-left: 15px;
+  margin-top: 10px;
+  font-size: 16px;
+  height: 40px;
+  border-radius: 10px;
+  margin-left: 10px;
+  box-shadow: 4px 6px 9px -4px rgba(0, 0, 0, 0.25);
+  border: none;
+`;
 export const SearchBtn = styled.button`
   margin-top: 10px;
   margin-left: 5px;

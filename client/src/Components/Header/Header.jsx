@@ -13,6 +13,7 @@ function Header() {
             <div id="henry">HENRY</div>
             <div id="bar">BAR</div>
           </div>
+          <div id="pos">Point of sale</div>
         </div>
         <div>
           <div>
