@@ -6,22 +6,56 @@ import {
   getTotalCashAction,
   getTotalPaypalAction,
   getTotalIncomeAction,
-} from "../../redux/actions/ordersActions";
+  getTotalSalesAction,
+  getTotalExpenseAction,
+  cierreDeCaja,
+  getTotalAction,
+} from "../../redux/actions/cashFlowActions";
 import { useDispatch, useSelector } from "react-redux";
-import Modal from "./Modal";
 import Modals from "./Modals";
+import { useState } from "react";
 
 export default function CashFlow() {
   const history = useHistory();
   const dispatch = useDispatch();
-  const { totalCash, totalPaypal, totalIncome } = useSelector(
-    (state) => state.orders
-  );
+  const {
+    totalCash,
+    totalPaypal,
+    totalIncome,
+    totalSales,
+    totalExpenses,
+    cashInit,
+    totalAll,
+  } = useSelector((state) => state.cashFlow);
+
+  const [cierre, setCierre] = useState({
+    initialCash: 0,
+    cashPayment: 0,
+    paypalPayment: 0,
+    income: 0,
+    expenses: 0,
+    totalSales: 0,
+    totalCashRegister: 0,
+    totalAll: 0,
+  });
 
   useEffect(() => {
     dispatch(getTotalCashAction());
     dispatch(getTotalPaypalAction());
     dispatch(getTotalIncomeAction());
+    dispatch(getTotalExpenseAction());
+    dispatch(getTotalSalesAction());
+    dispatch(getTotalAction());
+    setCierre({
+      initialCash: cashInit[0],
+      cashPayment: totalCash.totalCash,
+      paypalPayment: totalPaypal.totalPaypal,
+      income: totalIncome.totalIncome,
+      expenses: totalExpenses.totalExpenses,
+      totalSales: totalSales.totalSales,
+      totalCashRegister: totalCash.totalCash,
+      totalAll: totalAll.totalCashRegister,
+    });
   }, [dispatch]);
 
   return (
@@ -57,26 +91,51 @@ export default function CashFlow() {
               boxSizing: "border-box",
             }}
           >
-            <BoxesCashFlow title={"Inicio de Caja"} value={0} />
+            <BoxesCashFlow
+              title={"Inicio de Caja"}
+              value={cashInit[0] ? cashInit[0] : 0}
+            />
             <BoxesCashFlow
               title={"Ventas Efectivo"}
-              value={totalCash.totalCash}
+              value={totalCash.totalCash ? totalCash.totalCash : 0}
             />
             <BoxesCashFlow
               title={"Ventas Tarjeta"}
-              value={totalPaypal.totalPaypal}
+              value={totalPaypal.totalPaypal ? totalPaypal.totalPaypal : 0}
             />
             <BoxesCashFlow
               title={"Total de Ventas"}
+              value={totalSales.totalSales ? totalSales.totalSales : 0}
+            />
+            <BoxesCashFlow
+              title={"Ingresos"}
+              value={totalIncome.totalIncome ? totalIncome.totalIncome : 0}
+            />
+            <BoxesCashFlow
+              title={"Egresos"}
               value={
-                totalCash.totalCash + totalPaypal.totalPaypal < 1
-                  ? 0
-                  : totalCash.totalCash + totalPaypal.totalPaypal
+                totalExpenses.totalExpenses ? totalExpenses.totalExpenses : 0
               }
             />
-            <BoxesCashFlow title={"Ingresos"} value={totalIncome.totalIncome} />
-            <BoxesCashFlow title={"Egresos"} value={0} />
-            <BoxesCashFlow title={"Total de Efectivo"} value={0} />
+            <BoxesCashFlow
+              title={"Total de Efectivo"}
+              value={
+                // totalSales.totalSales +
+                //   totalIncome.totalIncome -
+                //   totalExpenses.totalExpenses !==
+                // null
+                //   ? totalSales.totalSales +
+                //     totalIncome.totalIncome -
+                //     totalExpenses.totalExpenses
+                //   : totalSales.totalSales + totalIncome.totalIncome
+                //   ? totalSales.totalSales + totalIncome.totalIncome
+                //   : totalSales.totalSales
+                //   ? totalSales.totalSales
+                //   : 0
+
+                totalAll.totalCashRegister ? totalAll.totalCashRegister : 0
+              }
+            />
           </div>
           <div
             style={{
@@ -96,7 +155,9 @@ export default function CashFlow() {
             <button onClick={() => history.push("/cashFlow/historialCashFlow")}>
               Historial De Cierres
             </button>
-            <button>Cerrar Caja</button>
+            <button onClick={() => dispatch(cierreDeCaja(cierre))}>
+              Cerrar Caja
+            </button>
           </div>
         </div>
       </div>
