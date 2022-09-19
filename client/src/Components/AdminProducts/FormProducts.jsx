@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { disableProductAction } from "../../redux/actions/productsActions";
 import { ButtonX, ButtonDis,ButtonDelete, ButtonSave } from '../../theme/styled-componets';
 import Swal from 'sweetalert2'
+import LoadImage from "./LoadImage";
 
 export default function FormProducts({
   categories,
@@ -42,6 +43,8 @@ export default function FormProducts({
     default:
       "https://media.istockphoto.com/photos/chinese-food-blank-background-picture-id545286388?k=20&m=545286388&s=612x612&w=0&h=1zAWEuV5W6SoYtErOkWasELFcAWMKgQEBUsNOoH5znc=",
   };
+
+  const [imageScreen, setImageScreen] = useState(false)
 
   let dispatch = useDispatch()
 
@@ -89,6 +92,12 @@ export default function FormProducts({
 
   }
 
+  const showImageScreen = (e) => {
+
+    setImageScreen(true)
+
+  }
+
   //const saveAlert = (e) => {
   //  Swal.fire({
   //    title: 'Advertencia',
@@ -105,6 +114,7 @@ export default function FormProducts({
   //}
 
   const handleSubmit = (e) => {
+    console.log("llega a handleSubmit")
     e.preventDefault();
     console.log("prodcuto a post:", state);
     addProduct(state);
@@ -140,6 +150,12 @@ export default function FormProducts({
           padding: "10px",
         }}
       >
+        {imageScreen && (
+          <LoadImage
+          setImageScreen={setImageScreen}
+          setState={setState}
+          />
+        )}
         <ButtonX
           onClick={() => {
             setShowFormProducts(false);
@@ -187,7 +203,7 @@ export default function FormProducts({
                 style={{ objectFit: "cover", width: "100%", height: "100%", borderRadius: "0.3rem" }}
               />
             </div>
-            <ButtonDis disabled type="button">Agregar Imagen</ButtonDis>
+            <ButtonDis type="button" onClick={showImageScreen}>Agregar Imagen</ButtonDis>
             <ButtonDelete onClick={(e) => {deleteAlert(e)}} type="button">Eliminar</ButtonDelete>
             <ButtonSave
               disabled={
