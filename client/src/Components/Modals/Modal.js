@@ -90,24 +90,36 @@ const Modal = ({
     setModalComments(true);
   }
 
-  const postToast = () => {
-    const Toast = Swal.mixin({
-      toast: true,
-      position: "top-end",
-      showConfirmButton: false,
-      timer: 3000,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.addEventListener("mouseenter", Swal.stopTimer);
-        toast.addEventListener("mouseleave", Swal.resumeTimer);
-      },
-    });
 
-    Toast.fire({
+  const postToast = () => {
+    Swal.fire({
+      position: "center",
       icon: "success",
       title: "Order placed",
+      showConfirmButton: false,
+      timer: 1000,
     });
   };
+
+
+  // const postToast = () => {
+  //   const Toast = Swal.mixin({
+  //     toast: true,
+  //     position: "top-end",
+  //     showConfirmButton: false,
+  //     timer: 3000,
+  //     timerProgressBar: true,
+  //     didOpen: (toast) => {
+  //       toast.addEventListener("mouseenter", Swal.stopTimer);
+  //       toast.addEventListener("mouseleave", Swal.resumeTimer);
+  //     },
+  //   });
+
+  //   Toast.fire({
+  //     icon: "success",
+  //     title: "Order placed",
+  //   });
+  // };
 
   function handlePost() {
     sch(false);

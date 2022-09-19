@@ -13,9 +13,7 @@ import {
   faBasketShopping,
   faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
-import { faCommentDots } from "@fortawesome/free-solid-svg-icons";
 import { ButtonCart } from "../../theme/styled-componets";
-import Swal from "sweetalert2";
 import ClearCart from "../Modals/ClearCart";
 import AddDrinks from "../Modals/AddDrinks";
 
@@ -43,29 +41,13 @@ function Cart({ products, setUpdate, update }) {
     }
   }
 
-  // function sureDelete() {
-  //   Swal.fire({
-  //     title: "Are you sure?",
-  //     text: "You won't be able to revert this!",
-  //     icon: "warning",
-  //     showCancelButton: true,
-  //     confirmButtonColor: "#3085d6",
-  //     cancelButtonColor: "#d33",
-  //     confirmButtonText: "Yes, delete it!",
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //       //deleteAll();
-  //     }
-  //   });
-  // }
-
   function postOrder() {
     //setCheckout(true)
     try {
       dispatch(postOrdersAction(order));
       setUpdate(update ? false : true);
       deleteAll();
-      dispatch(filterByCategoryAction("all"))
+      dispatch(filterByCategoryAction("all"));
     } catch (error) {
       console.error(error);
     }
@@ -77,14 +59,18 @@ function Cart({ products, setUpdate, update }) {
     setClearCart(true);
   }
 
-  function drinksFilter(filter){
-    dispatch(filterByCategoryAction(filter))
+  function drinksFilter(filter) {
+    dispatch(filterByCategoryAction(filter));
   }
 
   return (
     <div className="cart-cont">
       {addDrinks ? (
-        <AddDrinks setModalState={setAddDrinks} setCheckout={setCheckout} df={drinksFilter}/>
+        <AddDrinks
+          setModalState={setAddDrinks}
+          setCheckout={setCheckout}
+          df={drinksFilter}
+        />
       ) : null}
       {clearCart ? (
         <ClearCart setClearCart={setClearCart} deleteAll={deleteAll} />
