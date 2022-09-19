@@ -28,14 +28,14 @@ const Modals = () => {
   const [isOpenModalInit, openModalInit, closeModalInit] = useModal(false);
 
   const handleSubmitIncome = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     dispatch(addIncomeAction(ingreso.amount));
-    closeModalIncome();
+    // closeModalIncome();
   };
   const handleSubmitExpense = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     dispatch(addExpenseAction(egreso.amount));
-    closeModalExpense();
+    // closeModalExpense();
   };
 
   const handleSubmitInicioDeCaja = (e) => {
