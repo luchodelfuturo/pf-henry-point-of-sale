@@ -1,31 +1,51 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export const cashFlowSlice = createSlice({
-    name: "cashFlow",
-    initialState: {
-        allCashFlows: [],
-        CashFlows: [],
-
-
+  name: "cashFlow",
+  initialState: {
+    totalCash: [],
+    totalPaypal: [],
+    totalIncome: [],
+    totalExpenses: [],
+    totalSales: [],
+    cashInit: [],
+    totalAll: [],
+  },
+  reducers: {
+    ordersFinishedCash: (state, action) => {
+      state.totalCash = action.payload;
     },
-    reducers: {
-        getAllCashFlow: (state, action) => {
-            state.allCashFlows = action.payload;
-            state.CashFlows = action.payload;
-        },
-        searchDateCashFlow: (state, action) => {
 
-            const allDates = state.CashFlows
-            const filterDate = allDates.filter(cash => cash.date === action.payload)
-
-            state.allCashFlows = filterDate
-        }
-        // getCategoryById: (state, action) => {
-        //     state.categoryDetail = action.payload;
-        // },
+    ordersFinishedPaypal: (state, action) => {
+      state.totalPaypal = action.payload;
     },
+    getTotalIncome: (state, action) => {
+      state.totalIncome = action.payload;
+    },
+    getTotalExpense: (state, action) => {
+      state.totalExpenses = action.payload;
+    },
+    getTotalSales: (state, action) => {
+      state.totalSales = action.payload;
+    },
+    addCashInit: (state, action) => {
+      console.log(action.payload);
+      state.cashInit = [action.payload];
+    },
+    getTotal: (state, action) => {
+      state.totalAll = action.payload;
+    },
+  },
 });
 
-export const { getAllCashFlow, searchDateCashFlow } = cashFlowSlice.actions;
+export const {
+  getTotalIncome,
+  getTotalExpense,
+  getTotalSales,
+  addCashInit,
+  ordersFinishedCash,
+  ordersFinishedPaypal,
+  getTotal,
+} = cashFlowSlice.actions;
 
 export default cashFlowSlice.reducer;
