@@ -45,11 +45,11 @@ function App() {
 
       {/* <Route exact path="/cashFlow" component={CashFlow} /> */}
       <Route exact path="/cashFlow" component={CashFlow} />
-      <Route
+      {/* <Route
         exact
         path="/cashFlow/historialCashFlow"
         component={HistorialsCashFlow}
-      />
+      /> */}
     </div>
   );
 }
