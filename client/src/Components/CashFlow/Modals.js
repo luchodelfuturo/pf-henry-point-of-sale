@@ -30,12 +30,12 @@ const Modals = () => {
   const handleSubmitIncome = (e) => {
     e.preventDefault();
     dispatch(addIncomeAction(ingreso.amount));
-    closeModalInit();
+    closeModalIncome();
   };
   const handleSubmitExpense = (e) => {
     e.preventDefault();
     dispatch(addExpenseAction(egreso.amount));
-    closeModalInit();
+    closeModalExpense();
   };
 
   const handleSubmitInicioDeCaja = (e) => {

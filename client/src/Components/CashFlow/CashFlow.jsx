@@ -12,7 +12,6 @@ import {
   getTotalAction,
 } from "../../redux/actions/cashFlowActions";
 import { useDispatch, useSelector } from "react-redux";
-import Modal from "./Modal";
 import Modals from "./Modals";
 import { useState } from "react";
 
