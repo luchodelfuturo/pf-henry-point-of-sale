@@ -11,6 +11,7 @@ const {
   totalPaypal,
   updatedIncome,
   updatedExpenses,
+  initialCash
 } = require("../controllers/cashControlers.js");
 
 router.post("/close", async (req, res) => {
@@ -21,6 +22,17 @@ router.post("/close", async (req, res) => {
     res.json(error);
   }
 });
+
+router.post('/addInitCash/:id', async(req,res)=>{
+  const { initCash } = req.body;
+  const { id } = req.params;
+  try {
+    res.json(await initialCash(id, initCash))
+  } catch (error) {
+    res.json(error)
+  }
+});
+
 
 router.get("/history", async (req, res) => {
   let results = [];

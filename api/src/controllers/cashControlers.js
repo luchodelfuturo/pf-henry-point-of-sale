@@ -36,7 +36,7 @@ const paymentCash = async (id) => {
     console.log(result);
     let update = await cashUpdated(id);
     update = totalCash;
-    await Cash.create(
+    await Cash.update(
       { cashPayment: totalCash, totalCashRegister: update },
       { where: { id: id } }
     );
@@ -170,7 +170,7 @@ const addIncome = async (id, income) => { //el income del 2do param se sustituir
   return { income: ingresos }
   }
   else{
-    await Cash.create(
+    await Cash.update(
       { totalCashRegister: income, income:income},
       { where: {id: id}}
     )
@@ -238,7 +238,11 @@ const updatedExpenses = async (id) => {
   }
 };
 
-
+const initialCash = async(id, initCash) => {
+  await Cash.create({initialCash: initCash}, {where:{id:id}})
+  console.log(initCash)
+  return {initCash: initCash}
+}
 module.exports = {
   paymentCash,
   paymentPayPal,
@@ -249,6 +253,7 @@ module.exports = {
   totalPaypal,
   updatedIncome,
   updatedExpenses,
+  initialCash
 };
 
 // let cash = await Order.findAll({
