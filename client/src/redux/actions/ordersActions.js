@@ -14,7 +14,6 @@ import {
   filterToDate,
   disableOrder,
   filterStatus,
-  ordersFinished,
 } from "../slices/ordersSlice";
 
 export const getOrdersAction = () => (dispatch) => {
@@ -80,13 +79,6 @@ export const updateStatusFinished = (status, orderNumber) => (dispatch) => {
     .then((res) => dispatch(updateStatus(res.data)));
 };
 
-export const getFinishedOrdersAction = () => (dispatch) => {
-  axios
-    .get("/cash/payment-cash/1")
-    .then((res) => dispatch(ordersFinished(res.data)))
-    .catch((e) => console.log(e));
-};
-
 export const cleanReadyAction = () => (dispatch) => {
   dispatch(cleanReady());
 };
@@ -110,15 +102,4 @@ export const disableOrderAction = (orderNumber) => (dispatch) => {
 
 export const filterStatusAction = (status) => (dispatch) => {
   dispatch(filterStatus(status));
-};
-export const addIngresoAction = (income) => {
-  console.log(income);
-  return axios
-    .post("/cash/addIncome", { income: income })
-    .then((res) => console.log(res));
-};
-
-export const addExpenseAction = (expense) => (dispatch) => {
-  console.log(expense);
-  return axios.post("/cash/addExpense", expense);
 };

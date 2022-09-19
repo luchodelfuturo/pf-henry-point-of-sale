@@ -59,10 +59,10 @@ export default function HistorialPedidos() {
     dispatch(filterStatusAction(e.target.value));
   };
 
-  const desactivateOrder = (orderEdit) => {
-    dispatch(disableOrderAction(orderEdit.orderNumber));
-    setMostrarForm(false);
-  };
+  // const desactivateOrder = (orderEdit) => {
+  //   dispatch(disableOrderAction(orderEdit.orderNumber));
+  //   setMostrarForm(false);
+  // };
 
   useEffect(() => {
     dispatch(getAllOrdersAction());
@@ -98,6 +98,11 @@ export default function HistorialPedidos() {
           name="from"
           value={fromToFilter.from}
           onChange={(e) => {
+            setFromToFilter({
+              ...fromToFilter,
+              [e.target.name]: e.target.value,
+            });
+
             handleChangeFromDate(e);
           }}
         />

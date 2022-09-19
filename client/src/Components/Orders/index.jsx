@@ -21,17 +21,22 @@ function Orders() {
   }, [status, orders.length, dispatch]);
 
   const [delay, setDelay] = useState(new Date().getMinutes());
-  setTimeout(() => {
-    setInterval(() => {
-      setDelay(
-        new Date()
-          .toLocaleTimeString("en-US", { hour12: false })
-          .slice(0, 5)
-          .split(":")
-          .join("")
-      );
-    }, 1000);
-  });
+
+  setInterval(() => {
+    setDelay(
+      new Date()
+        .toLocaleTimeString("en-US", { hour12: false })
+        .slice(0, 5)
+        .split(":")
+        .join("")
+    );
+  }, 1000);
+
+  let z = 1;
+  setInterval(() => {
+    z++;
+    console.log("minutes:" + z);
+  }, 60000);
 
   const postToast = () => {
     const Toast = Swal.mixin({
@@ -63,16 +68,17 @@ function Orders() {
 
   return (
     <div className="Container">
-      {/* <NavBarSup>
-      <button
-        className="button"
-        onClick={() => {
-          window.location.reload();
-        }}
-
-      >Refresh</button>
+      {/* <NavBarSup> */}
+      {/* <button
+          className="button"
+          onClick={() => {
+            window.location.reload();
+          }}
+        >
+          Refresh
+        </button> */}
       <FilterSort />
-      </NavBarSup> */}
+      {/* </NavBarSup> */}
       <div className="orders-cont">
         {orders.length < 1 ||
         !orders.filter((o) => o.status !== "finished").length ? (
@@ -89,7 +95,7 @@ function Orders() {
                       return o.status === "ready" ||
                         o.status === "finished" ? null : (
                         <div
-                          key={o.orderNumber}
+                          Key={o.orderNumber}
                           id={o.status === "doing" ? "doing" : "pending"}
                           className="Card"
                         >

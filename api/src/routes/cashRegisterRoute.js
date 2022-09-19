@@ -9,7 +9,10 @@ const {
   addExpense,
   totalCash,
   totalPaypal,
+  updatedIncome,
+  updatedExpenses,
 } = require("../controllers/cashControlers.js");
+
 router.post("/close", async (req, res) => {
   try {
     let cashClose = await Cash.create(req.body);
@@ -33,21 +36,40 @@ router.get("/history", async (req, res) => {
     res.json(error);
   }
 });
-router.get("/:id", async (req, res) => {
+router.get("/totalSales/:id", async (req, res) => {
   const { id } = req.params;
   try {
     // res.json(await cashUpdated(id))
     let totalP = await totalPaypal(id);
-    let totalC = await totalCash(id)
+    let totalC = await totalCash(id);
     // console.log(totalC)
     // console.log(totalP)
-    let condition = isNaN(totalP) ? totalC + 0 : isNaN(totalC) ? totalP + 0 : totalC + totalP
-    console.log(condition)
+    let condition = totalP === 0
+      ? totalC + 0
+      : totalC === 0 
+      ? totalP + 0
+      : totalC + totalP;
+    // let condition = isNaN(totalP)
+    //   ? totalC + 0
+    //   : isNaN(totalC)
+    //   ? totalP + 0
+    //   : totalC + totalP;
+    console.log(condition);
     await Cash.update({ totalSales: condition }, { where: { id: id } });
     // res.json(totals);
-    res.json(condition)
+    res.json({ totalSales: condition });
   } catch (error) {
     console.log(error);
+  }
+});
+
+router.get("/totalCash-register/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    let totals = await cashUpdated(id);
+    res.json({ totalCashRegister: totals });
+  } catch (error) {
+    res.josn(error);
   }
 });
 
@@ -72,15 +94,19 @@ router.get("/payment-cash/:id", async (req, res) => {
 });
 
 router.post("/addIncome/:id", async (req, res) => {
-  const { income } = req.body;
+  const { income, comments } = req.body;
   const { id } = req.params;
-  if (income) {
+  // if (income) {
     try {
+      // console.log(income);
+      // await addIncome(id, income)
+      // let result = await Cash.create(req.body)
       res.status(200).json(await addIncome(id, income));
+      // res.json(result)
     } catch (error) {
       console.log(error);
     }
-  }
+  // }
 });
 
 router.post("/addExpense/:id", async (req, res) => {
@@ -95,4 +121,35 @@ router.post("/addExpense/:id", async (req, res) => {
   }
 });
 
+router.get("/showIncome/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    let showIncome = await updatedIncome(id);
+    res.json({ totalIncome: showIncome });
+  } catch (error) {
+    res.josn(error);
+  }
+});
+
+router.get("/showExpense/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    let showExpenses = await updatedExpenses(id);
+    res.json({ totalExpenses: showExpenses });
+  } catch (error) {
+    res.josn(error);
+  }
+});
+
+
+router.get('/test/:id', async(req,res)=>{
+  const { id } = req.params;
+  let incomes = await Cash.findOne({
+    where: {id: id},
+    attributes: ["qtyIncome"]
+  });
+  console.log(JSON.stringify(incomes.qtyIncome[0].income)) //{"qtyIncome":[{"income":1000,"comments":"xxxxxxx"}]}
+
+  res.json(incomes)
+})
 module.exports = router;
