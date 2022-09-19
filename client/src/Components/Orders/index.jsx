@@ -68,17 +68,17 @@ function Orders() {
 
   return (
     <div className="Container">
-      <NavBarSup>
-        <button
+      {/* <NavBarSup> */}
+      {/* <button
           className="button"
           onClick={() => {
             window.location.reload();
           }}
         >
           Refresh
-        </button>
-        <FilterSort />
-      </NavBarSup>
+        </button> */}
+      <FilterSort />
+      {/* </NavBarSup> */}
       <div className="orders-cont">
         {orders.length < 1 ||
         !orders.filter((o) => o.status !== "finished").length ? (

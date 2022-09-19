@@ -14,9 +14,6 @@ import {
   filterToDate,
   disableOrder,
   filterStatus,
-  ordersFinishedPaypal,
-  ordersFinishedCash,
-  getTotalIncome,
 } from "../slices/ordersSlice";
 
 export const getOrdersAction = () => (dispatch) => {
@@ -82,20 +79,6 @@ export const updateStatusFinished = (status, orderNumber) => (dispatch) => {
     .then((res) => dispatch(updateStatus(res.data)));
 };
 
-export const getTotalCashAction = () => (dispatch) => {
-  axios
-    .get("/cash/payment-cash/1")
-    .then((res) => dispatch(ordersFinishedCash(res.data)))
-    .catch((e) => console.log(e));
-};
-
-export const getTotalPaypalAction = () => (dispatch) => {
-  axios
-    .get("cash/payment-paypal/1")
-    .then((res) => dispatch(ordersFinishedPaypal(res.data)))
-    .catch((e) => console.log(e));
-};
-
 export const cleanReadyAction = () => (dispatch) => {
   dispatch(cleanReady());
 };
@@ -119,22 +102,4 @@ export const disableOrderAction = (orderNumber) => (dispatch) => {
 
 export const filterStatusAction = (status) => (dispatch) => {
   dispatch(filterStatus(status));
-};
-export const addIncomeAction = (income) => (dispatch) => {
-  console.log(income);
-  return axios
-    .post("/cash/addIncome/1", { income: income })
-    .then((res) => console.log(res));
-};
-
-export const addExpenseAction = (expense) => (dispatch) => {
-  console.log(expense);
-  return axios.post("/cash/addExpense/1", expense);
-};
-
-export const getTotalIncomeAction = () => (dispatch) => {
-  return axios
-    .get("/cash/showIncome/1")
-    .then((res) => dispatch(getTotalIncome(res.data)))
-    .catch((e) => console.log(e));
 };

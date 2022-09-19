@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addIncomeAction } from "../../redux/actions/ordersActions";
+import {
+  addExpenseAction,
+  addIncomeAction,
+  addCashInitAction,
+} from "../../redux/actions/cashFlowActions.js";
 import { useModal } from "../Hooks/useModal";
 import Modal from "./Modal";
 
@@ -14,22 +18,55 @@ const Modals = () => {
     amount: 0,
     comment: "",
   });
+
+  const [init, setInit] = useState(0);
+
   const [isOpenModalIncome, openModalIncome, closeModalIncome] =
     useModal(false);
   const [isOpenModalExpense, openModalExpense, closeModalExpense] =
     useModal(false);
+  const [isOpenModalInit, openModalInit, closeModalInit] = useModal(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmitIncome = (e) => {
     e.preventDefault();
     dispatch(addIncomeAction(ingreso.amount));
+    closeModalInit();
+  };
+  const handleSubmitExpense = (e) => {
+    e.preventDefault();
+    dispatch(addExpenseAction(egreso.amount));
+    closeModalInit();
+  };
+
+  const handleSubmitInicioDeCaja = (e) => {
+    e.preventDefault();
+    dispatch(addCashInitAction(init));
+    closeModalInit();
   };
 
   return (
     <div>
+      <button onClick={openModalInit}>Iniciar caja</button>
+      <Modal isOpen={isOpenModalInit} closeModal={closeModalInit}>
+        <h2>Agregue un monto para su inicio de caja</h2>
+        <form onSubmit={handleSubmitInicioDeCaja}>
+          <label>
+            {" "}
+            Monto:
+            <input
+              type="number"
+              placeholder="monto"
+              onChange={(e) => setInit(e.target.value)}
+            />
+          </label>
+
+          <input type="submit" value="Inicio de caja" />
+        </form>
+      </Modal>
       <button onClick={openModalIncome}>Ingreso</button>
       <Modal isOpen={isOpenModalIncome} closeModal={closeModalIncome}>
         <h2>Agregue un monto y motivo de ingreso</h2>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmitIncome}>
           <label>
             {" "}
             Monto:
@@ -68,16 +105,34 @@ const Modals = () => {
       <button onClick={openModalExpense}>Egreso</button>
       <Modal isOpen={isOpenModalExpense} closeModal={closeModalExpense}>
         <h2>Agregue un monto y motivo de egreso</h2>
-        <form>
+        <form onSubmit={handleSubmitExpense}>
           <label>
             {" "}
             Monto:
-            <input type="number" placeholder="monto" />
+            <input
+              type="number"
+              placeholder="monto"
+              onChange={(e) =>
+                setEgreso({
+                  ...egreso,
+                  amount: e.target.value,
+                })
+              }
+            />
           </label>
           <label>
             {" "}
             Motivo:
-            <input type="text" placeholder="motivo" />
+            <input
+              type="text"
+              placeholder="motivo"
+              onChange={(e) =>
+                setEgreso({
+                  ...egreso,
+                  comment: e.target.value,
+                })
+              }
+            />
           </label>
           <input type="submit" value="Agregar egreso" />
         </form>
