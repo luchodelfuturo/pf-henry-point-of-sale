@@ -22,9 +22,11 @@ export const addExpenseAction = (expense) => (dispatch) => {
 };
 
 export const addCashInitAction = (init) => (dispatch) => {
-  return dispatch(addCashInit(init));
-  // return axios.post(/cash/addInitCash/1)
-  // .then(res=>dispatch(addCashInit(init))
+  // return dispatch(addCashInit(init));
+  return axios.post("/cash/addInitCash/1", { initialCash: init }).then(
+    (res) => dispatch(addCashInit(init))
+    // dispatch(addCashInit(init)
+  );
 };
 
 export const getTotalIncomeAction = () => (dispatch) => {
