@@ -96,7 +96,6 @@ function Store() {
                           filterCategory(categ.name.toLowerCase());
                         }}
                         key={index}
-                        s
                       >
                         {namer}
                       </BtnRounded>

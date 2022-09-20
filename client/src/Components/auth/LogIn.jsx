@@ -1,3 +1,14 @@
+<<<<<<< HEAD
+import React, {useEffect, useState} from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import axios from 'axios'
+import {showErrMsg, showSuccessMsg} from '../Utils/Notifications/Notifications.jsx'
+import './auth.css';
+import {dispatchLogin} from '../../redux/slices/authSlice';
+import {useDispatch} from 'react-redux';
+import jwt_decode from 'jwt-decode';
+
+=======
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
@@ -11,6 +22,7 @@ import { useDispatch } from "react-redux";
 import { Textinput, MainButton } from "../../theme/styled-componets";
 import LogInGoogle from "./LogInGoogle.jsx";
 // import { GoogleLogin } from 'react-google-login';
+>>>>>>> f3c3bfade795fd4a80ffb7b517e7e6bd922330d8
 
 const initialState = {
   email: "",
@@ -19,11 +31,15 @@ const initialState = {
   success: "",
 };
 
+<<<<<<< HEAD
+const client_id = "58357792722-mar8g19eknd6f1cp4tkpmq37gcn231d7.apps.googleusercontent.com";
+=======
 function Login() {
   const [user, setUser] = useState(initialState);
   const { email, password, err, success } = user;
   const dispatch = useDispatch();
   const history = useHistory();
+>>>>>>> f3c3bfade795fd4a80ffb7b517e7e6bd922330d8
 
   const handleChangeInput = (e) => {
     const { name, value } = e.target;
@@ -45,6 +61,81 @@ function Login() {
     }
   };
 
+<<<<<<< HEAD
+            localStorage.setItem('firstLogin', true)
+            
+            dispatch(dispatchLogin())
+            history.push("/store")
+
+        } catch (err) {
+            err.response.data.msg && 
+            setUser({...user, err: err.response.data.msg, success: ''})
+        }
+    }
+
+
+
+    const responseGoogle = async (response) => {
+        try {
+            console.log("Encoded JWT ID token: " + response.credential);
+            var userObject = jwt_decode(response.credential);
+            console.log(userObject);
+            // const res = await axios.post('/users/google_login', {tokenId: response.id_token})
+
+            setUser(userObject)
+            localStorage.setItem('firstLogin', true)
+
+            dispatch(dispatchLogin())
+            history.push('/store')
+        } catch (err) {
+            err.response.data.msg && 
+            setUser({...user, err: err.response.data.msg, success: ''})
+        }
+    }
+
+    useEffect(()=>{
+        /*global google*/
+        google.accounts.id.initialize({
+            client_id: client_id,
+            callback: responseGoogle
+        })
+        google.accounts.id.renderButton(
+            document.getElementById("signInDiv"),
+            {theme: "outline", size:"large"}
+        );
+    }, []);
+
+    return (
+        <div className="login_page">
+            <h2>Log In</h2>
+            {err && showErrMsg(err)}
+            {success && showSuccessMsg(success)}
+
+            <form onSubmit={handleSubmit}>
+                <div>
+                    <label htmlFor="email">Email Address</label>
+                    <input type="text" placeholder="Enter email address" id="email"
+                    value={email} name="email"  onChange={handleChangeInput}/>
+                </div>
+
+                <div>
+                    <label htmlFor="password">Password</label>
+                    <input type="password" placeholder="Enter password" id="password"
+                    value={password} name="password" onChange={handleChangeInput} />
+                </div>
+
+                <div className="row">
+                    <button type="submit">Login</button>
+                    <Link to="/forgot_password">Forgot your password?</Link>
+                </div>
+            </form>
+            
+            <div className="hr">Or Login With</div>
+
+            <div id="signInDiv" className="social"></div>
+
+            <p>New to Point of Sale? <Link to="/register">Register</Link></p>
+=======
   return (
     <div id="contenedor">
       <div id="left-cont">
@@ -59,6 +150,7 @@ function Login() {
               <div id="pos-login">Point of sale</div>
             </div>
           </div>
+>>>>>>> f3c3bfade795fd4a80ffb7b517e7e6bd922330d8
         </div>
       </div>
 
