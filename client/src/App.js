@@ -6,26 +6,10 @@ import Counter from "./Components/Counter/counter";
 import AdminProducts from "./Components/AdminProducts/AdminProducts";
 import { StoreProvider } from "./GlobalStates/StoreContext";
 
-<<<<<<< HEAD
-import LandingPage from './Components/LandingPage/LandingPage';
-import Login from './Components/auth/LogIn';
-import Register from './Components/auth/Register';
-import ActivationEmail from './Components/auth/ActivationEmail'
-import {useDispatch, useSelector} from 'react-redux'
-import React, {useEffect} from 'react';
-import axios from 'axios';
-import { dispatchGetToken } from "./redux/slices/tokenSlice";
-import { dispatchLogin, fetchUser, dispatchGetUser} from "./redux/slices/authSlice";
-import NotFound from './Components/Utils/NotFound/NotFound'
-import Profile from "./Components/Profile/Profile";
-import EditUser from "./Components/Profile/EditUser";
-
-=======
 import WelcomePage from "./Components/Header/Header";
 import Login from "./Components/auth/LogIn";
 import Register from "./Components/auth/Register";
 import ActivationEmail from "./Components/auth/ActivationEmail";
->>>>>>> f3c3bfade795fd4a80ffb7b517e7e6bd922330d8
 
 import GlobalStyle from "./theme/globalStyle.js";
 import CashFlow from "./Components/CashFlow/CashFlow";
