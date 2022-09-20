@@ -1,10 +1,11 @@
 import { Route } from "react-router-dom";
 import Kitchen from "./Components/Kitchen";
 import Store from "./Components/Store";
+import HistorialPedidos from "./Components/HistorialPedidos/HistorialPedidos";
 import Counter from "./Components/Counter/counter";
 import AdminProducts from "./Components/AdminProducts/AdminProducts";
 import { StoreProvider } from "./GlobalStates/StoreContext";
-import GlobalStyle from './theme/globalStyle.js';
+
 import LandingPage from './Components/LandingPage/LandingPage';
 import Login from './Components/auth/LogIn';
 import Register from './Components/auth/Register';
@@ -18,6 +19,9 @@ import NotFound from './Components/Utils/NotFound/NotFound'
 import Profile from "./Components/Profile/Profile";
 import EditUser from "./Components/Profile/EditUser";
 
+
+import GlobalStyle from "./theme/globalStyle.js";
+import CashFlow from "./Components/CashFlow/CashFlow.jsx";
 
 
 function App() {
@@ -51,9 +55,9 @@ function App() {
       getUser()
     }
   },[token, dispatch])
-
   return (
     <div className="App">
+
       <GlobalStyle/>
 
       <Route exact path="/" component={LandingPage} />
@@ -68,6 +72,7 @@ function App() {
 
       <Route path="/edit_user/:id" component={isAdmin ? EditUser : NotFound} exact />
 
+
       <Route exact path="/kitchen" component={Kitchen} />
 
       <StoreProvider>
@@ -77,6 +82,10 @@ function App() {
       <Route exact path="/counter" component={Counter} />
 
       <Route exact path="/adminProducts" component={AdminProducts} />
+      <Route exact path="/historialPedidos" component={HistorialPedidos} />
+
+      {/* <Route exact path="/cashFlow" component={CashFlow} /> */}
+      <Route exact path='/cashFlow' component={CashFlow}/>
     </div>
   );
 }

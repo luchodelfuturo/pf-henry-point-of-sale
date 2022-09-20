@@ -1,5 +1,7 @@
 import React from "react";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { disableProductAction } from "../../redux/actions/productsActions";
 import { ButtonX, ButtonDis,ButtonDelete, ButtonSave } from '../../theme/styled-componets';
 
 export default function FormProducts({
@@ -39,6 +41,8 @@ export default function FormProducts({
       "https://media.istockphoto.com/photos/chinese-food-blank-background-picture-id545286388?k=20&m=545286388&s=612x612&w=0&h=1zAWEuV5W6SoYtErOkWasELFcAWMKgQEBUsNOoH5znc=",
   };
 
+  let dispatch = useDispatch()
+
   const handleChange = (e) => {
     const value = e.target.value;
     setState({ ...state, [e.target.name]: value });
@@ -48,6 +52,13 @@ export default function FormProducts({
 
     setState({ ...state, idcategory: value, image: imagenes[value] });
   };
+
+  const handleDelete = (e) => {
+
+    dispatch(disableProductAction(productEdit.id))
+    setProductEdit((oldProduct) => ({...oldProduct, active: false}))
+
+  }
 
   //     "name": "Burger Doble",
   //     "price": 200,
@@ -141,7 +152,7 @@ export default function FormProducts({
               />
             </div>
             <ButtonDis disabled type="button">Agregar Imagen</ButtonDis>
-            <ButtonDelete type="button">Eliminar</ButtonDelete>
+            <ButtonDelete onClick={(e) => {handleDelete(e)}} type="button">Eliminar</ButtonDelete>
             <ButtonSave
               disabled={
                 state.name === "" ||

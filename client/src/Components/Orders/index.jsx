@@ -19,14 +19,16 @@ function Orders() {
     dispatch(getOrdersAction());
   }, [status, orders.length, dispatch]);
 
-  useEffect(() => {
-    // if (filteredOrders.length < 1) setLoading(true);
-  }, [orders.status, orders, orders.length, dispatch]);
-
-  const [time, setTime] = useState("");
+  const [delay, setDelay] = useState(new Date().getMinutes());
   setTimeout(() => {
     setInterval(() => {
-      setTime(new Date().toLocaleTimeString());
+      setDelay(
+        new Date()
+          .toLocaleTimeString("en-US", { hour12: false })
+          .slice(0, 5)
+          .split(":")
+          .join("")
+      );
     }, 1000);
   });
 
@@ -47,9 +49,11 @@ function Orders() {
         onClick={() => {
           window.location.reload();
         }}
+
       >Refresh</button>
       <FilterSort />
       </NavBarSup>
+
       {orders.length < 1 ? (
         <div id="empty">
           <h2>There are not orders !</h2>
@@ -69,18 +73,34 @@ function Orders() {
                       <div id="head">
                         <p id="orderNumber">#{o.orderNumber}</p>
                         <p id="time">{o.timeInit}</p>
+                        <p>
+                          {delay - o.timeInit.split(":").join("") > 59
+                            ? "over 1 hour!"
+                            : "delay:"}
+                        </p>
+                        <p>
+                          {delay - o.timeInit.split(":").join("") > 59
+                            ? "PLEASE HURRY UP, THE CLIENT IS WAITING"
+                            : delay -
+                              o.timeInit.split(":").join("") +
+                              " minutes"}
+                        </p>
                       </div>
 
-                      <h4 id="title">Order:</h4>
-                      {o.productsOrder.map((p) => (
-                        <p id="products"> {p.nameProduct}</p>
-                      ))}
-
-                      <h4 id="cantidad">Cantidad</h4>
-                      {o.productsOrder.map((p) => (
-                        <p id="qty">{p.qty}</p>
-                      ))}
-
+                      <div id="prodYcant">
+                        <div id="prod">
+                          <h4 id="title">Order:</h4>
+                          {o.productsOrder.map((p) => (
+                            <p id="products"> {p.nameProduct}</p>
+                          ))}
+                        </div>
+                        <div id="cant">
+                          <h4 id="cantidad">Cantidad</h4>
+                          {o.productsOrder.map((p) => (
+                            <p id="qty">{p.qty}</p>
+                          ))}
+                        </div>
+                      </div>
                       {o.comments && (
                         <p id="comments">
                           Comments: <br />
@@ -116,6 +136,18 @@ function Orders() {
                       <div id="head">
                         <p id="orderNumber">#{o.orderNumber}</p>
                         <p id="time">{o.timeInit}</p>
+                        <p>
+                          {delay - o.timeInit.split(":").join("") > 59
+                            ? "over 1 hour!"
+                            : "delay:"}
+                        </p>
+                        <p>
+                          {delay - o.timeInit.split(":").join("") > 59
+                            ? "PLEASE HURRY UP, THE CLIENT IS WAITING"
+                            : delay -
+                              o.timeInit.split(":").join("") +
+                              " minutes"}
+                        </p>
                       </div>
 
                       <div id="prodYcant">

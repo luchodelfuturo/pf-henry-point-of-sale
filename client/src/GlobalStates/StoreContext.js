@@ -1,25 +1,27 @@
-import { createContext, useReducer } from "react";
+import { createContext, useEffect, useReducer, useState } from "react";
 import { useSelector } from "react-redux";
 
 const StoreContext = createContext();
 
 let prev = [];
 let exists = {};
-let section = "";
+//let section = "";
 const initialState = [];
 function reducer(state = initialState, action = {}) {
   switch (action.type) {
+    case "INIT":
+      return action.payload;
     case "INCREMENT":
       prev = state.filter((e) => e.product.id !== action.payload);
       exists = state.find((e) => e.product.id === action.payload);
 
+      let inc = exists.qty;
       return [
         ...prev,
         {
-          qty: exists.qty++,
+          qty: inc + 1,
           product: exists.product,
-          subTotal: exists.qty * exists.product.price - exists.product.price,
-          section: exists.section,
+          subTotal: (inc + 1) * exists.product.price,
         },
       ];
 
@@ -35,21 +37,15 @@ function reducer(state = initialState, action = {}) {
           qty: dec,
           product: exists.product,
           subTotal: dec * exists.product.price,
-          section: exists.section,
         },
       ];
     case "ADD":
-      //exists = state.find((e) => e.product.id === action.payload);
-
-      console.log(state);
-
       return [
         ...state,
         {
           qty: 1,
           subTotal: action.payload.price,
           product: action.payload,
-          section: action.payload.section,
         },
       ];
     case "DELETE":
@@ -67,17 +63,9 @@ function reducer(state = initialState, action = {}) {
 export function StoreProvider({ children }) {
   const { products } = useSelector((state) => state.products);
   const { categories } = useSelector((state) => state.categories);
-
-  console.log("CATEGORIES");
-
-  console.log(categories);
-
-  console.log("PRODUCTS");
-
-  console.log(products);
-
   const [state, dispatch] = useReducer(reducer, reducer());
-  //console.log(products)
+  const [comments, setComments] = useState("");
+  const [methodPayment, setMethodPayment] = useState("cash");
 
   function qtyIncr(id) {
     dispatch({ type: "INCREMENT", payload: id });
@@ -87,16 +75,18 @@ export function StoreProvider({ children }) {
   }
   function itemDelete(id) {
     dispatch({ type: "DELETE", payload: id });
+    if (state.length === 1) {
+      window.localStorage.removeItem("items");
+    }
   }
   function deleteAll(id) {
     dispatch({ type: "DELETE_ALL" });
+    window.localStorage.removeItem("items");
   }
 
   let aux = {};
 
   function addProductById(added) {
-    console.log("added = " + added);
-
     if (state.find((e) => e.product.id === added)) {
       dispatch({ type: "INCREMENT", payload: added });
     } else {
@@ -111,7 +101,6 @@ export function StoreProvider({ children }) {
           price,
           active,
           categories: categories.map((e) => e.name).toString(),
-          section: categories.map((e) => e.section).toString(),
         };
       };
 
@@ -119,19 +108,39 @@ export function StoreProvider({ children }) {
     }
   }
 
+  const totals = state.reduce((acc, curr) => {
+    return acc + curr.subTotal;
+  }, 0);
+
   let productsOrder = {};
 
   function sendOrder() {
     productsOrder = state.map((p) => {
-      return { qty: p.qty, nameProduct: p.product.name, section: p.section };
+      return { qty: p.qty, nameProduct: p.product.name };
     });
   }
   sendOrder();
 
   let order = {
-    comments: "",
+    comments: comments,
     productsOrder: productsOrder,
+    totalOrder: totals,
+    methodPayment: methodPayment,
+
   };
+  const ls = JSON.parse(window.localStorage.getItem("items"));
+  useEffect(() => {
+    if (state.length > 0) {
+      window.localStorage.setItem("items", JSON.stringify(state));
+    } else {
+      if (ls && ls.length > 0) {
+        dispatch({
+          type: "INIT",
+          payload: JSON.parse(window.localStorage.getItem("items")),
+        });
+      }
+    }
+  }, [state.length, ls]);
 
   return (
     <StoreContext.Provider
@@ -146,6 +155,9 @@ export function StoreProvider({ children }) {
         deleteAll,
         sendOrder,
         order,
+        totals,
+        setComments,
+        setMethodPayment,
       }}
     >
       {children}

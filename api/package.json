@@ -30,6 +30,9 @@
     "multi-part": "^3.0.0",
     "node-fetch": "^3.2.10",
     "nodemailer": "^6.7.8",
+
+    "paypal-rest-sdk": "^1.8.1",
+
     "pg": "^8.5.1",
     "sequelize": "^6.21.4"
   },
