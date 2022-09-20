@@ -11,7 +11,7 @@ export default function CashFlow() {
   const history = useHistory();
   const dispatch = useDispatch();
   const { lastCashFlow } = useSelector((state) => state.cashFlow);
-
+  const [closeModal, setCloseModal] = useState(false);
   const [cierre, setCierre] = useState({
     initialCash: 0,
     cashPayment: 0,
@@ -41,10 +41,10 @@ export default function CashFlow() {
     //   totalCashRegister: totalCash.totalCash,
     //   totalAll: totalAll.totalCashRegister,
     // });
-    console.log("despachando");
     dispatch(getLastCashFlowAction());
+    console.log("despachando cashflowAction");
   }, [dispatch]);
-  console.log("lastcashflow:", lastCashFlow);
+
   return (
     <div style={{ width: "100%", height: "100vh", backgroundColor: "gray" }}>
       <div style={{ height: "90vh", backgroundColor: "white", width: "100%" }}>
@@ -141,8 +141,7 @@ export default function CashFlow() {
               alignContent: "start",
             }}
           >
-            <Modals />
-          
+            <Modals lastCashFlow={lastCashFlow}  />
 
             {/* <button onClick={() => dispatch(cierreDeCaja(cierre))}>
               Cerrar Caja

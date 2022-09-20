@@ -27,12 +27,10 @@ module.exports = (sequelize) => {
         type: DataTypes.DECIMAL,
         defaultValue: 0
       },
-      qtyIncome: {
-          type: DataTypes.ARRAY(DataTypes.JSONB)
-      },
-      qtyExpenses: {
+      cashFlowMoves: {
         type: DataTypes.ARRAY(DataTypes.JSONB)
       },
+
       date: {
         type: DataTypes.DATEONLY,
         defaultValue: DataTypes.NOW,
@@ -46,7 +44,7 @@ module.exports = (sequelize) => {
         type: DataTypes.DECIMAL,
         defaultValue: 0
       },
-      closeCashFlow:{
+      closeCashFlow: {
         type: DataTypes.BOOLEAN,
         defaultValue: true
       }
