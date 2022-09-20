@@ -1,14 +1,3 @@
-<<<<<<< HEAD
-import React, {useEffect, useState} from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import axios from 'axios'
-import {showErrMsg, showSuccessMsg} from '../Utils/Notifications/Notifications.jsx'
-import './auth.css';
-import {dispatchLogin} from '../../redux/slices/authSlice';
-import {useDispatch} from 'react-redux';
-import jwt_decode from 'jwt-decode';
-
-=======
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
@@ -22,7 +11,6 @@ import { useDispatch } from "react-redux";
 import { Textinput, MainButton } from "../../theme/styled-componets";
 import LogInGoogle from "./LogInGoogle.jsx";
 // import { GoogleLogin } from 'react-google-login';
->>>>>>> f3c3bfade795fd4a80ffb7b517e7e6bd922330d8
 
 const initialState = {
   email: "",
