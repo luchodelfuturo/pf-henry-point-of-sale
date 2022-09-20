@@ -44,7 +44,7 @@ export default function CashFlow() {
     console.log("despachando");
     dispatch(getLastCashFlowAction());
   }, [dispatch]);
-  console.log(lastCashFlow);
+  console.log("lastcashflow:", lastCashFlow);
   return (
     <div style={{ width: "100%", height: "100vh", backgroundColor: "gray" }}>
       <div style={{ height: "90vh", backgroundColor: "white", width: "100%" }}>
@@ -61,71 +61,72 @@ export default function CashFlow() {
             }}
           >
             Resumen de Caja{" "}
+            <button onClick={() => history.push("/cashFlow/historialCashFlow")}>
+              Historial De Cierres
+            </button>
           </div>
-          <div
-            style={{
-              width: "90%",
-              margin: "0 auto",
+          {lastCashFlow && !lastCashFlow.closeCashFlow && (
+            <div
+              style={{
+                width: "90%",
+                margin: "0 auto",
 
-              height: "80%",
-              backgroundColor: "pink",
-              display: "flex",
-              flexWrap: "wrap",
-              gap: "4px",
-              justifyContent: "space-around",
-              alignContent: "space-around",
-              padding: "4px",
-              boxSizing: "border-box",
-            }}
-          >
-            <BoxesCashFlow
-              title={"Inicio de Caja"}
-              value={lastCashFlow.initialCash ? lastCashFlow.initialCash : 0}
-            />
-            <BoxesCashFlow
-              title={"Ventas Efectivo"}
-              value={lastCashFlow.cashPayment ? lastCashFlow.cashPayment : 0}
-            />
-            <BoxesCashFlow
-              title={"Ventas Tarjeta"}
-              value={
-                lastCashFlow.paypalPayment ? lastCashFlow.paypalPayment : 0
-              }
-            />
-            <BoxesCashFlow
-              title={"Total de Ventas"}
-              value={lastCashFlow.totalSales ? lastCashFlow.totalSales : 0}
-            />
-            <BoxesCashFlow
-              title={"Ingresos"}
-              value={lastCashFlow.income ? lastCashFlow.income : 0}
-            />
-            <BoxesCashFlow
-              title={"Egresos"}
-              value={lastCashFlow.expenses ? lastCashFlow.expenses : 0}
-            />
-            <BoxesCashFlow
-              title={"Total de Efectivo"}
-              value={
-                // totalSales.totalSales +
-                //   totalIncome.totalIncome -
-                //   totalExpenses.totalExpenses !==
-                // null
-                //   ? totalSales.totalSales +
-                //     totalIncome.totalIncome -
-                //     totalExpenses.totalExpenses
-                //   : totalSales.totalSales + totalIncome.totalIncome
-                //   ? totalSales.totalSales + totalIncome.totalIncome
-                //   : totalSales.totalSales
-                //   ? totalSales.totalSales
-                //   : 0
+                height: "80%",
+                backgroundColor: "pink",
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "4px",
+                justifyContent: "space-around",
+                alignContent: "space-around",
+                padding: "4px",
+                boxSizing: "border-box",
+              }}
+            >
+              <BoxesCashFlow
+                title={"Inicio de Caja"}
+                value={lastCashFlow ? lastCashFlow.initialCash : 0}
+              />
+              <BoxesCashFlow
+                title={"Ventas Efectivo"}
+                value={lastCashFlow ? lastCashFlow.cashPayment : 0}
+              />
+              <BoxesCashFlow
+                title={"Ventas Tarjeta"}
+                value={lastCashFlow ? lastCashFlow.paypalPayment : 0}
+              />
+              <BoxesCashFlow
+                title={"Total de Ventas"}
+                value={lastCashFlow ? lastCashFlow.totalSales : 0}
+              />
+              <BoxesCashFlow
+                title={"Ingresos"}
+                value={lastCashFlow ? lastCashFlow.income : 0}
+              />
+              <BoxesCashFlow
+                title={"Egresos"}
+                value={lastCashFlow ? lastCashFlow.expenses : 0}
+              />
+              <BoxesCashFlow
+                title={"Total de Efectivo"}
+                value={
+                  // totalSales.totalSales +
+                  //   totalIncome.totalIncome -
+                  //   totalExpenses.totalExpenses !==
+                  // null
+                  //   ? totalSales.totalSales +
+                  //     totalIncome.totalIncome -
+                  //     totalExpenses.totalExpenses
+                  //   : totalSales.totalSales + totalIncome.totalIncome
+                  //   ? totalSales.totalSales + totalIncome.totalIncome
+                  //   : totalSales.totalSales
+                  //   ? totalSales.totalSales
+                  //   : 0
 
-                lastCashFlow.totalCashRegister
-                  ? lastCashFlow.totalCashRegister
-                  : 0
-              }
-            />
-          </div>
+                  lastCashFlow ? lastCashFlow.totalCashRegister : 0
+                }
+              />
+            </div>
+          )}
           <div
             style={{
               width: "90%",
@@ -140,10 +141,9 @@ export default function CashFlow() {
               alignContent: "start",
             }}
           >
-            {/* <Modals /> */}
-            <button onClick={() => history.push("/cashFlow/historialCashFlow")}>
-              Historial De Cierres
-            </button>
+            <Modals />
+          
+
             {/* <button onClick={() => dispatch(cierreDeCaja(cierre))}>
               Cerrar Caja
             </button> */}

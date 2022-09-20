@@ -11,7 +11,11 @@ export const getLastCashFlowAction = () => (dispatch) => {
     .then((res) => dispatch(getLastCashFlow(res.data[0])))
 }
 
-
+export const infoCashFlowAction = (order) => (dispatch) => {
+  return axios
+    .put(`/cash/updateCashFlow/`, order)
+    .then(console.log("put exitoso!"))
+}
 // export const addIncomeAction = (income) => (dispatch) => {
 //   return axios
 //     .post("/cash/addIncome/1", { income: parseInt(income) })
@@ -24,13 +28,12 @@ export const getLastCashFlowAction = () => (dispatch) => {
 //     .then((res) => console.log(res));
 // };
 
-// export const addCashInitAction = (init) => (dispatch) => {
-//   // return dispatch(addCashInit(init));
-//   return axios.post("/cash/addInitCash/1", { initialCash: init }).then(
-//     (res) => dispatch(addCashInit(init))
-//     // dispatch(addCashInit(init)
-//   );
-// };
+export const addCashInitAction = (init) => (dispatch) => {
+  // return dispatch(addCashInit(init));
+  return axios.post(`/cash/newCashFlow/`, { initialCash: init })
+    .then(console.log("post Init Cash exitoso xd!"))
+
+};
 
 // export const getTotalIncomeAction = () => (dispatch) => {
 //   return axios
