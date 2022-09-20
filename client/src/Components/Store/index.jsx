@@ -4,6 +4,7 @@ import {
   getProducts,
   filterByCategoryAction,
   sortProductsAction,
+  searchProductsName,
 } from "../../redux/actions/productsActions";
 import { getCategories } from "../../redux/actions/categoriesActions";
 import NavBarApp from "../NavbarApp/NavBarApp";
@@ -19,26 +20,26 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 function Store() {
   const dispatch = useDispatch();
   const { state, products, categories } = useContext(StoreContext);
+  const [update, setUpdate] = useState(false)
+
 
   useEffect(() => {
     dispatch(getCategories());
     dispatch(getProducts());
-  }, [dispatch]);
-
-  console.log(products);
+  }, [dispatch, update]);
 
   const filterCategory = async (category) => {
     await dispatch(filterByCategoryAction(category));
   };
 
   function sort(e) {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     dispatch(sortProductsAction(e.target.value));
   }
 
-  function handleInput(params) {}
-
-  function handleSearchBtn(params) {}
+  function handleInput(e) {
+    dispatch(searchProductsName(e.target.value));
+  }
 
   return (
     <>
@@ -47,7 +48,7 @@ function Store() {
           {/* <div className="clients-tabs">Clients</div> */}
           <div className="store-container">
             <div className="cart-container">
-              <Cart products={state} />
+              <Cart products={state} update={update} setUpdate={setUpdate} />
             </div>
             <div className="products-container">
               <div className="searchnsort">
@@ -60,7 +61,7 @@ function Store() {
                       onChange={(e) => handleInput(e)}
                     ></SearchInput>
 
-                    <SearchBtn
+                    {/* <SearchBtn
                       id="find"
                       type="submit"
                       onClick={(e) => handleSearchBtn(e)}
@@ -69,7 +70,7 @@ function Store() {
                 icon={faMagnifyingGlass}
                 style={{ width: 15, height: 15 }}
               />
-                    </SearchBtn>
+                    </SearchBtn> */}
                   </div>
                   <div></div>
                 </div>
@@ -102,7 +103,7 @@ function Store() {
                   })}
               </div>
               <div className="cards-container">
-                <Cards products={products} />
+                {<Cards products={products} allProducts={state} />}
               </div>
             </div>
           </div>

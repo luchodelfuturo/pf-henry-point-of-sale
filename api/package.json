@@ -27,19 +27,20 @@
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.4",
     "morgan": "^1.10.0",
+<<<<<<< HEAD
     "multi-part": "^3.0.0",
+=======
+>>>>>>> f3c3bfade795fd4a80ffb7b517e7e6bd922330d8
     "node-fetch": "^3.2.10",
     "nodemailer": "^6.7.8",
-
+    "nodemon": "^2.0.19",
     "paypal-rest-sdk": "^1.8.1",
-
     "pg": "^8.5.1",
     "sequelize": "^6.21.4"
   },
   "devDependencies": {
     "chai": "^4.2.0",
     "mocha": "^8.2.1",
-    "nodemon": "^2.0.6",
     "supertest": "^6.0.1",
     "supertest-session": "^4.1.0"
   }

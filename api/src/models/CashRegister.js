@@ -8,21 +8,30 @@ module.exports = (sequelize) => {
     {
       initialCash: {
         type: DataTypes.DECIMAL,
-        // allowNull: false,
+        defaultValue: 0
       },
       cashPayment: {
         type: DataTypes.DECIMAL,
-        // allowNull: false,
+        defaultValue: 0
       },
       paypalPayment: {
         type: DataTypes.DECIMAL,
+        defaultValue: 0
         // allowNull: false
       },
       income: {
         type: DataTypes.DECIMAL,
+        defaultValue: 0
       },
       expenses: {
         type: DataTypes.DECIMAL,
+        defaultValue: 0
+      },
+      qtyIncome: {
+          type: DataTypes.ARRAY(DataTypes.JSONB)
+      },
+      qtyExpenses: {
+        type: DataTypes.ARRAY(DataTypes.JSONB)
       },
       date: {
         type: DataTypes.DATEONLY,
@@ -31,9 +40,11 @@ module.exports = (sequelize) => {
       },
       totalSales: {
         type: DataTypes.DECIMAL,
+        defaultValue: 0
       },
       totalCashRegister: {
         type: DataTypes.DECIMAL,
+        defaultValue: 0
       },
     },
     {

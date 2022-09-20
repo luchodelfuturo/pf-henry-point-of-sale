@@ -6,6 +6,7 @@ import Counter from "./Components/Counter/counter";
 import AdminProducts from "./Components/AdminProducts/AdminProducts";
 import { StoreProvider } from "./GlobalStates/StoreContext";
 
+<<<<<<< HEAD
 import LandingPage from './Components/LandingPage/LandingPage';
 import Login from './Components/auth/LogIn';
 import Register from './Components/auth/Register';
@@ -19,10 +20,16 @@ import NotFound from './Components/Utils/NotFound/NotFound'
 import Profile from "./Components/Profile/Profile";
 import EditUser from "./Components/Profile/EditUser";
 
+=======
+import WelcomePage from "./Components/Header/Header";
+import Login from "./Components/auth/LogIn";
+import Register from "./Components/auth/Register";
+import ActivationEmail from "./Components/auth/ActivationEmail";
+>>>>>>> f3c3bfade795fd4a80ffb7b517e7e6bd922330d8
 
 import GlobalStyle from "./theme/globalStyle.js";
-import CashFlow from "./Components/CashFlow/CashFlow.jsx";
-
+import CashFlow from "./Components/CashFlow/CashFlow";
+import HistorialsCashFlow from "./Components/CashFlow/HistorialsCashFlow";
 
 function App() {
   const dispatch = useDispatch()
@@ -57,8 +64,7 @@ function App() {
   },[token, dispatch])
   return (
     <div className="App">
-
-      <GlobalStyle/>
+      <GlobalStyle />
 
       <Route exact path="/" component={LandingPage} />
 
@@ -68,10 +74,18 @@ function App() {
 
       <Route path="/profile" component={isLogged ? Profile : NotFound} exact />
 
+<<<<<<< HEAD
       <Route exact path="/user/activate/:activation_token" component={ActivationEmail} />
 
       <Route path="/edit_user/:id" component={isAdmin ? EditUser : NotFound} exact />
 
+=======
+      <Route
+        exact
+        path="/user/activate/:activation_token"
+        component={ActivationEmail}
+      />
+>>>>>>> f3c3bfade795fd4a80ffb7b517e7e6bd922330d8
 
       <Route exact path="/kitchen" component={Kitchen} />
 
@@ -85,7 +99,12 @@ function App() {
       <Route exact path="/historialPedidos" component={HistorialPedidos} />
 
       {/* <Route exact path="/cashFlow" component={CashFlow} /> */}
-      <Route exact path='/cashFlow' component={CashFlow}/>
+      <Route exact path="/cashFlow" component={CashFlow} />
+      <Route
+        exact
+        path="/cashFlow/historialCashFlow"
+        component={HistorialsCashFlow}
+      />
     </div>
   );
 }
