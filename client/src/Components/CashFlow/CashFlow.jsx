@@ -24,23 +24,6 @@ export default function CashFlow() {
   });
 
   useEffect(() => {
-    //Get ULTIMO CASHFLOW
-    // dispatch(getTotalCashAction());
-    // dispatch(getTotalPaypalAction());
-    // dispatch(getTotalIncomeAction());
-    // dispatch(getTotalExpenseAction());
-    // dispatch(getTotalSalesAction());
-    // dispatch(getTotalAction());
-    // setCierre({
-    //   initialCash: cashInit[0],
-    //   cashPayment: totalCash.totalCash,
-    //   paypalPayment: totalPaypal.totalPaypal,
-    //   income: totalIncome.totalIncome,
-    //   expenses: totalExpenses.totalExpenses,
-    //   totalSales: totalSales.totalSales,
-    //   totalCashRegister: totalCash.totalCash,
-    //   totalAll: totalAll.totalCashRegister,
-    // });
     dispatch(getLastCashFlowAction());
     console.log("despachando cashflowAction");
   }, [dispatch]);
@@ -141,7 +124,7 @@ export default function CashFlow() {
               alignContent: "start",
             }}
           >
-            <Modals lastCashFlow={lastCashFlow}  />
+            <Modals lastCashFlow={lastCashFlow} />
 
             {/* <button onClick={() => dispatch(cierreDeCaja(cierre))}>
               Cerrar Caja
