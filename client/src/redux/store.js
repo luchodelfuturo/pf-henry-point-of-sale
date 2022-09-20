@@ -2,10 +2,17 @@ import { configureStore } from "@reduxjs/toolkit";
 import orders from "./slices/ordersSlice";
 import products from "./slices/productsSlice";
 import categories from './slices/categoriesSlice'
+import auth from './slices/authSlice'
+import token from './slices/tokenSlice'
+import users from './slices/usersSlice'
+
 export default configureStore({
   reducer: {
     orders: orders,
     products: products,
     categories: categories,
+    auth: auth,
+    token: token,
+    users: users
   },
 });

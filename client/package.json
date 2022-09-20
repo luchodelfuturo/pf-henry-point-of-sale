@@ -12,8 +12,10 @@
     "axios": "^0.27.2",
     "cross-env": "^7.0.3",
     "jwt-decode": "^3.1.2",
+    "process": "^0.11.10",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-google-login": "^5.2.2",
     "react-redux": "^7.2.3",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
@@ -46,5 +48,8 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:3001"
+  "proxy": "http://localhost:3001",
+  "devDependencies": {
+    "react-error-overlay": "^6.0.9"
+  }
 }

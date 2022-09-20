@@ -1,12 +1,12 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios'
 import {showErrMsg, showSuccessMsg} from '../Utils/Notifications/Notifications.jsx'
 import './auth.css';
-import {dispatchLogin} from '../../redux/actions/authAction';
+import {dispatchLogin} from '../../redux/slices/authSlice';
 import {useDispatch} from 'react-redux';
-import LogInGoogle from './LogInGoogle.jsx';
-// import { GoogleLogin } from 'react-google-login';
+import jwt_decode from 'jwt-decode';
+
 
 const initialState = {
     email: '',
@@ -15,6 +15,7 @@ const initialState = {
     success: ''
 }
 
+const client_id = "58357792722-mar8g19eknd6f1cp4tkpmq37gcn231d7.apps.googleusercontent.com";
 
 
 function Login(){
@@ -34,7 +35,7 @@ function Login(){
             setUser({...user, err: '', success: res.data.msg})
 
             localStorage.setItem('firstLogin', true)
-
+            
             dispatch(dispatchLogin())
             history.push("/store")
 
@@ -44,11 +45,44 @@ function Login(){
         }
     }
 
+
+
+    const responseGoogle = async (response) => {
+        try {
+            console.log("Encoded JWT ID token: " + response.credential);
+            var userObject = jwt_decode(response.credential);
+            console.log(userObject);
+            // const res = await axios.post('/users/google_login', {tokenId: response.id_token})
+
+            setUser(userObject)
+            localStorage.setItem('firstLogin', true)
+
+            dispatch(dispatchLogin())
+            history.push('/store')
+        } catch (err) {
+            err.response.data.msg && 
+            setUser({...user, err: err.response.data.msg, success: ''})
+        }
+    }
+
+    useEffect(()=>{
+        /*global google*/
+        google.accounts.id.initialize({
+            client_id: client_id,
+            callback: responseGoogle
+        })
+        google.accounts.id.renderButton(
+            document.getElementById("signInDiv"),
+            {theme: "outline", size:"large"}
+        );
+    }, []);
+
     return (
         <div className="login_page">
             <h2>Log In</h2>
             {err && showErrMsg(err)}
             {success && showSuccessMsg(success)}
+
             <form onSubmit={handleSubmit}>
                 <div>
                     <label htmlFor="email">Email Address</label>
@@ -67,7 +101,11 @@ function Login(){
                     <Link to="/forgot_password">Forgot your password?</Link>
                 </div>
             </form>
-            <LogInGoogle/>
+            
+            <div className="hr">Or Login With</div>
+
+            <div id="signInDiv" className="social"></div>
+
             <p>New to Point of Sale? <Link to="/register">Register</Link></p>
         </div>
     )
