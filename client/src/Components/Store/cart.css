@@ -2,17 +2,17 @@
   background-color: #d4d4d4;
   height: 730px;
   margin-right: 20px;
+  overflow-y: auto;
 }
 
 .cart {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
-  
 }
 .items {
-  height: 550px;
+  overflow-y: auto;
+  height: 619px;
 }
 .items-header {
   display: flex;
@@ -23,15 +23,16 @@
   font-weight: 700;
 }
 .items-header-qty {
-  width: 57px;
+  width: 40px;
   font-size: 20px;
-  border-right: 1px dashed #696969;
-  text-align: center;
+  border-right: 1px dashed #a1a1a1;
+  text-align: left;
+  padding-left: 5px;
 }
 .items-header-prod {
-  border-right: 1px dashed #696969;
+  border-right: 1px dashed #a1a1a1;
   text-align: start;
-  width: 402px;
+  width: 414px;
   font-size: 24px;
   padding-left: 5px;
 }

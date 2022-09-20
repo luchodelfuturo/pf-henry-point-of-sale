@@ -1,4 +1,4 @@
-import { createContext, useEffect, useReducer } from "react";
+import { createContext, useEffect, useReducer, useState } from "react";
 import { useSelector } from "react-redux";
 
 const StoreContext = createContext();
@@ -63,7 +63,12 @@ function reducer(state = initialState, action = {}) {
 export function StoreProvider({ children }) {
   const { products } = useSelector((state) => state.products);
   const { categories } = useSelector((state) => state.categories);
+
   const [state, dispatch] = useReducer(reducer, reducer());
+  const [comments, setComments] = useState("");
+  const [methodPayment, setMethodPayment] = useState("cash");
+
+  console.log('%cStoreContext.js line:71 state', 'color: #007acc;', state);
 
   function qtyIncr(id) {
     dispatch({ type: "INCREMENT", payload: id });
@@ -89,7 +94,7 @@ export function StoreProvider({ children }) {
       dispatch({ type: "INCREMENT", payload: added });
     } else {
       aux = () => {
-        let { id, name, price, active, categories } = products.find(
+        let { id, name, price, active, categories, stock } = products.find(
           (f) => f.id === added
         );
 
@@ -99,6 +104,7 @@ export function StoreProvider({ children }) {
           price,
           active,
           categories: categories.map((e) => e.name).toString(),
+          stock,
         };
       };
 
@@ -120,10 +126,13 @@ export function StoreProvider({ children }) {
   sendOrder();
 
   let order = {
-    comments: "",
+    comments: comments,
     productsOrder: productsOrder,
-    totals: totals,
+    totalOrder: totals,
+    methodPayment: methodPayment,
   };
+
+  
   const ls = JSON.parse(window.localStorage.getItem("items"));
   useEffect(() => {
     if (state.length > 0) {
@@ -152,6 +161,8 @@ export function StoreProvider({ children }) {
         sendOrder,
         order,
         totals,
+        setComments,
+        setMethodPayment,
       }}
     >
       {children}

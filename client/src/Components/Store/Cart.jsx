@@ -1,36 +1,91 @@
-import React, { useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import StoreContext from "../../GlobalStates/StoreContext";
 import CartItem from "./CartItem";
 import styled from "styled-components";
 import "./cart.css";
+import { filterByCategoryAction } from "../../redux/actions/productsActions";
 import { postOrdersAction } from "../../redux/actions/ordersActions";
 import { useDispatch } from "react-redux";
+import Modal from "../Modals/Modal";
+import { colors } from "../../theme/variables";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faBasketShopping,
+  faTrashCan,
+} from "@fortawesome/free-solid-svg-icons";
+import { ButtonCart } from "../../theme/styled-componets";
+import ClearCart from "../Modals/ClearCart";
+import AddDrinks from "../Modals/AddDrinks";
 
-function Cart({ products }) {
-  const { deleteAll, order, totals } = useContext(StoreContext);
+function Cart({ products, setUpdate, update }) {
+  const { deleteAll, order, totals, setComments, setMethodPayment } =
+    useContext(StoreContext);
+  const [checkout, setCheckout] = useState(false);
+  const [clearCart, setClearCart] = useState(false);
+  const [addDrinks, setAddDrinks] = useState(false);
 
   useEffect(() => {}, [products]);
 
   let dispatch = useDispatch();
-  let confirmMessage = "";
 
-  function onSubmit(e) {
-    e.preventDefault();
+  function checkDrinks() {
+    let foundDrinks = products.find((d) => d.product.categories === "Drinks");
+    return foundDrinks !== undefined ? true : false;
+  }
+
+  function handleCheckoutModal() {
+    if (checkDrinks()) {
+      setCheckout(true);
+    } else {
+      setAddDrinks(true);
+    }
+  }
+
+  function postOrder() {
+    //setCheckout(true)
     try {
       dispatch(postOrdersAction(order));
-      confirmMessage = "Se ha realizado el pedido correctamente";
+      setUpdate(update ? false : true);
       deleteAll();
+      dispatch(filterByCategoryAction("all"));
     } catch (error) {
-      confirmMessage = "Se ha producido un error";
+      console.error(error);
     }
   }
 
   function handleDeleteAll() {
-    deleteAll();
+    //deleteAll();
+    //sureDelete();
+    setClearCart(true);
+  }
+
+  function drinksFilter(filter) {
+    dispatch(filterByCategoryAction(filter));
   }
 
   return (
     <div className="cart-cont">
+      {addDrinks ? (
+        <AddDrinks
+          setModalState={setAddDrinks}
+          setCheckout={setCheckout}
+          df={drinksFilter}
+        />
+      ) : null}
+      {clearCart ? (
+        <ClearCart setClearCart={setClearCart} deleteAll={deleteAll} />
+      ) : null}
+      {checkout && (
+        <Modal
+          total={totals}
+          checkout={checkout}
+          sch={setCheckout}
+          setComments={setComments}
+          postOrder={postOrder}
+          setMethodPayment={setMethodPayment}
+          df={drinksFilter}
+        />
+      )}
       <div className="cart">
         <div className="items">
           <div className="items-header">
@@ -42,16 +97,26 @@ function Cart({ products }) {
             {products ? <CartItem AllProducts={products} /> : null}
           </div>
         </div>
-        {products ? (
+        {products.length ? (
           <Checkout>
             <button className="delete-cart" onClick={() => handleDeleteAll()}>
-              X
+              <FontAwesomeIcon
+                icon={faTrashCan}
+                style={{ width: 25, height: 25 }}
+              />
             </button>
             <div className="pay-btn">
-              <button className="checkout-btn" onClick={onSubmit}>
-                PAY
-              </button>
-              {!confirmMessage ? null : <p>{confirmMessage}</p>}
+              <ButtonCart
+                className="checkout-btn"
+                onClick={() => handleCheckoutModal()}
+              >
+                {" "}
+                Checkout{" "}
+                <FontAwesomeIcon
+                  icon={faBasketShopping}
+                  style={{ width: 35, height: 35 }}
+                />
+              </ButtonCart>
             </div>
             <div className="totals">
               <div className="total-label">Total</div>
@@ -70,35 +135,43 @@ const Checkout = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: absolute;
+  bottom: 80px;
   background: #eaeaea;
   box-shadow: 4px 6px 9px -4px rgba(0, 0, 0, 0.25);
   border-radius: 0px 20px 20px 0px;
-  width: 600px;
+  width: 610px;
   height: 100px;
   .checkout-btn {
     font-weight: 700;
     font-size: 32px;
+    cursor: pointer;
     width: 280px;
     height: 83px;
     margin-left: 17px;
     background: #ffffff;
-    border: 2px solid #000000;
+    border: none;
     box-shadow: 4px 2px 9px -1px rgba(0, 0, 0, 0.25);
-    border-radius: 36px;
+    border-radius: 25px;
+    color: ${colors.dgreen};
+    background-color: ${colors.lgreen};
   }
   .delete-cart {
-    font-weight: 600;
+    font-weight: 500;
     text-align: center;
     font-size: 28px;
     padding-top: 5px;
     color: #ff4f58;
+    cursor: pointer;
     background-color: #eaeaea;
-    width: 58px;
+    width: 61px;
     height: 61px;
-    border: 2px solid #ff4d57;
+    background-color: ${colors.red};
+    border: none;
     box-shadow: 4px 2px 9px -1px rgba(0, 0, 0, 0.25);
-    border-radius: 41px;
+    border-radius: 25px;
     margin-left: 75px;
+    padding-bottom: 5px;
   }
   .totals {
     display: flex;
@@ -106,6 +179,7 @@ const Checkout = styled.div`
   }
   .total-label {
     color: #604f4f;
+    text-align: center;
     font-weight: 700;
     font-size: 20px;
   }
@@ -115,5 +189,7 @@ const Checkout = styled.div`
     font-weight: 700;
     font-size: 32px;
     text-align: center;
+    padding-right: 5px;
+    padding-bottom: 5px;
   }
 `;

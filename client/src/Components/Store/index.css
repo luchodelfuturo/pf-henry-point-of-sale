@@ -4,7 +4,7 @@
   justify-content: space-between;
   width: 1280px;
   height: 800px;
-  background-color: #EFEEEE;
+  background-color: #efeeee;
 }
 .clients-tabs {
   height: 55px;
@@ -16,18 +16,36 @@
 }
 .cart-container {
   width: 640px;
+  
 }
 .products-container {
   width: 640px;
-
 }
-
 
 .cards-container {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
+  height: 667px;
+  overflow-y: auto;
+  padding-right: 20px;
 }
-.category-buttons{
+.category-buttons {
   display: flex;
   margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+ 
+  }
+
+.searchnsort{
+  display: flex;
+  justify-content: space-between;
+  
+}
+
+.search-cont{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

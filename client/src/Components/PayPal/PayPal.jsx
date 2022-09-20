@@ -1,47 +1,61 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useDispatch } from "react-redux";
 import { postOrdersAction } from "../../redux/actions/ordersActions";
-import ReactDOM from "react-dom"
+import StoreContext from "../../GlobalStates/StoreContext";
+import Swal from "sweetalert2";
+import ReactDOM from "react-dom";
+import { icon } from "@fortawesome/fontawesome-svg-core";
 const PayPalButton = window.paypal.Buttons.driver("react", { React, ReactDOM });
-export default function PayPal (){
-
-  const dispatch = useDispatch()
+export default function PayPal() {
+  const { order, totals } = useContext(StoreContext);
+  const dispatch = useDispatch();
   function createOrder(data, actions) {
-    
     return actions.order.create({
       purchase_units: [
         {
           amount: {
-            value: "50", //aqui el valor total de la orden
+            value: totals, //aqui el valor total de la orden
+  
           },
         },
       ],
     });
   }
   function onApprove(data, actions) {
-    return actions.order.capture().then(data=>console.log(data));
-    
+    actions.order.capture().then(()=>modal());
+    // actions.redirect('http://localhost:3000/store');
+
   }
 
-  function onSubmitPayPal(e){
+  function onSubmitPayPal(e) {
     // e.preventDefault();
-    dispatch(postOrdersAction()) //la misma action que se usa en el componente Cart
+    dispatch(postOrdersAction(order)); //la misma action que se usa en el componente Cart
   }
-    return (
-    <div style={{width: "2rem"}}>
+  function modal(){
+    Swal.fire({
+      icon:'success',
+      title:'Successful Payment',
+  })
+  }
+  return (
+    <div>
       <PayPalButton
         createOrder={(data, actions) => createOrder(data, actions)}
-        onApprove={(data, actions) => onApprove(data, actions)}
+        onApprove={(data, actions) => {
+          onApprove(data, actions)
+          onSubmitPayPal()}}
         style={{
-          layout: 'vertical',
-          color:  'gold',
-          shape:  'rect',
+          layout: "vertical",
+          color: "gold",
+          shape: "rect",
           tagline: false,
           shape: "pill",
           height: 40,
         }}
-        onClick={onSubmitPayPal}
         
-      /></div>
-    );
+      />
+    </div>
+  );
 }
+
+//apKey =VVDC4yWz15iNQItZFesTcy55QHjLs6AP

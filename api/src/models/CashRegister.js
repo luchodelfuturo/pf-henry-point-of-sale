@@ -1,40 +1,54 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes } = require("sequelize");
 
 // Exportamos una funcion que define el modelo
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
-    sequelize.define('cash', {
-        initialCash: {
-            type: DataTypes.DECIMAL,
-            allowNull: false,
-        },
-        cashPayment: {
-            type: DataTypes.DECIMAL,
-            allowNull: false
-        },
-        paypalPayment: {
-            type: DataTypes.DECIMAL,
-            // allowNull: false
-        },
-        income: {
-            type: DataTypes.DECIMAL,
-        },
-        expanses: {
-            type: DataTypes.DECIMAL,
-        },
-        date: {
-            type: DataTypes.DATEONLY,
-            defaultValue: DataTypes.NOW,
-            // This way, the current date/time will be used to populate this column (at the moment of insertion)
-          },   
-        totalSales: {
-            type: DataTypes.DECIMAL
-        }, 
-        totalCashRegister: {
-            type: DataTypes.DECIMAL
-        }      
-    },   
+  sequelize.define(
+    "cash",
     {
-        timestamps: false,
-    });
-}
+      initialCash: {
+        type: DataTypes.DECIMAL,
+        defaultValue: 0
+      },
+      cashPayment: {
+        type: DataTypes.DECIMAL,
+        defaultValue: 0
+      },
+      paypalPayment: {
+        type: DataTypes.DECIMAL,
+        defaultValue: 0
+        // allowNull: false
+      },
+      income: {
+        type: DataTypes.DECIMAL,
+        defaultValue: 0
+      },
+      expenses: {
+        type: DataTypes.DECIMAL,
+        defaultValue: 0
+      },
+      qtyIncome: {
+          type: DataTypes.ARRAY(DataTypes.JSONB)
+      },
+      qtyExpenses: {
+        type: DataTypes.ARRAY(DataTypes.JSONB)
+      },
+      date: {
+        type: DataTypes.DATEONLY,
+        defaultValue: DataTypes.NOW,
+        // This way, the current date/time will be used to populate this column (at the moment of insertion)
+      },
+      totalSales: {
+        type: DataTypes.DECIMAL,
+        defaultValue: 0
+      },
+      totalCashRegister: {
+        type: DataTypes.DECIMAL,
+        defaultValue: 0
+      },
+    },
+    {
+      timestamps: false,
+    }
+  );
+};
