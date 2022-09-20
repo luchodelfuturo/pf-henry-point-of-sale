@@ -40,22 +40,23 @@ export default function CashFlow() {
   });
 
   useEffect(() => {
-    dispatch(getTotalCashAction());
-    dispatch(getTotalPaypalAction());
-    dispatch(getTotalIncomeAction());
-    dispatch(getTotalExpenseAction());
-    dispatch(getTotalSalesAction());
-    dispatch(getTotalAction());
-    setCierre({
-      initialCash: cashInit[0],
-      cashPayment: totalCash.totalCash,
-      paypalPayment: totalPaypal.totalPaypal,
-      income: totalIncome.totalIncome,
-      expenses: totalExpenses.totalExpenses,
-      totalSales: totalSales.totalSales,
-      totalCashRegister: totalCash.totalCash,
-      totalAll: totalAll.totalCashRegister,
-    });
+    //Get ULTIMO CASHFLOW 
+    // dispatch(getTotalCashAction());
+    // dispatch(getTotalPaypalAction());
+    // dispatch(getTotalIncomeAction());
+    // dispatch(getTotalExpenseAction());
+    // dispatch(getTotalSalesAction());
+    // dispatch(getTotalAction());
+    // setCierre({
+    //   initialCash: cashInit[0],
+    //   cashPayment: totalCash.totalCash,
+    //   paypalPayment: totalPaypal.totalPaypal,
+    //   income: totalIncome.totalIncome,
+    //   expenses: totalExpenses.totalExpenses,
+    //   totalSales: totalSales.totalSales,
+    //   totalCashRegister: totalCash.totalCash,
+    //   totalAll: totalAll.totalCashRegister,
+    // });
   }, [dispatch]);
 
   return (

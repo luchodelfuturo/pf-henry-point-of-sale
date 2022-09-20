@@ -9,6 +9,14 @@ import {
   addCashInit,
 } from "../slices/cashFlowSlice";
 
+
+export const getLastCashFlowAction = () => (dispatch)=>{
+  return axios
+    .get("/cash/getLastCashFlow")
+    .then((res)=> dispatch(getLastCashFlow(res.data)))
+}
+
+
 export const addIncomeAction = (income) => (dispatch) => {
   return axios
     .post("/cash/addIncome/1", { income: parseInt(income) })
