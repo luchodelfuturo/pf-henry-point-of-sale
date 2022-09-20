@@ -16,6 +16,7 @@ import {
 import { ButtonCart } from "../../theme/styled-componets";
 import ClearCart from "../Modals/ClearCart";
 import AddDrinks from "../Modals/AddDrinks";
+import { infoCashFlowAction } from "../../redux/actions/cashFlowActions";
 
 function Cart({ products, setUpdate, update }) {
   const { deleteAll, order, totals, setComments, setMethodPayment } =
@@ -45,6 +46,8 @@ function Cart({ products, setUpdate, update }) {
     //setCheckout(true)
     try {
       dispatch(postOrdersAction(order));
+      // Dispachar info para cashflow
+      dispatch(infoCashFlowAction(order));
       setUpdate(update ? false : true);
       deleteAll();
       dispatch(filterByCategoryAction("all"));

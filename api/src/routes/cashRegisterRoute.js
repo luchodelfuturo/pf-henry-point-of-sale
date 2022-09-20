@@ -23,15 +23,38 @@ router.post("/close", async (req, res) => {
   }
 });
 
-router.post('/addInitCash/:id', async (req, res) => {
-  const { initCash } = req.body;
-  const { id } = req.params;
+router.post('/newCashFlow', async (req, res) => {
+  const { initCash } = req.body
+  console.log(initCash)
+
   try {
-    res.json(await initialCash(id, initCash))
+    const newCashFlow = await Cash.findOrCreate({
+      where: {
+        initialCash: initCash,
+        closeCashFlow: false,
+        totalCashRegister: initCash
+      },
+    });
+    res.status(200).send('Category created successfully')
   } catch (error) {
-    res.json(error)
+    console.log(error);
   }
 });
+// try {
+//   results = await Cash.findAndCountAll(
+//     {
+//       order: [["id", "DESC"]],
+//       limit: 1
+
+//     })
+//   const id = results.rows[0].id
+
+//   const ekis = await Cash.create(req.body)
+//   res.send(ekis)
+// } catch (error) {
+//   res.json(error)
+// }
+
 
 
 router.get("/history", async (req, res) => {
@@ -63,12 +86,14 @@ router.get("/getLastCashFlow", async (req, res) => {
     );
     // lastCash = results.dataValues.pop()
     console.log(results)
+    console.log(results.rows.id)
     // lastCash = results.pop()
     // console.log(lastCash)
 
     if (results.length === 0) {
       res.status(404).json("no se encontraron resultados")
     } else {
+      console.log(results.rows)
       res.status(200, "200").json(results.rows)
     }
   } catch (error) {
@@ -76,88 +101,91 @@ router.get("/getLastCashFlow", async (req, res) => {
   }
 });
 
-router.get("/totalSales/:id", async (req, res) => {
-  const { id } = req.params;
+router.put("/updateCashFlow", async (req, res) => {
+  const order = req.body;
   try {
-    // res.json(await cashUpdated(id))
-    let totalP = await totalPaypal(id);
-    let totalC = await totalCash(id);
-    // console.log(totalC)
-    // console.log(totalP)
-    let condition = totalP === 0
-      ? totalC + 0
-      : totalC === 0
-        ? totalP + 0
-        : totalC + totalP;
-    // let condition = isNaN(totalP)
-    //   ? totalC + 0
-    //   : isNaN(totalC)
-    //   ? totalP + 0
-    //   : totalC + totalP;
-    console.log(condition);
-    await Cash.update({ totalSales: condition }, { where: { id: id } });
-    // res.json(totals);
-    res.json({ totalSales: condition });
-  } catch (error) {
-    console.log(error);
-  }
-});
+    results = await Cash.findAndCountAll(
+      {
+        order: [["id", "DESC"]],
+        limit: 1
 
-router.get("/totalCash-register/:id", async (req, res) => {
-  const { id } = req.params;
-  try {
-    let totals = await cashUpdated(id);
-    res.json({ totalCashRegister: totals });
-  } catch (error) {
-    res.josn(error);
-  }
-});
+      }
+    )
+    const cash = order.methodPayment === "cash" ? order.totalOrder : 0
+    const paypal = order.methodPayment === "paypal" ? order.totalOrder : 0
 
-router.get("/payment-paypal/:id", async (req, res) => {
-  const { id } = req.params;
-  try {
-    res.json(await paymentPayPal(id));
-  } catch (error) {
-    res.send(error);
-  }
-});
+    const id = results.rows[0].id
+    const cashPaymentOut = parseInt(results.rows[0].cashPayment) + parseInt(cash)
 
-router.get("/payment-cash/:id", async (req, res) => {
-  //llamar a esta ruta cada que se efectua una venta
-  const { id } = req.params;
-  // let totalSales = await totalSells(id)
-  try {
-    res.json(await paymentCash(id));
-  } catch (error) {
-    console.log(error);
-  }
-});
+    const paypalPaymentOut = parseInt(results.rows[0].paypalPayment) + parseInt(paypal)
 
-router.post("/addIncome/:id", async (req, res) => {
-  const { income, comments } = req.body;
-  const { id } = req.params;
-  // if (income) {
-  try {
-    // console.log(income);
-    // await addIncome(id, income)
-    // let result = await Cash.create(req.body)
-    res.status(200).json(await addIncome(id, income));
-    // res.json(result)
-  } catch (error) {
-    console.log(error);
-  }
-  // }
-});
+    const totalSalesOut = cashPaymentOut + paypalPaymentOut
+    const totalCashRegisterOut = parseInt(results.rows[0].totalCashRegister) + parseInt(cash)
+    //  ({ active: false }, { where: { orderNumber: orderNumber } })
+    if (order.methodPayment === "cash") {
+      await Cash.update({ cashPayment: cashPaymentOut, totalSales: totalSalesOut, totalCashRegister: totalCashRegisterOut }, { where: { id: id } })
 
-router.post("/addExpense/:id", async (req, res) => {
-  const { expenses } = req.body;
-  const { id } = req.params;
-  if (expenses) {
-    try {
-      return res.status(200).json(await addExpense(id, expenses));
-    } catch (error) {
-      console.log(error);
+
     }
+    else {
+
+      await Cash.update({ paypalPayment: paypalPaymentOut, totalSales: totalSalesOut }, { where: { id: id } })
+
+
+    }
+  }
+  catch (error) {
+    res.json(error);
+  }
+})
+
+
+
+
+router.put("/addIncome", async (req, res) => {
+  const income = req.body;
+  console.log("income:", income)
+  try {
+    results = await Cash.findAndCountAll(
+      {
+        order: [["id", "DESC"]],
+        limit: 1
+
+      }
+    )
+
+
+    const id = results.rows[0].id
+    const totalCashRegisterOut = parseInt(results.rows[0].totalCashRegister) + parseInt(income.amount)
+    const incomeOut = parseInt(results.rows[0].income) + parseInt(income.amount)
+    await Cash.update({ income: incomeOut, totalCashRegister: totalCashRegisterOut }, { where: { id: id } })
+
+  }
+  catch (error) {
+    res.json(error);
+  }
+});
+
+router.put("/addExpense", async (req, res) => {
+  const expenses = req.body;
+  try {
+    results = await Cash.findAndCountAll(
+      {
+        order: [["id", "DESC"]],
+        limit: 1
+
+      }
+    )
+
+
+    const id = results.rows[0].id
+    const totalCashRegisterOut = parseInt(results.rows[0].totalCashRegister) - parseInt(expenses.amount)
+    const expensesOut = parseInt(results.rows[0].expenses) + parseInt(expenses.amount)
+    await Cash.update({ expenses: expensesOut, totalCashRegister: totalCashRegisterOut }, { where: { id: id } })
+
+  }
+  catch (error) {
+    res.json(error);
   }
 });
 
