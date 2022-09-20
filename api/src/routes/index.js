@@ -14,7 +14,7 @@ const categoryRoute = require("./categoryRoute.js");
 const readyRoute = require("./readyRoute.js"); //nuevo
 
 const userRoute = require("./userRoute.js");
-// const uploadRoute = require("./uploadRoute");
+const uploadRoute = require("./uploadRoute");
 
 
 const cashClose = require("./cashRegisterRoute.js")
@@ -25,7 +25,7 @@ router.use("/products", productsRoute);
 router.use("/category", categoryRoute);
 
 router.use("/users", userRoute);
-// router.use("/upload_avatar", uploadRoute);
+router.use("/upload_avatar", uploadRoute);
 
 router.use("/cash", cashClose);
 

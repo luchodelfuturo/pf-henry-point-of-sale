@@ -46,6 +46,10 @@ module.exports = (sequelize) => {
         type: DataTypes.DECIMAL,
         defaultValue: 0
       },
+      closeCashFlow:{
+        type: DataTypes.BOOLEAN,
+        defaultValue: true
+      }
     },
     {
       timestamps: false,

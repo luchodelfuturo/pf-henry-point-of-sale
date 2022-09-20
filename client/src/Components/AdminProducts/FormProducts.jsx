@@ -27,7 +27,7 @@ export default function FormProducts({
       : {
           name: productEdit.name,
           price: productEdit.price,
-
+          
           description: productEdit.description,
           idcategory: productEdit.idcategory,
           active: productEdit.active,
