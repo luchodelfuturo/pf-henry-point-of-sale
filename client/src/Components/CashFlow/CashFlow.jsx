@@ -2,15 +2,7 @@ import React, { useEffect } from "react";
 import NavBarApp from "../NavbarApp/NavBarApp";
 import BoxesCashFlow from "./BoxesCashFlow";
 import { useHistory } from "react-router-dom";
-import {
-  getTotalCashAction,
-  getTotalPaypalAction,
-  getTotalIncomeAction,
-  getTotalSalesAction,
-  getTotalExpenseAction,
-  cierreDeCaja,
-  getTotalAction,
-} from "../../redux/actions/cashFlowActions";
+import { getLastCashFlowAction } from "../../redux/actions/cashFlowActions";
 import { useDispatch, useSelector } from "react-redux";
 import Modals from "./Modals";
 import { useState } from "react";
@@ -18,15 +10,7 @@ import { useState } from "react";
 export default function CashFlow() {
   const history = useHistory();
   const dispatch = useDispatch();
-  const {
-    totalCash,
-    totalPaypal,
-    totalIncome,
-    totalSales,
-    totalExpenses,
-    cashInit,
-    totalAll,
-  } = useSelector((state) => state.cashFlow);
+  const { lastCashFlow } = useSelector((state) => state.cashFlow);
 
   const [cierre, setCierre] = useState({
     initialCash: 0,
@@ -40,7 +24,7 @@ export default function CashFlow() {
   });
 
   useEffect(() => {
-    //Get ULTIMO CASHFLOW 
+    //Get ULTIMO CASHFLOW
     // dispatch(getTotalCashAction());
     // dispatch(getTotalPaypalAction());
     // dispatch(getTotalIncomeAction());
@@ -57,8 +41,10 @@ export default function CashFlow() {
     //   totalCashRegister: totalCash.totalCash,
     //   totalAll: totalAll.totalCashRegister,
     // });
+    console.log("despachando");
+    dispatch(getLastCashFlowAction());
   }, [dispatch]);
-
+  console.log(lastCashFlow);
   return (
     <div style={{ width: "100%", height: "100vh", backgroundColor: "gray" }}>
       <div style={{ height: "90vh", backgroundColor: "white", width: "100%" }}>
@@ -94,29 +80,29 @@ export default function CashFlow() {
           >
             <BoxesCashFlow
               title={"Inicio de Caja"}
-              value={cashInit[0] ? cashInit[0] : 0}
+              value={lastCashFlow.initialCash ? lastCashFlow.initialCash : 0}
             />
             <BoxesCashFlow
               title={"Ventas Efectivo"}
-              value={totalCash.totalCash ? totalCash.totalCash : 0}
+              value={lastCashFlow.cashPayment ? lastCashFlow.cashPayment : 0}
             />
             <BoxesCashFlow
               title={"Ventas Tarjeta"}
-              value={totalPaypal.totalPaypal ? totalPaypal.totalPaypal : 0}
+              value={
+                lastCashFlow.paypalPayment ? lastCashFlow.paypalPayment : 0
+              }
             />
             <BoxesCashFlow
               title={"Total de Ventas"}
-              value={totalSales.totalSales ? totalSales.totalSales : 0}
+              value={lastCashFlow.totalSales ? lastCashFlow.totalSales : 0}
             />
             <BoxesCashFlow
               title={"Ingresos"}
-              value={totalIncome.totalIncome ? totalIncome.totalIncome : 0}
+              value={lastCashFlow.income ? lastCashFlow.income : 0}
             />
             <BoxesCashFlow
               title={"Egresos"}
-              value={
-                totalExpenses.totalExpenses ? totalExpenses.totalExpenses : 0
-              }
+              value={lastCashFlow.expenses ? lastCashFlow.expenses : 0}
             />
             <BoxesCashFlow
               title={"Total de Efectivo"}
@@ -134,7 +120,9 @@ export default function CashFlow() {
                 //   ? totalSales.totalSales
                 //   : 0
 
-                totalAll.totalCashRegister ? totalAll.totalCashRegister : 0
+                lastCashFlow.totalCashRegister
+                  ? lastCashFlow.totalCashRegister
+                  : 0
               }
             />
           </div>
@@ -152,13 +140,13 @@ export default function CashFlow() {
               alignContent: "start",
             }}
           >
-            <Modals />
+            {/* <Modals /> */}
             <button onClick={() => history.push("/cashFlow/historialCashFlow")}>
               Historial De Cierres
             </button>
-            <button onClick={() => dispatch(cierreDeCaja(cierre))}>
+            {/* <button onClick={() => dispatch(cierreDeCaja(cierre))}>
               Cerrar Caja
-            </button>
+            </button> */}
           </div>
         </div>
       </div>
