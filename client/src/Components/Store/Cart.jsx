@@ -18,8 +18,14 @@ import ClearCart from "../Modals/ClearCart";
 import AddDrinks from "../Modals/AddDrinks";
 
 function Cart({ products, setUpdate, update }) {
-  const { deleteAll, order, totals, setComments, setMethodPayment } =
-    useContext(StoreContext);
+  const {
+    deleteAll,
+    order,
+    totals,
+    setComments,
+    setMethodPayment,
+    setDiscounts,
+  } = useContext(StoreContext);
   const [checkout, setCheckout] = useState(false);
   const [clearCart, setClearCart] = useState(false);
   const [addDrinks, setAddDrinks] = useState(false);
@@ -84,6 +90,7 @@ function Cart({ products, setUpdate, update }) {
           postOrder={postOrder}
           setMethodPayment={setMethodPayment}
           df={drinksFilter}
+          setDiscounts={setDiscounts}
         />
       )}
       <div className="cart">
