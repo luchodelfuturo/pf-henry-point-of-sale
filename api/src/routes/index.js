@@ -13,13 +13,13 @@ const productsRoute = require("./productsRoute.js");
 const categoryRoute = require("./categoryRoute.js");
 const readyRoute = require("./readyRoute.js"); //nuevo
 const userRoute = require("./userRoute.js");
-// const uploadRoute = require("./uploadRoute");
+const uploadRoute = require("./uploadRoute");
 
 router.use("/orders", ordersRoute);
 router.use("/orders/ready", readyRoute); //nuevo
 router.use("/products", productsRoute);
 router.use("/category", categoryRoute);
 router.use("/users", userRoute);
-// router.use("/upload_avatar", uploadRoute);
+router.use("/upload_avatar", uploadRoute);
 
 module.exports = router;
