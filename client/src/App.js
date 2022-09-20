@@ -74,18 +74,11 @@ function App() {
 
       <Route path="/profile" component={isLogged ? Profile : NotFound} exact />
 
-<<<<<<< HEAD
-      <Route exact path="/user/activate/:activation_token" component={ActivationEmail} />
-
-      <Route path="/edit_user/:id" component={isAdmin ? EditUser : NotFound} exact />
-
-=======
       <Route
         exact
         path="/user/activate/:activation_token"
         component={ActivationEmail}
       />
->>>>>>> f3c3bfade795fd4a80ffb7b517e7e6bd922330d8
 
       <Route exact path="/kitchen" component={Kitchen} />
 
