@@ -9,9 +9,7 @@ export const cashFlowSlice = createSlice({
 
     },
     reducers: {
-        // ordersFinishedCash: (state, action) => {
-        //   state.totalCash = action.payload;
-        // },
+        
         getLastCashFlow: (state, action) => {
             state.lastCashFlow = action.payload;
         },
