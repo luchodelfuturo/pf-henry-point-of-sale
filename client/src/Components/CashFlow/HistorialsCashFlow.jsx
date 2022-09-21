@@ -8,7 +8,7 @@ import {
 } from "../../redux/actions/cashFlowActions";
 
 export default function HistorialsCashFlow() {
-  const { allCashFlows } = useSelector((state) => state.cashFlow);
+  const { allCashFlow } = useSelector((state) => state.cashFlow);
   const dispatch = useDispatch();
 
   const handleSearchDate = (e) => {
@@ -19,7 +19,7 @@ export default function HistorialsCashFlow() {
   useEffect(() => {
     dispatch(getAllCashFlowAction());
   }, [dispatch]);
-
+  console.log(allCashFlow);
   return (
     <div
       style={{
@@ -84,8 +84,8 @@ export default function HistorialsCashFlow() {
             overflowY: "scroll",
           }}
         >
-          {allCashFlows ? (
-            allCashFlows.map((cashFlowBox) => {
+          {allCashFlow.length > 0 ? (
+            allCashFlow.map((cashFlowBox) => {
               //setTotalSuma(...totalSuma, totalSuma + order.totalOrder);
 
               return (

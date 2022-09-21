@@ -53,15 +53,16 @@ export default function CashFlow() {
               style={{
                 width: "90%",
                 margin: "0 auto",
-
+                backgroundColor: "lightgray",
                 height: "80%",
-                backgroundColor: "pink",
+                border: "2px solid gray",
+                borderRadius: "20px",
                 display: "flex",
                 flexWrap: "wrap",
-                gap: "4px",
+                gap: "10px",
                 justifyContent: "space-around",
-                alignContent: "space-around",
-                padding: "4px",
+                alignContent: "start",
+                padding: "20px",
                 boxSizing: "border-box",
               }}
             >
@@ -116,7 +117,7 @@ export default function CashFlow() {
               margin: "0 auto",
 
               height: "10%",
-              backgroundColor: "blue",
+
               display: "flex",
               flexWrap: "wrap",
               gap: "10px",
