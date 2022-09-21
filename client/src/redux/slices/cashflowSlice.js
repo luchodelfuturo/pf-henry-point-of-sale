@@ -9,7 +9,7 @@ export const cashFlowSlice = createSlice({
 
     },
     reducers: {
-        
+
         getLastCashFlow: (state, action) => {
             state.lastCashFlow = action.payload;
         },
@@ -22,7 +22,7 @@ export const cashFlowSlice = createSlice({
 
             state.allCashFlow = filtro.filter(cash => cash.date === action.payload)
         }
-        },
+    },
 });
 
 export const {
