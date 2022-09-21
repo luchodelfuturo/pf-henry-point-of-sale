@@ -39,7 +39,7 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/add", async (req, res) => {
-  let { name, price, image, description, active, idcategory, id } = req.body;
+  let { name, price, image, description, active, stock, idcategory, id } = req.body;
 
   const searchProduct = await Product.findOne({where: {id: id}})
   
@@ -52,6 +52,7 @@ router.post("/add", async (req, res) => {
           image: image,
           description: description,
           active: active,
+          stock: stock,
           idcategory: idcategory,
         },
       });
@@ -79,6 +80,7 @@ router.post("/add", async (req, res) => {
       image: image, 
       description: description,
       active: active,
+      stock: stock,
       idcategory: idcategory
     }, {where: {id: id}})
     res.status(200).send("Producto editado")
