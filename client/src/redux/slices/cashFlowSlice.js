@@ -22,8 +22,7 @@ export const cashFlowSlice = createSlice({
 
             state.allCashFlow = filtro.filter(cash => cash.date === action.payload)
         }
-
-    },
+        },
 });
 
 export const {
