@@ -39,9 +39,9 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/add", async (req, res) => {
-  let { name, price, image, description, active, idcategory } = req.body;
+  let { name, price, image, description, active, idcategory, id } = req.body;
 
-  const searchProduct = await Product.findOne({where: {name: name}})
+  const searchProduct = await Product.findOne({where: {id: id}})
   
   if(searchProduct === null) { //en caso de que no exista
     try {
@@ -72,6 +72,7 @@ router.post("/add", async (req, res) => {
     }
   } else {
 
+    try{
     await Product.update({
       name: name, 
       price: price,
@@ -79,8 +80,11 @@ router.post("/add", async (req, res) => {
       description: description,
       active: active,
       idcategory: idcategory
-    }, {where: {name: name}})
-
+    }, {where: {id: id}})
+    res.status(200).send("Producto editado")
+    } catch(error){
+      res.status(404).json(error)
+    }
   }
 });
 

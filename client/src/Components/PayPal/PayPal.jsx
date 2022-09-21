@@ -22,7 +22,9 @@ export default function PayPal() {
     });
   }
   function onApprove(data, actions) {
-    return actions.order.capture().then(()=>modal());
+    actions.order.capture().then(()=>modal());
+    // actions.redirect('http://localhost:3000/store');
+
   }
 
   function onSubmitPayPal(e) {
@@ -39,7 +41,9 @@ export default function PayPal() {
     <div>
       <PayPalButton
         createOrder={(data, actions) => createOrder(data, actions)}
-        onApprove={(data, actions) => onApprove(data, actions)}
+        onApprove={(data, actions) => {
+          onApprove(data, actions)
+          onSubmitPayPal()}}
         style={{
           layout: "vertical",
           color: "gold",
@@ -48,8 +52,10 @@ export default function PayPal() {
           shape: "pill",
           height: 40,
         }}
-        onClick={onSubmitPayPal}
+        
       />
     </div>
   );
 }
+
+//apKey =VVDC4yWz15iNQItZFesTcy55QHjLs6AP

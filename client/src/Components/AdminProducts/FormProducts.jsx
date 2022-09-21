@@ -3,6 +3,8 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { disableProductAction } from "../../redux/actions/productsActions";
 import { ButtonX, ButtonDis,ButtonDelete, ButtonSave } from '../../theme/styled-componets';
+import Swal from 'sweetalert2'
+import LoadImage from "./LoadImage";
 
 export default function FormProducts({
   categories,
@@ -25,11 +27,12 @@ export default function FormProducts({
       : {
           name: productEdit.name,
           price: productEdit.price,
-
+          
           description: productEdit.description,
           idcategory: productEdit.idcategory,
           active: productEdit.active,
           image: productEdit.image,
+          id: productEdit.id
         }
   );
   console.log("STATE edit:", state.idcategory);
@@ -40,6 +43,8 @@ export default function FormProducts({
     default:
       "https://media.istockphoto.com/photos/chinese-food-blank-background-picture-id545286388?k=20&m=545286388&s=612x612&w=0&h=1zAWEuV5W6SoYtErOkWasELFcAWMKgQEBUsNOoH5znc=",
   };
+
+  const [imageScreen, setImageScreen] = useState(false)
 
   let dispatch = useDispatch()
 
@@ -53,22 +58,63 @@ export default function FormProducts({
     setState({ ...state, idcategory: value, image: imagenes[value] });
   };
 
-  const handleDelete = (e) => {
+  const deleteAlert = (e) => {
 
-    dispatch(disableProductAction(productEdit.id))
-    setProductEdit((oldProduct) => ({...oldProduct, active: false}))
+    Swal.fire({
+      title: 'Advertencia',
+      text: 'Estás seguro que deseas eliminar este producto?',
+      icon: 'warning',
+      showDenyButton: true,
+      denyButtonText: 'No',
+      confirmButtonText: 'Sí'
+    }).then(res => {
+      if(res.isConfirmed){
+        handleDelete(e)
+      }
+    })
 
   }
 
-  //     "name": "Burger Doble",
-  //     "price": 200,
-  //     "image": "",
-  //     "description": "veggie burger",
-  //     "active": true,
-  //     "idcategory": 1
-  //
+  const handleDelete = (e) => {
+
+    //Hace la funcion
+    dispatch(disableProductAction(productEdit.id))
+    setProductEdit((oldProduct) => ({...oldProduct, active: false}))
+
+    // Cierra la pestaña
+    setShowFormProducts(false);
+    setProductEdit({
+      name: "",
+      price: "",
+      categorias: "",
+      desc: "",
+    });
+
+  }
+
+  const showImageScreen = (e) => {
+
+    setImageScreen(true)
+
+  }
+
+  //const saveAlert = (e) => {
+  //  Swal.fire({
+  //    title: 'Advertencia',
+  //    text: 'Estás seguro que deseas guardar este producto?',
+  //    icon: 'warning',
+  //    showDenyButton: true,
+  //    denyButtonText: 'No',
+  //    confirmButtonText: 'Sí'
+  //  }).then(res => {
+  //    if(res.isConfirmed){
+  //      handleSubmit(e)
+  //    }
+  //  })
+  //}
 
   const handleSubmit = (e) => {
+    console.log("llega a handleSubmit")
     e.preventDefault();
     console.log("prodcuto a post:", state);
     addProduct(state);
@@ -104,6 +150,12 @@ export default function FormProducts({
           padding: "10px",
         }}
       >
+        {imageScreen && (
+          <LoadImage
+          setImageScreen={setImageScreen}
+          setState={setState}
+          />
+        )}
         <ButtonX
           onClick={() => {
             setShowFormProducts(false);
@@ -151,8 +203,8 @@ export default function FormProducts({
                 style={{ objectFit: "cover", width: "100%", height: "100%", borderRadius: "0.3rem" }}
               />
             </div>
-            <ButtonDis disabled type="button">Agregar Imagen</ButtonDis>
-            <ButtonDelete onClick={(e) => {handleDelete(e)}} type="button">Eliminar</ButtonDelete>
+            <ButtonDis type="button" onClick={showImageScreen}>Agregar Imagen</ButtonDis>
+            <ButtonDelete onClick={(e) => {deleteAlert(e)}} type="button">Eliminar</ButtonDelete>
             <ButtonSave
               disabled={
                 state.name === "" ||

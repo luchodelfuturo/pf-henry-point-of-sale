@@ -24,6 +24,7 @@ async function precarga() {
       description: "Hamburguesa de doble medallón y queso cheddar",
       active: true,
       idcategory: 2,
+      stock: 26
     },
     {
       name: "Hamburguesa de huevo",
@@ -33,6 +34,7 @@ async function precarga() {
       description: "Hamburguesa de doble medallón y un huevo frito",
       active: true,
       idcategory: 2,
+      stock: 25
     },
     {
       name: "Cheese Burguer triple",
@@ -42,6 +44,7 @@ async function precarga() {
       description: "Hamburguesa de triple medallón y queso cheddar",
       active: true,
       idcategory: 2,
+      stock: 27
     },
     {
       name: "Cheese Burguer cuádruple",
@@ -51,6 +54,7 @@ async function precarga() {
       description: "Hamburguesa de cuádruple medallón y queso cheddar",
       active: true,
       idcategory: 2,
+      stock: 25
     },
     {
       name: "porky Burguer",
@@ -60,6 +64,7 @@ async function precarga() {
       description: "Hamburguesa de cerdo de doble medallón y queso cheddar",
       active: true,
       idcategory: 2,
+      stock: 20
     },
     {
       name: "Bacon Cheese Burguer",
@@ -69,6 +74,7 @@ async function precarga() {
       description: "Hamburguesa de doble medallón, cheddar y bacon",
       active: true,
       idcategory: 2,
+      stock: 16
     },
     {
       name: "Veggie Burguer",
@@ -78,6 +84,7 @@ async function precarga() {
       description: "Hamburguesa de soja texturizada de doble medallón y tofu",
       active: true,
       idcategory: 2,
+      stock: 20
     },
     {
       name: "blue Cheese Burguer",
@@ -87,6 +94,7 @@ async function precarga() {
       description: "Hamburguesa de doble medallón, queso roquefort y cebolla",
       active: true,
       idcategory: 2,
+      stock: 24
     },
   ]);
   await burguers[0].addCategory(2);
@@ -107,6 +115,7 @@ async function precarga() {
       description: "pizza con queso muzzarella",
       active: true,
       idcategory: 3,
+      stock: 23
     },
     {
       name: "Pizza fugazzeta",
@@ -116,6 +125,7 @@ async function precarga() {
       description: "Pizza con queso muzzarella y cebolla salteada",
       active: true,
       idcategory: 3,
+      stock: 28
     },
     {
       name: "Pizza 4 quesos",
@@ -125,6 +135,7 @@ async function precarga() {
       description: "Pizza con queso muzzarella, roquefort, cremón y pategrás",
       active: true,
       idcategory: 3,
+      stock: 27
     },
     {
       name: "Pizza margarita",
@@ -135,6 +146,7 @@ async function precarga() {
         "Pizza con queso muzzarella, rodajas de tomate, albahaca y aceite de oliva",
       active: true,
       idcategory: 3,
+      stock: 18
     },
     {
       name: "Pizza de morrones asados",
@@ -144,6 +156,7 @@ async function precarga() {
       description: "Pizza con queso muzzarella y morrones asados",
       active: true,
       idcategory: 3,
+      stock: 21
     },
     {
       name: "Pizza funghi",
@@ -153,6 +166,7 @@ async function precarga() {
       description: "Pizza con queso muzzarella, cebolla salteada y champiñones",
       active: true,
       idcategory: 3,
+      stock: 20
     },
     {
       name: "Pizza de salmón",
@@ -162,6 +176,7 @@ async function precarga() {
       description: "Pizza con queso muzzarella, salmón y rúcula",
       active: true,
       idcategory: 3,
+      stock: 18
     },
     {
       name: "Pizza carbonara",
@@ -171,6 +186,7 @@ async function precarga() {
         "Pizza con queso muzzarella, panceta, champiñones y nata líquida",
       active: true,
       idcategory: 3,
+      stock: 17
     },
   ]);
   await pizzas[0].addCategory(3);
@@ -191,6 +207,7 @@ async function precarga() {
       description: "Fernet Branca mezclado con Coca Cola y hielo",
       active: true,
       idcategory: 4,
+      stock: 35
     },
     {
       name: "Gancia con Sprite",
@@ -200,6 +217,7 @@ async function precarga() {
       description: "Gancia mezclado con Sprite y hielo",
       active: true,
       idcategory: 4,
+      stock: 23
     },
     {
       name: "Margarita",
@@ -209,6 +227,7 @@ async function precarga() {
       description: "Tequila Mezclado con jugo de limón y sal en los bordes",
       active: true,
       idcategory: 4,
+      stock: 19
     },
     {
       name: "negroni",
@@ -218,6 +237,7 @@ async function precarga() {
       description: "Ginebra mezclado con Campari y Vermut dulce",
       active: true,
       idcategory: 4,
+      stock: 25
     },
     {
       name: "Manhattan",
@@ -227,6 +247,7 @@ async function precarga() {
       description: "Whiskey mezclado con Vermut y 2 dashes angostura bitters",
       active: true,
       idcategory: 4,
+      stock: 25
     },
     {
       name: "Whisky Sour",
@@ -237,6 +258,7 @@ async function precarga() {
         "Whiskey mezclado con jugo de limón, azucar y clara de huevo",
       active: true,
       idcategory: 4,
+      stock: 25
     },
     {
       name: "Sazerac",
@@ -246,6 +268,7 @@ async function precarga() {
       description: "Whiskey mezclado con Sirope, Absenta y amargo de Peychaud",
       active: true,
       idcategory: 4,
+      stock: 24
     },
     {
       name: "Gimlet",
@@ -255,6 +278,7 @@ async function precarga() {
       description: "Ginebra mezclado con sirope de azúcar y jugo de limón",
       active: true,
       idcategory: 4,
+      stock: 21
     },
   ]);
   await drinks[0].addCategory(4);
@@ -275,6 +299,7 @@ async function precarga() {
       description: "Flan con dulce de leche y crema",
       active: true,
       idcategory: 5,
+      stock: 22
     },
     {
       name: "Papas Bravas",
@@ -284,6 +309,7 @@ async function precarga() {
       description: "Papas en cuña con salsa brava (creo)",
       active: true,
       idcategory: 5,
+      stock: 27
     },
     {
       name: "Chicken fingers",
@@ -293,6 +319,7 @@ async function precarga() {
       description: "pechuga de pollo empanada y frita",
       active: true,
       idcategory: 5,
+      stock: 25
     },
     {
       name: "Lemmon Pie",
@@ -302,6 +329,7 @@ async function precarga() {
       description: "1 porción mediana de torta con limón y nata casera",
       active: true,
       idcategory: 5,
+      stock: 20
     },
     {
       name: "Apple Crumble",
@@ -311,6 +339,7 @@ async function precarga() {
       description: "1 porción mediana de torta de manzana",
       active: true,
       idcategory: 5,
+      stock: 17
     },
     {
       name: "Cheese Cake",
@@ -320,6 +349,7 @@ async function precarga() {
         "1 porción mediana de torta de ricotta y dulce de frutos rojos",
       active: true,
       idcategory: 5,
+      stock: 15
     },
     {
       name: "Maracuyá Cheese Cake",
@@ -329,6 +359,7 @@ async function precarga() {
       description: "1 porción mediana de torta de ricotta y dulce de maracuyá",
       active: true,
       idcategory: 5,
+      stock: 22
     },
     {
       name: "Mousse de choco",
@@ -338,6 +369,7 @@ async function precarga() {
       description: "1 copa de Mousse de chocolate y nata líquida",
       active: true,
       idcategory: 5,
+      stock: 20
     },
   ]);
   await extras[0].addCategory(5);
@@ -354,7 +386,7 @@ async function precarga() {
 conn
   .sync({ force: true })
   .then(() => {
-    server.listen(3001, () => {
+    server.listen(process.env.PORT, () => {
       console.log("%s listening at 3001"); // eslint-disable-line no-console
     });
   })

@@ -10,7 +10,7 @@ import { getCategories } from "../../redux/actions/categoriesActions";
 import axios from "axios";
 import NavBarApp from "../NavbarApp/NavBarApp";
 import { ButtonSave } from "../../theme/styled-componets";
-import SearchNav from "../SearchNav/SearchNav";
+import SearchNav from "../SearchNav/SearchNav.jsx";
 
 export default function AdminProducts() {
   const dispatch = useDispatch();
@@ -33,6 +33,7 @@ export default function AdminProducts() {
     active: true,
     idcategory: "",
     image: "",
+    id: ""
   });
 
   const [addCatShow, setAddCatShow] = useState(false);
@@ -57,7 +58,7 @@ export default function AdminProducts() {
   };
 
   const addCategory = async (category) => {
-    await axios.post("http://localhost:3001/category/add", category);
+    await axios.post("/category/add", category);
     setInputCategory("");
     dispatch(getCategories());
   };

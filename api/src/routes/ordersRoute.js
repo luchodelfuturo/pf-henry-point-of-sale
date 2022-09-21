@@ -38,6 +38,8 @@ router.post("/", async (req, res) => {
       let selled = product.dataValues.sellCount
       selled = selled + req.body.productsOrder[i].qty
       await Product.update({ sellCount: selled }, { where: { name: req.body.productsOrder[i].nameProduct } })
+      let newStock = product.dataValues.stock - req.body.productsOrder[i].qty
+      await Product.update({ stock: newStock }, { where: { name: req.body.productsOrder[i].nameProduct } })
     }
     res.json(order);
   } catch (error) {

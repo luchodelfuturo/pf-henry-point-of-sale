@@ -83,6 +83,10 @@ export const ButtonSave = styled.button`
 `;
 
 export const ButtonCart = styled.button`
+  transition: all 0.2s ease;
+  /* transform: translateY(-0.2em);
+ transition: transform 0.1s ease; */
+  //transition: transform 0.2s ease;
   border-radius: 0.3rem;
   border-style: none;
   filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.25));
@@ -90,11 +94,60 @@ export const ButtonCart = styled.button`
   //font-weight: bold;
   font-size: 17px;
   cursor: pointer;
-  transition: all 0.5s ease;
+  //transition: all 0.5s ease;
 
   &:hover {
-    background-color: ${colors.grey5};
+    //transition: all 0.3s ease;
+    //filter: drop-shadow(3px 3px 5px rgba(0, 0, 0, 0.25));
+    //transform: scale(1.01);
+    //transform: translateY(-0.33em);
   }
+
+  &:active {
+    transition: all 0.1s ease;
+    transform: scale(0.9);
+  }
+
+  /* &:focus {
+    transition: all 0.3s ease;
+    transform: translateY(-0.33em);
+  } */
+`;
+
+export const MainButton = styled.button`
+  transition: all 0.2s ease;
+  color: white;
+  background-color: #7f5af0;
+  /* transform: translateY(-0.2em);
+ transition: transform 0.1s ease; */
+  //transition: transform 0.2s ease;
+  border-radius: 0.3rem;
+  border-style: none;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.25));
+  font-family: "Lato";
+  //font-weight: bold;
+  font-size: 14px;
+  padding: 0.5em;
+  margin: 0.5rem;
+  cursor: pointer;
+  //transition: all 0.5s ease;
+
+  &:hover {
+    //transition: all 0.3s ease;
+    //filter: drop-shadow(3px 3px 5px rgba(0, 0, 0, 0.25));
+    //transform: scale(1.01);
+    //transform: translateY(-0.33em);
+  }
+
+  &:active {
+    transition: all 0.1s ease;
+    transform: scale(0.9);
+  }
+
+  /* &:focus {
+    transition: all 0.3s ease;
+    transform: translateY(-0.33em);
+  } */
 `;
 
 export const NavBar = styled.nav`
@@ -109,21 +162,22 @@ export const NavBar = styled.nav`
   justify-content: center;
   padding-top: 1rem;
   padding-left: 2rem;
+  z-index: 5;
 `;
 
 export const NavBarSup = styled.nav`
-    background-color: ${colors.grey2};
-    position: fixed;
-    top: 0;
-    height: 3rem;
-    width: 100%;
-    margin: auto;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    padding-top: 1rem;
-    padding-left: 2rem;
-`
+  background-color: ${colors.grey2};
+  position: fixed;
+  top: 0;
+  height: 3rem;
+  width: 100%;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding-top: 1rem;
+  padding-left: 2rem;
+`;
 
 export const Time = styled.h2`
   font-family: "Century Gothic";
@@ -180,7 +234,17 @@ export const SearchInput = styled.input`
   border-radius: 10px;
   margin-left: 10px;
   box-shadow: 4px 6px 9px -4px rgba(0, 0, 0, 0.25);
-  border:none;
+  border: none;
+`;
+export const Textinput = styled.input`
+  padding-left: 15px;
+  margin-top: 10px;
+  font-size: 16px;
+  height: 40px;
+  border-radius: 10px;
+  margin-left: 10px;
+  box-shadow: 4px 6px 9px -4px rgba(0, 0, 0, 0.25);
+  border: none;
 `;
 export const SearchBtn = styled.button`
   margin-top: 10px;
@@ -197,13 +261,13 @@ export const SearchBtn = styled.button`
 `;
 
 export const Select = styled.select`
-padding-left: 5px;
-margin-top: 10px;
-margin-right: 30px;
-height: 40px;
-font-size: 16px;
-background-color: white;
-border-radius: 10px;
-border: none;
-box-shadow: 4px 6px 9px -4px rgba(0, 0, 0, 0.25);
-`
+  padding-left: 5px;
+  margin-top: 10px;
+  margin-right: 30px;
+  height: 40px;
+  font-size: 16px;
+  background-color: white;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 4px 6px 9px -4px rgba(0, 0, 0, 0.25);
+`;
