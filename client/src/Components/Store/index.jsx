@@ -16,16 +16,17 @@ import { colors, BtnRounded } from "../../theme/variables";
 import { SearchInput, SearchBtn, Select } from "../../theme/styled-componets";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-
+import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { getLastCashFlowAction } from "../../redux/actions/cashFlowActions";
 function Store() {
   const dispatch = useDispatch();
-  const { state, products, categories } = useContext(StoreContext);
-  const [update, setUpdate] = useState(false);
+  const history = useHistory();
+  const { lastCashFlow } = useSelector((state) => state.cashFlow);
 
-  useEffect(() => {
-    dispatch(getCategories());
-    dispatch(getProducts());
-  }, [dispatch, update]);
+  const { state, products, categories } = useContext(StoreContext);
+
+  const [update, setUpdate] = useState(false);
 
   const filterCategory = async (category) => {
     await dispatch(filterByCategoryAction(category));
@@ -39,7 +40,27 @@ function Store() {
   function handleInput(e) {
     dispatch(searchProductsName(e.target.value));
   }
+  useEffect(() => {
+    dispatch(getLastCashFlowAction());
+    if (lastCashFlow && lastCashFlow.closeCashFlow === false) {
+      console.log("Hola Si hay caja");
+    } else if (lastCashFlow && lastCashFlow.closeCashFlow === true) {
+      console.log("Caja Cerrada");
 
+      history.push("/cashFlow");
+    } else if (
+      lastCashFlow &&
+      lastCashFlow === "No se encontraron resultados"
+    ) {
+      console.log("no existe caja aun");
+
+      history.push("/cashFlow");
+    } else {
+      console.log("HOLAPUTAMDR");
+    }
+    dispatch(getCategories());
+    dispatch(getProducts());
+  }, [dispatch, update]);
   return (
     <>
       <div className="container">

@@ -62,6 +62,7 @@ export const postOrdersAction = (order) => (dispatch) => {
   })
     .then((res) => res.json())
     .then((r) => dispatch(postOrders(r.data)));
+  axios.put("/cash/addOrderInfo", order)
 };
 
 export const ordersReadyAction = () => (dispatch) => {

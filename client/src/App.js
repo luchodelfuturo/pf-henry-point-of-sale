@@ -83,15 +83,13 @@ function App() {
 
       <Route exact path="/adminProducts" component={isLogged ? AdminProducts : WelcomePage} />
 
-      <Route exact path="/historialPedidos" component={isLogged ? HistorialPedidos: WelcomePage} />
-
-      
-      <Route exact path="/cashFlow" component={isLogged ? CashFlow : WelcomePage} />
-      {/* <Route
+      {/* <Route exact path="/cashFlow" component={CashFlow} /> */}
+      <Route exact path="/cashFlow" component={CashFlow} />
+      <Route
         exact
         path="/cashFlow/historialCashFlow"
         component={HistorialsCashFlow}
-      /> */}
+      />
     </div>
   );
 }
