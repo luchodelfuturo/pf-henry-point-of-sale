@@ -62,7 +62,7 @@ function App() {
     <div className="App">
       <GlobalStyle />
 
-      <UserNavBar />
+      {/* <UserNavBar /> */}
 
       <Route exact path="/" component={WelcomePage} />
 
