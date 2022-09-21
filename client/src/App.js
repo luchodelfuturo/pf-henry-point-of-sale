@@ -62,7 +62,7 @@ function App() {
     <div className="App">
       <GlobalStyle />
 
-      {/* <UserNavBar /> */}
+      {!isLogged ? <UserNavBar /> : ""}
 
       <Route exact path="/" component={WelcomePage} />
 
