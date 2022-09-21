@@ -1,7 +1,9 @@
 import axios from "axios";
 import {
-  getLastCashFlow
-} from "../slices/cashFlowSlice";
+  getLastCashFlow,
+  getAllCashFlow,
+  searchDateCashFlow
+} from "../slices/cashflowSlice";
 
 
 export const getLastCashFlowAction = () => (dispatch) => {
@@ -35,4 +37,18 @@ export const addCashInitAction = (init) => (dispatch) => {
 
 };
 
+export const getAllCashFlowAction = () => (dispatch) => {
+  // return dispatch(addCashInit(init));
+  return axios.get(`/cash/history`)
+    .then((res) => dispatch(getAllCashFlow(res.data[0])))
 
+
+};
+
+export const searchDateCashFlowAction = (date) => (dispatch) => {
+  // return dispatch(addCashInit(init));
+  return dispatch(searchDateCashFlow(date))
+
+
+
+};
