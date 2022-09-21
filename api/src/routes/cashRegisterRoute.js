@@ -211,10 +211,10 @@ router.put("/addReview", async (req, res) => {
     )
     const id = results.rows[0].id
     const reviewsArray1 = results.rows[0].reviews
-    console.log("array del model", reviewsArray1)
+
     var reviewsArray = reviewsArray1.concat(reviews)
-    console.log("array al modelo:", reviewsArray)
-    await Cash.update({ reviews: reviewsArray }, { where: { id: id } })
+
+    await Cash.update({ reviews: reviewsArray, closeCashFlow: true }, { where: { id: id } })
   } catch (error) {
     res.json(error)
   }

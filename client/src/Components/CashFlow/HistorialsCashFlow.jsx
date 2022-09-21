@@ -112,15 +112,22 @@ export default function HistorialsCashFlow() {
                       borderRadius: "20px",
                       display: "grid",
                       textAlign: "center",
-                      gridTemplateColumns: "5% 20% 20% 20% 20% ",
+                      gridTemplateColumns: "5% 10% 10% 10% 10% 10% 10%",
                     }}
                   >
                     <span>Id: {cashFlowBox.id}</span>
                     <span>Date: {cashFlowBox.date}</span>
                     <span>Initial Cash: {cashFlowBox.initialCash}</span>
-                    <span>Total Cash: {cashFlowBox.totalCash}</span>
 
                     <span>Total Sales: {cashFlowBox.totalSales}</span>
+                    <span>Incomes: {cashFlowBox.income}</span>
+                    <span>Expenses: {cashFlowBox.expenses}</span>
+                    <span>
+                      Estado:{" "}
+                      {cashFlowBox.closeCashFlow
+                        ? "Caja Cerrada"
+                        : "caja Abierta"}
+                    </span>
                   </div>
                   {/* <button
                     onClick={() => {

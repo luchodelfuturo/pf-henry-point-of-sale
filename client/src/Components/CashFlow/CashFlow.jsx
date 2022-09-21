@@ -129,7 +129,6 @@ export default function CashFlow() {
 
             {/* <button onClick={()=> setCloseModal(true)}> Cerrar Caja </button>
              */}
-            
           </div>
         </div>
       </div>
