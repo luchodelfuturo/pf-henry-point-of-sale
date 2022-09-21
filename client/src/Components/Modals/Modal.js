@@ -1,31 +1,46 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, useRef } from "react";
 import styled from "styled-components";
-import { ButtonCart } from "../theme/styled-componets";
-import { colors } from "../theme/variables";
+import { ButtonCart, Select } from "../../theme/styled-componets";
+import { colors } from "../../theme/variables";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import PayPal from "./PayPal/PayPal";
+import PayPal from "../PayPal/PayPal";
 import {
   faCommentDots,
   faDeleteLeft,
   faMoneyBill,
+  faPercent,
+  faRug,
 } from "@fortawesome/free-solid-svg-icons";
 import { faPaypal } from "@fortawesome/free-brands-svg-icons";
 import Swal from "sweetalert2";
+import Comments from "../Store/Comments";
+import { discounts, cupons } from "../Store/vars";
 
-const Modal = ({ total, sch, setComments, postOrder, setMethodPayment }) => {
+const Modal = ({
+  total,
+  sch,
+  comments,
+  setComments,
+  postOrder,
+  setMethodPayment,
+  df,
+}) => {
   const [payment, setPayment] = useState("cash");
   const [cash, setCash] = useState("0");
   const [change, setChange] = useState(0);
   const [disc, setDisc] = useState(0);
+  const [modalComments, setModalComments] = useState(false);
+  const [cupon, setCupon] = useState(0);
 
   const calcChange = useCallback(
-    () => setChange((cash - total).toFixed(2)),
-    [cash, total, disc]
+    () =>
+      setChange(
+        (cash - total + (total * cupon) / 100 + (total * disc) / 100).toFixed(2)
+      ),
+    [cash, total, disc, cupon]
   );
-  //   const calcChange = useCallback(
-  //     () => setChange((cash - total - (disc * total) / 100).toFixed(2)),
-  //     [cash, total, disc]
-  //   );
+
+  const inputEl = useRef();
 
   useEffect(() => {
     if (cash === "") {
@@ -68,44 +83,43 @@ const Modal = ({ total, sch, setComments, postOrder, setMethodPayment }) => {
     if (e.target.id === "overlay") {
       sch(false);
     }
+    df("all products")
   }
 
-  const openComments = async () => {
-    const { value: text } = await Swal.fire({
-      input: "textarea",
-      inputLabel: "Message",
-      inputPlaceholder: "Type your message here...",
-      inputAttributes: {
-        "aria-label": "Type your message here",
-      },
-      showCancelButton: true,
-      confirmButtonColor: "#31d159",
-    });
+  function handleComments() {
+    setModalComments(true);
+  }
 
-    if (text) {
-      setComments(text);
-      Swal.fire("Message: " + text);
-    }
-  };
 
   const postToast = () => {
-    const Toast = Swal.mixin({
-      toast: true,
-      position: "top-end",
-      showConfirmButton: false,
-      timer: 3000,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.addEventListener("mouseenter", Swal.stopTimer);
-        toast.addEventListener("mouseleave", Swal.resumeTimer);
-      },
-    });
-
-    Toast.fire({
+    Swal.fire({
+      position: "center",
       icon: "success",
       title: "Order placed",
+      showConfirmButton: false,
+      timer: 1000,
     });
   };
+
+
+  // const postToast = () => {
+  //   const Toast = Swal.mixin({
+  //     toast: true,
+  //     position: "top-end",
+  //     showConfirmButton: false,
+  //     timer: 3000,
+  //     timerProgressBar: true,
+  //     didOpen: (toast) => {
+  //       toast.addEventListener("mouseenter", Swal.stopTimer);
+  //       toast.addEventListener("mouseleave", Swal.resumeTimer);
+  //     },
+  //   });
+
+  //   Toast.fire({
+  //     icon: "success",
+  //     title: "Order placed",
+  //   });
+  // };
 
   function handlePost() {
     sch(false);
@@ -115,13 +129,32 @@ const Modal = ({ total, sch, setComments, postOrder, setMethodPayment }) => {
     }, 500);
   }
 
-  //   function handleDisc(e) {
-  //     setDisc(e.target.value);
-  //   }
+  function handleDisc(e) {
+    if (e.target.value !== "none") {
+      setDisc(e.target.value);
+    } else {
+      setDisc(0);
+    }
+  }
+
+  function handleCupons(e) {
+    if (e.target.value !== "none") {
+      setCupon(e.target.value);
+    } else {
+      setCupon(0);
+    }
+  }
 
   return (
     <>
       <Overlay id="overlay" onClick={(e) => handleClose(e)}>
+        {modalComments && (
+          <Comments
+            closeModal={setModalComments}
+            comments={comments}
+            setComments={setComments}
+          />
+        )}
         <ModalContainer>
           <ModalHeader>
             <TabBtn value="cash" onClick={(e) => handlePayment(e)}>
@@ -147,7 +180,8 @@ const Modal = ({ total, sch, setComments, postOrder, setMethodPayment }) => {
                     <div className="titles">
                       <div>Total</div>
                       <div className="cash">Cash</div>
-                      {/* <div>Discount</div> */}
+                      <div>Cupon</div>
+                      <div>Discount</div>
                       <div>Change</div>
                     </div>
 
@@ -155,29 +189,74 @@ const Modal = ({ total, sch, setComments, postOrder, setMethodPayment }) => {
                       <div className="signs">
                         <div>$</div>
                         <div className="cash">$</div>
-                        {/* <div>%</div> */}
+                        <div className="cupon-sing">-</div>
+                        <div>%</div>
                         <div>$</div>
                       </div>
                       <div className="totals">
                         <div className="total">{total.toFixed(2)}</div>
                         <div className="cash">{Number(cash).toFixed(2)}</div>
-                        {/* <input
-                        type="text"
-                        value={disc}
-                        className="discount"
-                        onChange={handleDisc}
-                      ></input> */}
+
+                        <Select
+                          className="select"
+                          defaultValue="Select"
+                          id="select"
+                          onClick={(e) => handleCupons(e)}
+                        >
+                          {/* <option
+                              disabled
+                              hidden
+                              value="Select"
+                              className="option-select"
+                            >
+                              Cupons
+                            </option> */}
+                          <option value="none" className="option-select">
+                            ----
+                          </option>
+                          {cupons &&
+                            cupons.map((b) => {
+                              return (
+                                <option
+                                  // onClick={(e) => handleDisc(e)}
+                                  className="select-items"
+                                  value={b.value}
+                                  key={b.name}
+                                >
+                                  {b.name}
+                                </option>
+                              );
+                            })}
+                        </Select>
+
+                        <Select
+                          className="select"
+                          defaultValue="Select"
+                          name=""
+                          id="select"
+                          onClick={(e) => handleDisc(e)}
+                        >
+                          <option value="none" className="option-select">
+                            ----
+                          </option>
+                          {discounts &&
+                            discounts.map((b) => {
+                              return (
+                                <option
+                                  className="select-items"
+                                  value={b}
+                                  key={b}
+                                >
+                                  {b}
+                                </option>
+                              );
+                            })}
+                        </Select>
+
                         <div className="change">{change}</div>
                       </div>
                     </div>
                   </Sum>
-                  <ButtonCart className="desc">
-                    <FontAwesomeIcon
-                      onClick={() => openComments()}
-                      icon={faCommentDots}
-                      style={{ width: 35, height: 35 }}
-                    />
-                  </ButtonCart>
                 </div>
                 <div>
                   <Buttons>
@@ -234,6 +313,13 @@ const Modal = ({ total, sch, setComments, postOrder, setMethodPayment }) => {
               </div>
 
               <div className="footer-buttons">
+                <ButtonCart className="desc" onClick={() => handleComments()}>
+                  <FontAwesomeIcon
+                    icon={faCommentDots}
+                    style={{ width: 35, height: 35 }}
+                  />
+                </ButtonCart>
+
                 <ButtonCart
                   className="close"
                   value="close"
@@ -252,19 +338,19 @@ const Modal = ({ total, sch, setComments, postOrder, setMethodPayment }) => {
                 <PayPal />
               </div>
               <div className="footer-buttons">
+                <ButtonCart className="desc-relative">
+                  <FontAwesomeIcon
+                    onClick={() => handleComments()}
+                    icon={faCommentDots}
+                    style={{ width: 35, height: 35 }}
+                  />
+                </ButtonCart>
                 <ButtonCart
                   className="close"
                   value="close"
                   onClick={(e) => handleClose(e)}
                 >
                   Cancel
-                </ButtonCart>
-                <ButtonCart className="desc-relative">
-                  <FontAwesomeIcon
-                    onClick={() => openComments()}
-                    icon={faCommentDots}
-                    style={{ width: 35, height: 35 }}
-                  />
                 </ButtonCart>
               </div>
             </PaymentBody>
@@ -287,7 +373,7 @@ const Overlay = styled.div`
   align-items: center;
   justify-content: center;
   //padding: 40px;
-  z-index: 1;
+  z-index: 6;
 `;
 
 const ModalContainer = styled.div`
@@ -297,6 +383,13 @@ const ModalContainer = styled.div`
   box-shadow: -5px 0px 9px 2px rgba(0, 0, 0, 0.25);
   border-radius: 35px;
   font-family: "Lato";
+  z-index: 7;
+  /* transform: scale(0.9);
+  transition: all 0.3s ease;
+  &:focus {
+    transform: scale(0.9);
+    transition: all 0.3s ease;
+  } */
 `;
 
 const ModalHeader = styled.div`
@@ -366,11 +459,82 @@ const PaymentBody = styled.div`
     background-color: ${colors.blue};
     width: 83px;
     height: 71px;
-    position: absolute;
-    bottom: 10px;
-    left: 10px;
+
     color: white;
   }
+  .cupon {
+    background-color: ${colors.orange};
+    color: black;
+    width: 83px;
+    height: 71px;
+    position: absolute;
+    bottom: 10px;
+    left: 110px;
+  }
+  .discount {
+    background-color: ${colors.yellow};
+    color: black;
+    width: 83px;
+    height: 71px;
+    position: absolute;
+    bottom: 10px;
+    left: 215px;
+  }
+
+  .selects {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    //align-items: center;
+    width: 160px;
+    //align-self: auto;
+    //margin-left: 0px;
+  }
+  .cupon-div {
+    display: flex;
+    align-self: flex-end;
+    font-size: 18px;
+    height: 30px;
+    width: 130px;
+    //font-size: 32px;
+    background-color: inherit;
+    border: none;
+    text-align: right;
+    padding-bottom: 15px;
+    //margin-right: 25px;
+    background-color: black;
+  }
+  .disc-div {
+    display: flex;
+    align-self: flex-end;
+
+    font-size: 18px;
+    height: 30px;
+    width: 130px;
+    //font-size: 32px;
+    background-color: inherit;
+    border: none;
+    text-align: right;
+    padding-bottom: 15px;
+    //margin-right: 25px;
+  }
+  .cupon-sing {
+    color: #e1e1e1;
+  }
+  .select {
+    display: flex;
+    align-self: flex-start;
+    border: none;
+    //background-color: inherit;
+    font-size: 20px;
+    text-align: right;
+    width: 130px;
+
+    .select-items {
+      background-color: inherit;
+    }
+  }
+
   .desc-relative {
     background-color: ${colors.blue};
     width: 83px;
@@ -407,7 +571,7 @@ const Sum = styled.div`
   justify-content: space-between;
   overflow-x: hidden;
   width: 484px;
-  height: 250px;
+  height: 365px;
   padding-top: 10px;
   color: ${colors.grey5};
   font-weight: 500;
@@ -421,6 +585,7 @@ const Sum = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+
     width: 130px;
     padding-right: 10px;
     margin-right: 10px;
@@ -495,7 +660,7 @@ const Buttons = styled.div`
 
 const NumBtn = styled.button`
   display: flex;
-  padding: 25px 25px 25px 25px;
+  padding: 25px;
   margin: 15px 30px 15px 15px;
   font-weight: 500;
   cursor: pointer;
@@ -507,4 +672,9 @@ const NumBtn = styled.button`
   border-radius: 50%;
   background-color: #f6f6f6;
   color: #9c9c9c;
+  &:active {
+    transition: all 0.1s ease;
+    transform: scale(0.8);
+    background: rgba(33, 33, 33, 0.15);
+  }
 `;
