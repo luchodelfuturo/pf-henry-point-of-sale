@@ -21,7 +21,6 @@ const Modals = ({ lastCashFlow }) => {
         comment: "",
     });
     const [iniciarButton, setIniciarButton] = useState(true)
-
     const [init, setInit] = useState(0);
 
     const [isOpenModalIncome, openModalIncome, closeModalIncome] =
@@ -66,11 +65,16 @@ const Modals = ({ lastCashFlow }) => {
 
     return (
         <div>
-            {iniciarButton && <button onClick={openModalInit}>Iniciar caja</button>}
+            <button
+                hidden={lastCashFlow && !lastCashFlow.closeCashFlow}
+                onClick={() => {
+
+                    openModalInit()
+                }}>Iniciar caja</button>
             <Modal isOpen={isOpenModalInit} closeModal={closeModalInit}>
                 <h2>Agregue un monto para su inicio de caja</h2>
                 <form onSubmit={() => {
-                    setIniciarButton(false)
+
                     handleSubmitInicioDeCaja()
                 }}>
                     <label>
@@ -83,7 +87,7 @@ const Modals = ({ lastCashFlow }) => {
                         />
                     </label>
 
-                    <input type="submit" value="Inicio de caja" />
+                    <input type="submit" value="Inicio de caja" onClick={() => setIniciarButton(false)} />
                 </form>
             </Modal>
             {lastCashFlow && !lastCashFlow.closeCashFlow && <button onClick={openModalIncome}>Ingreso</button>}
@@ -160,6 +164,7 @@ const Modals = ({ lastCashFlow }) => {
                     <input type="submit" value="Agregar egreso" />
                 </form>
             </Modal>
+
         </div>
     );
 };
