@@ -17,10 +17,12 @@ export const cashFlowSlice = createSlice({
         },
         getAllCashFlow: (state, action) => {
             state.allCashFlow = action.payload;
+            state.filteredCashFlow = action.payload; 
         },
         searchDateCashFlow: (state, action) => {
-            const allCashFlows = state.filteredCashFlow;
-            state.allCashFlow = allCashFlows.filter(cash => cash.date === action.payload)
+            const filtro = state.filteredCashFlow;
+
+            state.allCashFlow = filtro.filter(cash => cash.date === action.payload)
         }
         // ordersFinishedPaypal: (state, action) => {
         //   state.totalPaypal = action.payload;
