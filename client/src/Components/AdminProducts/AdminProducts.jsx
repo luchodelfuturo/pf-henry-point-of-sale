@@ -10,7 +10,7 @@ import { getCategories } from "../../redux/actions/categoriesActions";
 import axios from "axios";
 import NavBarApp from "../NavbarApp/NavBarApp";
 import { ButtonSave } from "../../theme/styled-componets";
-import SearchNav from "../SearchNav/SearchNav";
+import SearchNav from "../SearchNav/SearchNav.jsx";
 
 export default function AdminProducts() {
   const dispatch = useDispatch();

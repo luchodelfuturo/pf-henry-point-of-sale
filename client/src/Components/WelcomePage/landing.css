@@ -1,22 +1,3 @@
-#button {
-  color: white;
-  background-color: #7f5af0;
-  padding: 10px 15px 10px 15px;
-  font-size: 1.5em;
-  margin-bottom: 80px;
-  /* border-radius: 0.3rem;
-    border-style: none;
-    width: 10rem;
-    height: 3rem;
-    font-family: 'Century Gothic';
-    font-weight: bold;
-    color: #fffffe;
-    font-size: 17px;
-    cursor: pointer;
-    transition: all 0.5s ease;
-    margin:0rem 0.5rem; */
-}
-
 #register-link {
   font-size: 1.3em;
   position: absolute;

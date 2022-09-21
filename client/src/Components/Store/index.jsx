@@ -32,7 +32,7 @@ function Store() {
   };
 
   function sort(e) {
-    // console.log(e.target.value);
+    // // console.log(e.target.value);
     dispatch(sortProductsAction(e.target.value));
   }
 
@@ -47,7 +47,7 @@ function Store() {
           {/* <div className="clients-tabs">Clients</div> */}
           <div className="store-container">
             <div className="cart-container">
-              <Cart products={state} update={update} setUpdate={setUpdate} />
+              <Cart products={state} update={update} setUpdate={setUpdate} update={update} setUpdate={setUpdate} />
             </div>
             <div className="products-container">
               <div className="searchnsort">
@@ -103,7 +103,7 @@ function Store() {
                   })}
               </div>
               <div className="cards-container">
-                {<Cards products={products} allProducts={state} />}
+                {<Cards products={products} allProducts={state} allProducts={state} />}
               </div>
             </div>
           </div>

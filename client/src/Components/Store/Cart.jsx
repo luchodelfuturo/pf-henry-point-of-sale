@@ -4,9 +4,10 @@ import CartItem from "./CartItem";
 import styled from "styled-components";
 import "./cart.css";
 import { filterByCategoryAction } from "../../redux/actions/productsActions";
+import { filterByCategoryAction } from "../../redux/actions/productsActions";
 import { postOrdersAction } from "../../redux/actions/ordersActions";
 import { useDispatch } from "react-redux";
-import Modal from "../Modals/Modal";
+import Modal from "../Modals/Modals/Modal";
 import { colors } from "../../theme/variables";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -25,6 +26,9 @@ function Cart({ products, setUpdate, update }) {
   const [clearCart, setClearCart] = useState(false);
   const [addDrinks, setAddDrinks] = useState(false);
 
+  const [clearCart, setClearCart] = useState(false);
+  const [addDrinks, setAddDrinks] = useState(false);
+
   useEffect(() => {}, [products]);
 
   let dispatch = useDispatch();
@@ -34,9 +38,18 @@ function Cart({ products, setUpdate, update }) {
     return foundDrinks !== undefined ? true : false;
   }
 
+  function checkDrinks() {
+    let foundDrinks = products.find((d) => d.product.categories === "Drinks");
+    return foundDrinks !== undefined ? true : false;
+  }
+
   function handleCheckoutModal() {
     if (checkDrinks()) {
+      if (checkDrinks()) {
       setCheckout(true);
+    } else {
+      setAddDrinks(true);
+    }
     } else {
       setAddDrinks(true);
     }
@@ -49,7 +62,11 @@ function Cart({ products, setUpdate, update }) {
       // Dispachar info para cashflow
       dispatch(infoCashFlowAction(order));
       setUpdate(update ? false : true);
+      // Dispachar info para cashflow
+      dispatch(infoCashFlowAction(order));
+      setUpdate(update ? false : true);
       deleteAll();
+      dispatch(filterByCategoryAction("all"));
       dispatch(filterByCategoryAction("all"));
     } catch (error) {
       console.error(error);
@@ -57,7 +74,13 @@ function Cart({ products, setUpdate, update }) {
   }
 
   function handleDeleteAll() {
-    //deleteAll();
+    ////deleteAll();
+    //sureDelete();
+    setClearCart(true);
+  }
+
+  function drinksFilter(filter) {
+    dispatch(filterByCategoryAction(filter));
     //sureDelete();
     setClearCart(true);
   }
@@ -78,6 +101,16 @@ function Cart({ products, setUpdate, update }) {
       {clearCart ? (
         <ClearCart setClearCart={setClearCart} deleteAll={deleteAll} />
       ) : null}
+      {addDrinks ? (
+        <AddDrinks
+          setModalState={setAddDrinks}
+          setCheckout={setCheckout}
+          df={drinksFilter}
+        />
+      ) : null}
+      {clearCart ? (
+        <ClearCart setClearCart={setClearCart} deleteAll={deleteAll} />
+      ) : null}
       {checkout && (
         <Modal
           total={totals}
@@ -87,6 +120,7 @@ function Cart({ products, setUpdate, update }) {
           postOrder={postOrder}
           methodPayment={methodPayment}
           setMethodPayment={setMethodPayment}
+          df={drinksFilter}
           df={drinksFilter}
         />
       )}

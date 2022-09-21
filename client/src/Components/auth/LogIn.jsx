@@ -1,16 +1,14 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
-import {
-  showErrMsg,
-  showSuccessMsg,
-} from "../Utils/Notifications/Notifications.jsx";
+import { showErrMsg, showSuccessMsg } from "../Utils/Notifications/Notifications.jsx";
 import "./auth.css";
-import { dispatchLogin } from "../../redux/actions/authAction";
+import { dispatchLogin } from '../../redux/slices/authSlice';
 import { useDispatch } from "react-redux";
 import { Textinput, MainButton } from "../../theme/styled-componets";
-import LogInGoogle from "./LogInGoogle.jsx";
-// import { GoogleLogin } from 'react-google-login';
+import jwt_decode from 'jwt-decode';
+
+const client_id = "58357792722-mar8g19eknd6f1cp4tkpmq37gcn231d7.apps.googleusercontent.com";
 
 const initialState = {
   email: "",
@@ -25,10 +23,13 @@ function Login() {
   const dispatch = useDispatch();
   const history = useHistory();
 
+
+
   const handleChangeInput = (e) => {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value, err: "", success: "" });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -44,6 +45,37 @@ function Login() {
         setUser({ ...user, err: err.response.data.msg, success: "" });
     }
   };
+
+  const responseGoogle = async (response) => {
+    try {
+      console.log("Encoded JWT ID token: " + response.credential);
+      var userObject = jwt_decode(response.credential);
+      console.log(userObject);
+      // const res = await axios.post('/users/google_login', {tokenId: response.id_token})
+    
+      setUser(userObject)
+      localStorage.setItem('firstLogin', true)
+    
+      dispatch(dispatchLogin())
+      history.push('/store')
+    } catch (err) {
+      err.response.data.msg && 
+      setUser({...user, err: err.response.data.msg, success: ''})
+    }
+  }
+
+  useEffect(()=>{
+    /*global google*/
+    google.accounts.id.initialize({
+      client_id: client_id,
+      callback: responseGoogle
+    })
+    google.accounts.id.renderButton(
+      document.getElementById("signInDiv"),
+      {theme: "outline", size:"large"}
+    );
+  }, []);
+
 
   return (
     <div id="contenedor">
@@ -95,7 +127,7 @@ function Login() {
               <Link to="/forgot_password">Forgot your password?</Link>
             </div>
             <div className="row">
-              <LogInGoogle/>
+              <div id="signInDiv" className="social"></div>
               <MainButton type="submit">Log in</MainButton>
             </div>
           </form>

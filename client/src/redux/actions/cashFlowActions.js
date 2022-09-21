@@ -1,7 +1,7 @@
 import axios from "axios";
 import {
   getLastCashFlow
-} from "../slices/cashFlowSlice";
+} from "../slices/cashflowSlice";
 
 
 export const getLastCashFlowAction = () => (dispatch) => {

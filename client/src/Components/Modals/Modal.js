@@ -1,18 +1,22 @@
-import React, { useCallback, useEffect, useState, useRef } from "react";
+import React, { useCallback, useEffect, useState, useRef, useRef } from "react";
 import styled from "styled-components";
-import { ButtonCart, Select } from "../../theme/styled-componets";
-import { colors } from "../../theme/variables";
+import { ButtonCart, Select, Select } from "../../../theme/styled-componets";
+import { colors } from "../../../theme/variables";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import PayPal from "../PayPal/PayPal";
+import PayPal from ".../PayPal/PayPal";
 import {
   faCommentDots,
   faDeleteLeft,
   faMoneyBill,
   faPercent,
   faRug,
+  faPercent,
+  faRug,
 } from "@fortawesome/free-solid-svg-icons";
 import { faPaypal } from "@fortawesome/free-brands-svg-icons";
 import Swal from "sweetalert2";
+import Comments from "../Store/Comments";
+import { discounts, cupons } from "../Store/vars";
 import Comments from "../Store/Comments";
 import { discounts, cupons } from "../Store/vars";
 
@@ -32,13 +36,18 @@ const Modal = ({
   const [disc, setDisc] = useState(0);
   const [modalComments, setModalComments] = useState(false);
   const [cupon, setCupon] = useState(0);
+  const [modalComments, setModalComments] = useState(false);
+  const [cupon, setCupon] = useState(0);
 
   const calcChange = useCallback(
     () =>
+     
       setChange(
-        (cash - total + (total * cupon) / 100 + (total * disc) / 100).toFixed(2)
+        
+        (cash - total + (total * cupon) / 100 + (total * disc) / 100 + (total * cupon) / 100 + (total * disc) / 100).toFixed(2)
+      
       ),
-    [cash, total, disc, cupon]
+    [cash, total, disc, cupon, cupon]
   );
 
   useEffect(() => {
@@ -103,8 +112,30 @@ const Modal = ({
       title: "Order placed",
       showConfirmButton: false,
       timer: 1000,
+      showConfirmButton: false,
+      timer: 1000,
     });
   };
+
+
+  // const postToast = () => {
+  //   const Toast = Swal.mixin({
+  //     toast: true,
+  //     position: "top-end",
+  //     showConfirmButton: false,
+  //     timer: 3000,
+  //     timerProgressBar: true,
+  //     didOpen: (toast) => {
+  //       toast.addEventListener("mouseenter", Swal.stopTimer);
+  //       toast.addEventListener("mouseleave", Swal.resumeTimer);
+  //     },
+  //   });
+
+  //   Toast.fire({
+  //     icon: "success",
+  //     title: "Order placed",
+  //   });
+  // };
 
   function handlePost() {
     sch(false);
@@ -133,6 +164,13 @@ const Modal = ({
   return (
     <>
       <Overlay id="overlay" onClick={(e) => handleClose(e)}>
+        {modalComments && (
+          <Comments
+            closeModal={setModalComments}
+            comments={comments}
+            setComments={setComments}
+          />
+        )}
         {modalComments && (
           <Comments
             closeModal={setModalComments}
@@ -305,6 +343,13 @@ const Modal = ({
                   />
                 </ButtonCart>
 
+                <ButtonCart className="desc" onClick={() => handleComments()}>
+                  <FontAwesomeIcon
+                    icon={faCommentDots}
+                    style={{ width: 35, height: 35 }}
+                  />
+                </ButtonCart>
+
                 <ButtonCart
                   className="close"
                   value="close"
@@ -405,6 +450,13 @@ const Modal = ({
               </div>
 
               <div className="footer-buttons">
+                <ButtonCart className="desc-relative">
+                  <FontAwesomeIcon
+                    onClick={() => handleComments()}
+                    icon={faCommentDots}
+                    style={{ width: 35, height: 35 }}
+                  />
+                </ButtonCart>
                 <ButtonCart className="desc-relative">
                   <FontAwesomeIcon
                     onClick={() => handleComments()}
@@ -549,6 +601,23 @@ const PaymentBody = styled.div`
     color: black;
     width: 83px;
     height: 71px;
+
+    color: white;
+  }
+  .cupon {
+    background-color: ${colors.orange};
+    color: black;
+    width: 83px;
+    height: 71px;
+    position: absolute;
+    bottom: 10px;
+    left: 110px;
+  }
+  .discount {
+    background-color: ${colors.yellow};
+    color: black;
+    width: 83px;
+    height: 71px;
     position: absolute;
     bottom: 10px;
     left: 215px;
@@ -608,6 +677,7 @@ const PaymentBody = styled.div`
     }
   }
 
+
   .desc-relative {
     background-color: ${colors.blue};
     width: 83px;
@@ -658,6 +728,7 @@ const Sum = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+
 
     width: 130px;
     padding-right: 10px;
@@ -745,6 +816,11 @@ const NumBtn = styled.button`
   border-radius: 50%;
   background-color: #f6f6f6;
   color: #9c9c9c;
+  &:active {
+    transition: all 0.1s ease;
+    transform: scale(0.8);
+    background: rgba(33, 33, 33, 0.15);
+  }
   &:active {
     transition: all 0.1s ease;
     transform: scale(0.8);

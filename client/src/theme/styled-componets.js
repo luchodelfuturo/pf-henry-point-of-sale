@@ -116,6 +116,8 @@ export const ButtonCart = styled.button`
 
 export const MainButton = styled.button`
   transition: all 0.2s ease;
+  color: white;
+  background-color: #7f5af0;
   /* transform: translateY(-0.2em);
  transition: transform 0.1s ease; */
   //transition: transform 0.2s ease;
@@ -124,7 +126,9 @@ export const MainButton = styled.button`
   filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.25));
   font-family: "Lato";
   //font-weight: bold;
-  font-size: 17px;
+  font-size: 14px;
+  padding: 0.5em;
+  margin: 0.5rem;
   cursor: pointer;
   //transition: all 0.5s ease;
 
