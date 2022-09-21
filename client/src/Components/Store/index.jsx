@@ -22,7 +22,7 @@ import { getLastCashFlowAction } from "../../redux/actions/cashFlowActions";
 function Store() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { lastCashFlow } = useSelector((state) => state.cashFlow);
+  // const { lastCashFlow } = useSelector((state) => state.cashFlow);
 
   const { state, products, categories } = useContext(StoreContext);
 
@@ -41,23 +41,23 @@ function Store() {
     dispatch(searchProductsName(e.target.value));
   }
   useEffect(() => {
-    dispatch(getLastCashFlowAction());
-    if (lastCashFlow && lastCashFlow.closeCashFlow === false) {
-      console.log("Hola Si hay caja");
-    } else if (lastCashFlow && lastCashFlow.closeCashFlow === true) {
-      console.log("Caja Cerrada");
+    // dispatch(getLastCashFlowAction());
+    // if (lastCashFlow && lastCashFlow.closeCashFlow === false) {
+    //   console.log("Hola Si hay caja");
+    // } else if (lastCashFlow && lastCashFlow.closeCashFlow === true) {
+    //   console.log("Caja Cerrada");
 
-      history.push("/cashFlow");
-    } else if (
-      lastCashFlow &&
-      lastCashFlow === "No se encontraron resultados"
-    ) {
-      console.log("no existe caja aun");
+    //   history.push("/cashFlow");
+    // } else if (
+    //   lastCashFlow &&
+    //   lastCashFlow === "No se encontraron resultados"
+    // ) {
+    //   console.log("no existe caja aun");
 
-      history.push("/cashFlow");
-    } else {
-      console.log("HOLAPUTAMDR");
-    }
+    //   history.push("/cashFlow");
+    // } else {
+    //   console.log("HOLAPUTAMDR");
+    // }
     dispatch(getCategories());
     dispatch(getProducts());
   }, [dispatch, update]);
@@ -68,7 +68,12 @@ function Store() {
           {/* <div className="clients-tabs">Clients</div> */}
           <div className="store-container">
             <div className="cart-container">
-              <Cart products={state} update={update} setUpdate={setUpdate} update={update} setUpdate={setUpdate} />
+              <Cart
+                products={state}
+                update={update}
+                setUpdate={setUpdate}
+                
+              />
             </div>
             <div className="products-container">
               <div className="searchnsort">
@@ -124,7 +129,13 @@ function Store() {
                   })}
               </div>
               <div className="cards-container">
-                {<Cards products={products} allProducts={state} allProducts={state} />}
+                {
+                  <Cards
+                    products={products}
+                    allProducts={state}
+                    
+                  />
+                }
               </div>
             </div>
           </div>
