@@ -3,10 +3,14 @@ import { createSlice } from "@reduxjs/toolkit";
 export const cashFlowSlice = createSlice({
     name: "cashFlow",
     initialState: {
-        lastCashFlow: [],
-        allCashFlow: [],
-        filteredCashFlow: [],
-
+        lastCashFlow: []
+        // totalCash: [],
+        // totalPaypal: [],
+        // totalIncome: [],
+        // totalExpenses: [],
+        // totalSales: [],
+        // cashInit: [],
+        // totalAll: [],
     },
     reducers: {
         // ordersFinishedCash: (state, action) => {
@@ -14,13 +18,6 @@ export const cashFlowSlice = createSlice({
         // },
         getLastCashFlow: (state, action) => {
             state.lastCashFlow = action.payload;
-        },
-        getAllCashFlow: (state, action) => {
-            state.allCashFlow = action.payload;
-        },
-        searchDateCashFlow: (state, action) => {
-            const allCashFlows = state.filteredCashFlow
-            state.allCashFlow = allCashFlows.filter(cash => cash.date === action.payload)
         }
         // ordersFinishedPaypal: (state, action) => {
         //   state.totalPaypal = action.payload;
@@ -52,9 +49,7 @@ export const {
     //   ordersFinishedCash,
     //   ordersFinishedPaypal,
     //   getTotal,
-    getLastCashFlow,
-    getAllCashFlow,
-    searchDateCashFlow,
+    getLastCashFlow
 } = cashFlowSlice.actions;
 
 export default cashFlowSlice.reducer;
