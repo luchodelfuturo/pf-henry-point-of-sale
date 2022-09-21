@@ -16,31 +16,51 @@ import { colors, BtnRounded } from "../../theme/variables";
 import { SearchInput, SearchBtn, Select } from "../../theme/styled-componets";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-
+import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { getLastCashFlowAction } from "../../redux/actions/cashFlowActions";
 function Store() {
   const dispatch = useDispatch();
+  const history = useHistory();
+  // const { lastCashFlow } = useSelector((state) => state.cashFlow);
+
   const { state, products, categories } = useContext(StoreContext);
-  const [update, setUpdate] = useState(false)
 
-
-  useEffect(() => {
-    dispatch(getCategories());
-    dispatch(getProducts());
-  }, [dispatch, update]);
+  const [update, setUpdate] = useState(false);
 
   const filterCategory = async (category) => {
     await dispatch(filterByCategoryAction(category));
   };
 
   function sort(e) {
-    // console.log(e.target.value);
+    // // console.log(e.target.value);
     dispatch(sortProductsAction(e.target.value));
   }
 
   function handleInput(e) {
     dispatch(searchProductsName(e.target.value));
   }
+  useEffect(() => {
+    // dispatch(getLastCashFlowAction());
+    // if (lastCashFlow && lastCashFlow.closeCashFlow === false) {
+    //   console.log("Hola Si hay caja");
+    // } else if (lastCashFlow && lastCashFlow.closeCashFlow === true) {
+    //   console.log("Caja Cerrada");
 
+    //   history.push("/cashFlow");
+    // } else if (
+    //   lastCashFlow &&
+    //   lastCashFlow === "No se encontraron resultados"
+    // ) {
+    //   console.log("no existe caja aun");
+
+    //   history.push("/cashFlow");
+    // } else {
+    //   console.log("HOLAPUTAMDR");
+    // }
+    dispatch(getCategories());
+    dispatch(getProducts());
+  }, [dispatch, update]);
   return (
     <>
       <div className="container">
@@ -48,7 +68,12 @@ function Store() {
           {/* <div className="clients-tabs">Clients</div> */}
           <div className="store-container">
             <div className="cart-container">
-              <Cart products={state} update={update} setUpdate={setUpdate} />
+              <Cart
+                products={state}
+                update={update}
+                setUpdate={setUpdate}
+                
+              />
             </div>
             <div className="products-container">
               <div className="searchnsort">
@@ -104,12 +129,18 @@ function Store() {
                   })}
               </div>
               <div className="cards-container">
-                {<Cards products={products} allProducts={state} />}
+                {
+                  <Cards
+                    products={products}
+                    allProducts={state}
+                    
+                  />
+                }
               </div>
             </div>
           </div>
         </div>
-        <div style={{ height: "10vh" }}>
+        <div style={{ height: "6vh" }}>
           <NavBarApp />
         </div>
       </div>
