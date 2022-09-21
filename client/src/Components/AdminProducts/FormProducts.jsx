@@ -18,7 +18,7 @@ export default function FormProducts({
       ? {
           name: "",
           price: "",
-
+          stock: 0,
           description: "",
           active: true,
           idcategory: "",
@@ -27,7 +27,7 @@ export default function FormProducts({
       : {
           name: productEdit.name,
           price: productEdit.price,
-          
+          stock: productEdit.stock,
           description: productEdit.description,
           idcategory: productEdit.idcategory,
           active: productEdit.active,
@@ -195,9 +195,9 @@ export default function FormProducts({
             <div>
               <img
                 src={
-                  imagenes[state.idcategory]
-                    ? imagenes[state.idcategory]
-                    : imagenes.default
+                  state.image
+                    ? state.image
+                    : imagenes[state.idcategory]
                 }
                 alt=""
                 style={{ objectFit: "cover", width: "100%", height: "100%", borderRadius: "0.3rem" }}
@@ -303,6 +303,31 @@ export default function FormProducts({
               type="number"
               name="price"
               value={state.price}
+            />
+            <div
+              style={{
+                border: "2px solid black",
+                padding: "12px",
+                borderRadius: "5px",
+                fontSize: "90%",
+                fontWeight: "bold",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              Stock
+            </div>
+            <input
+              onChange={(e) => handleChange(e)}
+              style={{
+                border: "2px solid black",
+                padding: "14px",
+                borderRadius: "5px",
+              }}
+              type="number"
+              name="stock"
+              value={state.stock}
             />
             <div
               style={{
