@@ -6,13 +6,7 @@ export const cashFlowSlice = createSlice({
         lastCashFlow: [],
         allCashFlow: [],
         filteredCashFlow: [],
-        // totalCash: [],
-        // totalPaypal: [],
-        // totalIncome: [],
-        // totalExpenses: [],
-        // totalSales: [],
-        // cashInit: [],
-        // totalAll: [],
+
     },
     reducers: {
         // ordersFinishedCash: (state, action) => {
