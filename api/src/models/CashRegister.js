@@ -48,7 +48,8 @@ module.exports = (sequelize) => {
         defaultValue: true
       },
       reviews: {
-        type: DataTypes.JSON
+        type: DataTypes.ARRAY(DataTypes.JSONB),
+        defaultValue: []
       }
     },
     {

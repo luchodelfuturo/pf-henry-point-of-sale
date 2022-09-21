@@ -189,54 +189,27 @@ router.put("/addExpense", async (req, res) => {
   }
 });
 
-router.post("/reviews", async(req,res)=>{
-//  const reviews = req.body;
-//  console.log(JSON.stringify(req.body))
+router.put("/addReview", async (req, res) => {
+  const reviews = req.body;
+  console.log("esta es la review desde el back:", reviews)
   try {
-    // results = await Cash.findAndCountAll(
-    //   {
-    //     order: [["id", "DESC"]],
-    //     limit: 1
+    results = await Cash.findAndCountAll(
+      {
+        order: [["id", "DESC"]],
+        limit: 1
 
-    //   }
-    // )
-    // const id = results.rows[0].id
-    let response  = await Cash.create(req.body);
-    res.json(response);
+      }
+    )
+    const id = results.rows[0].id
+    const reviewsArray1 = results.rows[0].reviews
+    console.log("array del model", reviewsArray1)
+    var reviewsArray = reviewsArray1.concat(reviews)
+    console.log("array al modelo:", reviewsArray)
+    await Cash.update({ reviews: reviewsArray }, { where: { id: id } })
   } catch (error) {
     res.json(error)
   }
 });
 
-router.get("/showIncome/:id", async (req, res) => {
-  const { id } = req.params;
-  try {
-    let showIncome = await updatedIncome(id);
-    res.json({ totalIncome: showIncome });
-  } catch (error) {
-    res.josn(error);
-  }
-});
 
-router.get("/showExpense/:id", async (req, res) => {
-  const { id } = req.params;
-  try {
-    let showExpenses = await updatedExpenses(id);
-    res.json({ totalExpenses: showExpenses });
-  } catch (error) {
-    res.josn(error);
-  }
-});
-
-
-router.get('/test/:id', async (req, res) => {
-  const { id } = req.params;
-  let incomes = await Cash.findOne({
-    where: { id: id },
-    attributes: ["qtyIncome"]
-  });
-  console.log(JSON.stringify(incomes.qtyIncome[0].income)) //{"qtyIncome":[{"income":1000,"comments":"xxxxxxx"}]}
-
-  res.json(incomes)
-})
 module.exports = router;
