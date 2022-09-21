@@ -21,6 +21,8 @@ import Profile from "./Components/Profile/Profile";
 import EditUser from "./Components/Profile/EditUser";
 import UserNavBar from "./Components/UserNavbar/UserNavBar.jsx";
 
+//MAIN BARBI FUNCIONANDO
+
 function App() {
 
   const dispatch = useDispatch()
