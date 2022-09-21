@@ -1,22 +1,16 @@
-import React, { useCallback, useEffect, useState, useRef, useRef } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
-import { ButtonCart, Select, Select } from "../../../theme/styled-componets";
-import { colors } from "../../../theme/variables";
+import { ButtonCart, Select } from "../../theme/styled-componets";
+import { colors } from "../../theme/variables";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import PayPal from ".../PayPal/PayPal";
+import PayPal from "../PayPal/PayPal";
 import {
   faCommentDots,
   faDeleteLeft,
   faMoneyBill,
-  faPercent,
-  faRug,
-  faPercent,
-  faRug,
 } from "@fortawesome/free-solid-svg-icons";
 import { faPaypal } from "@fortawesome/free-brands-svg-icons";
 import Swal from "sweetalert2";
-import Comments from "../Store/Comments";
-import { discounts, cupons } from "../Store/vars";
 import Comments from "../Store/Comments";
 import { discounts, cupons } from "../Store/vars";
 
@@ -36,16 +30,18 @@ const Modal = ({
   const [disc, setDisc] = useState(0);
   const [modalComments, setModalComments] = useState(false);
   const [cupon, setCupon] = useState(0);
-  const [modalComments, setModalComments] = useState(false);
-  const [cupon, setCupon] = useState(0);
 
   const calcChange = useCallback(
     () =>
-     
       setChange(
-        
-        (cash - total + (total * cupon) / 100 + (total * disc) / 100 + (total * cupon) / 100 + (total * disc) / 100).toFixed(2)
-      
+        (
+          cash -
+          total +
+          (total * cupon) / 100 +
+          (total * disc) / 100 +
+          (total * cupon) / 100 +
+          (total * disc) / 100
+        ).toFixed(2)
       ),
     [cash, total, disc, cupon, cupon]
   );
@@ -116,7 +112,6 @@ const Modal = ({
       timer: 1000,
     });
   };
-
 
   // const postToast = () => {
   //   const Toast = Swal.mixin({
@@ -503,7 +498,7 @@ const ModalContainer = styled.div`
   border-radius: 35px;
   font-family: "Lato";
   z-index: 7;
-  
+
   /* transform: scale(0.9);
   transition: all 0.3s ease;
   &:focus {
@@ -677,7 +672,6 @@ const PaymentBody = styled.div`
     }
   }
 
-
   .desc-relative {
     background-color: ${colors.blue};
     width: 83px;
@@ -728,7 +722,6 @@ const Sum = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-
 
     width: 130px;
     padding-right: 10px;

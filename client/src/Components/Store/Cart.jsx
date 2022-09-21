@@ -4,10 +4,10 @@ import CartItem from "./CartItem";
 import styled from "styled-components";
 import "./cart.css";
 import { filterByCategoryAction } from "../../redux/actions/productsActions";
-import { filterByCategoryAction } from "../../redux/actions/productsActions";
 import { postOrdersAction } from "../../redux/actions/ordersActions";
 import { useDispatch } from "react-redux";
-import Modal from "../Modals/Modals/Modal";
+import Modal from '../Modals/Modal'
+//import Modal from "../Modals/Modals/Modal";
 import { colors } from "../../theme/variables";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -20,13 +20,17 @@ import AddDrinks from "../Modals/AddDrinks";
 import { infoCashFlowAction } from "../../redux/actions/cashFlowActions";
 
 function Cart({ products, setUpdate, update }) {
-  const { deleteAll, order, totals, setComments, methodPayment ,setMethodPayment } =
-    useContext(StoreContext);
+  const {
+    deleteAll,
+    order,
+    totals,
+    setComments,
+    methodPayment,
+    setMethodPayment,
+  } = useContext(StoreContext);
   const [checkout, setCheckout] = useState(false);
   const [clearCart, setClearCart] = useState(false);
-  const [addDrinks, setAddDrinks] = useState(false);
 
-  const [clearCart, setClearCart] = useState(false);
   const [addDrinks, setAddDrinks] = useState(false);
 
   useEffect(() => {}, [products]);
@@ -46,10 +50,10 @@ function Cart({ products, setUpdate, update }) {
   function handleCheckoutModal() {
     if (checkDrinks()) {
       if (checkDrinks()) {
-      setCheckout(true);
-    } else {
-      setAddDrinks(true);
-    }
+        setCheckout(true);
+      } else {
+        setAddDrinks(true);
+      }
     } else {
       setAddDrinks(true);
     }
