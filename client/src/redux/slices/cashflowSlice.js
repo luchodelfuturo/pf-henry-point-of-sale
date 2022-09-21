@@ -17,32 +17,14 @@ export const cashFlowSlice = createSlice({
         },
         getAllCashFlow: (state, action) => {
             state.allCashFlow = action.payload;
-            state.filteredCashFlow = action.payload; 
+            state.filteredCashFlow = action.payload;
         },
         searchDateCashFlow: (state, action) => {
             const filtro = state.filteredCashFlow;
 
             state.allCashFlow = filtro.filter(cash => cash.date === action.payload)
         }
-        // ordersFinishedPaypal: (state, action) => {
-        //   state.totalPaypal = action.payload;
-        // },
-        // getTotalIncome: (state, action) => {
-        //   state.totalIncome = action.payload;
-        // },
-        // getTotalExpense: (state, action) => {
-        //   state.totalExpenses = action.payload;
-        // },
-        // getTotalSales: (state, action) => {
-        //   state.totalSales = action.payload;
-        // },
-        // addCashInit: (state, action) => {
-        //   console.log(action.payload);
-        //   state.cashInit = [action.payload];
-        // },
-        // getTotal: (state, action) => {
-        //   state.totalAll = action.payload;
-        // },
+
     },
 });
 
