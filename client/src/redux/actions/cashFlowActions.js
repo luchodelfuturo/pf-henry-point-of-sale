@@ -3,7 +3,7 @@ import {
   getLastCashFlow,
   getAllCashFlow,
   searchDateCashFlow
-} from "../slices/cashflowSlice";
+} from "../slices/cashFlowSlice";
 
 
 export const getLastCashFlowAction = () => (dispatch) => {
