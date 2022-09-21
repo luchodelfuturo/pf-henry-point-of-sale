@@ -34,7 +34,7 @@ export default function BoxesCashFlow({ value, title }) {
           width: "100%",
           margin: "0 auto",
           backgroundColor: "white",
-
+          fontSize: "150%",
           borderRadius: "0 0 20px 20px",
           height: "50%",
           display: "flex",

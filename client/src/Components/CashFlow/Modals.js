@@ -8,20 +8,24 @@ import {
 } from "../../redux/actions/cashFlowActions.js";
 import { useModal } from "../Hooks/useModal";
 import Modal from "./Modal";
+import Reviews from "./Reviews.jsx";
 
 const Modals = ({ lastCashFlow }) => {
     const dispatch = useDispatch();
     const [ingreso, setIngreso] = useState({
         amount: 0,
         comment: "",
+        type: "Income",
+        hour: new Date().toLocaleTimeString()
 
     });
     const [egreso, setEgreso] = useState({
         amount: 0,
         comment: "",
+        type: "Expenses",
+        hour: new Date().toLocaleTimeString()
     });
     const [iniciarButton, setIniciarButton] = useState(true)
-
     const [init, setInit] = useState(0);
 
     const [isOpenModalIncome, openModalIncome, closeModalIncome] =
@@ -29,7 +33,7 @@ const Modals = ({ lastCashFlow }) => {
     const [isOpenModalExpense, openModalExpense, closeModalExpense] =
         useModal(false);
     const [isOpenModalInit, openModalInit, closeModalInit] = useModal(false);
-
+    const [isOpenModalReviews, openModalReviews, closeModalReviews] = useModal(false)
     const handleSubmitIncome = (e) => {
         // e.preventDefault();
 
@@ -66,11 +70,16 @@ const Modals = ({ lastCashFlow }) => {
 
     return (
         <div>
-            {iniciarButton && <button onClick={openModalInit}>Iniciar caja</button>}
+            <button
+                hidden={lastCashFlow && !lastCashFlow.closeCashFlow}
+                onClick={() => {
+
+                    openModalInit()
+                }}>Iniciar caja</button>
             <Modal isOpen={isOpenModalInit} closeModal={closeModalInit}>
                 <h2>Agregue un monto para su inicio de caja</h2>
                 <form onSubmit={() => {
-                    setIniciarButton(false)
+
                     handleSubmitInicioDeCaja()
                 }}>
                     <label>
@@ -83,7 +92,7 @@ const Modals = ({ lastCashFlow }) => {
                         />
                     </label>
 
-                    <input type="submit" value="Inicio de caja" />
+                    <input type="submit" value="Inicio de caja" onClick={() => setIniciarButton(false)} />
                 </form>
             </Modal>
             {lastCashFlow && !lastCashFlow.closeCashFlow && <button onClick={openModalIncome}>Ingreso</button>}
@@ -160,6 +169,11 @@ const Modals = ({ lastCashFlow }) => {
                     <input type="submit" value="Agregar egreso" />
                 </form>
             </Modal>
+            {lastCashFlow && !lastCashFlow.closeCashFlow && <button onClick={openModalReviews}>Cerrar caja</button>}
+            <Modal isOpen={isOpenModalReviews} closeModal={closeModalReviews}>
+                <Reviews />
+            </Modal>
+
         </div>
     );
 };
