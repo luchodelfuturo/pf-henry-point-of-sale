@@ -189,6 +189,25 @@ router.put("/addExpense", async (req, res) => {
   }
 });
 
+router.post("/reviews", async(req,res)=>{
+//  const reviews = req.body;
+//  console.log(JSON.stringify(req.body))
+  try {
+    // results = await Cash.findAndCountAll(
+    //   {
+    //     order: [["id", "DESC"]],
+    //     limit: 1
+
+    //   }
+    // )
+    // const id = results.rows[0].id
+    let response  = await Cash.create(req.body);
+    res.json(response);
+  } catch (error) {
+    res.json(error)
+  }
+});
+
 router.get("/showIncome/:id", async (req, res) => {
   const { id } = req.params;
   try {

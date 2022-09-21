@@ -8,6 +8,7 @@ import {
 } from "../../redux/actions/cashFlowActions.js";
 import { useModal } from "../Hooks/useModal";
 import Modal from "./Modal";
+import Reviews from "./Reviews.jsx";
 
 const Modals = ({ lastCashFlow }) => {
     const dispatch = useDispatch();
@@ -29,7 +30,7 @@ const Modals = ({ lastCashFlow }) => {
     const [isOpenModalExpense, openModalExpense, closeModalExpense] =
         useModal(false);
     const [isOpenModalInit, openModalInit, closeModalInit] = useModal(false);
-
+    const [isOpenModalReviews, openModalReviews, closeModalReviews] = useModal(false)
     const handleSubmitIncome = (e) => {
         // e.preventDefault();
 
@@ -160,6 +161,11 @@ const Modals = ({ lastCashFlow }) => {
                     <input type="submit" value="Agregar egreso" />
                 </form>
             </Modal>
+            {lastCashFlow && !lastCashFlow.closeCashFlow && <button onClick={openModalReviews}>Cerrar caja</button>}
+            <Modal isOpen={isOpenModalReviews} closeModal={closeModalReviews}>
+                <Reviews/>
+            </Modal>
+
         </div>
     );
 };

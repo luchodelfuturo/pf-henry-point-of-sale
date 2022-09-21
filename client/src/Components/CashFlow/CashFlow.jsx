@@ -126,9 +126,9 @@ export default function CashFlow() {
           >
             <Modals lastCashFlow={lastCashFlow} />
 
-            {/* <button onClick={() => dispatch(cierreDeCaja(cierre))}>
-              Cerrar Caja
-            </button> */}
+            {/* <button onClick={()=> setCloseModal(true)}> Cerrar Caja </button>
+             */}
+            
           </div>
         </div>
       </div>

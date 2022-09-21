@@ -52,3 +52,14 @@ export const searchDateCashFlowAction = (date) => (dispatch) => {
 
 
 };
+
+export const addReviews = (review) => (dispatch) => {
+  console.log(review);
+  fetch(`/cash/reviews`, {
+    method: "POST",
+    body: JSON.stringify(review),
+    headers: { "Content-type": "application/json; charset=UTF-8" },
+  })
+    .then((res) => res.json())
+    .then((r) => console.log(r));
+};
