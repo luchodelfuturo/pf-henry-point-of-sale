@@ -43,7 +43,7 @@ const Modal = ({
           (total * disc) / 100
         ).toFixed(2)
       ),
-    [cash, total, disc, cupon, cupon]
+    [cash, total, disc, cupon]
   );
 
   useEffect(() => {
@@ -106,8 +106,6 @@ const Modal = ({
       position: "center",
       icon: "success",
       title: "Order placed",
-      showConfirmButton: false,
-      timer: 1000,
       showConfirmButton: false,
       timer: 1000,
     });
@@ -338,13 +336,6 @@ const Modal = ({
                   />
                 </ButtonCart>
 
-                <ButtonCart className="desc" onClick={() => handleComments()}>
-                  <FontAwesomeIcon
-                    icon={faCommentDots}
-                    style={{ width: 35, height: 35 }}
-                  />
-                </ButtonCart>
-
                 <ButtonCart
                   className="close"
                   value="close"
@@ -445,13 +436,6 @@ const Modal = ({
               </div>
 
               <div className="footer-buttons">
-                <ButtonCart className="desc-relative">
-                  <FontAwesomeIcon
-                    onClick={() => handleComments()}
-                    icon={faCommentDots}
-                    style={{ width: 35, height: 35 }}
-                  />
-                </ButtonCart>
                 <ButtonCart className="desc-relative">
                   <FontAwesomeIcon
                     onClick={() => handleComments()}

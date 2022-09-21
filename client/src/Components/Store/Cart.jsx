@@ -42,10 +42,6 @@ function Cart({ products, setUpdate, update }) {
     return foundDrinks !== undefined ? true : false;
   }
 
-  function checkDrinks() {
-    let foundDrinks = products.find((d) => d.product.categories === "Drinks");
-    return foundDrinks !== undefined ? true : false;
-  }
 
   function handleCheckoutModal() {
     if (checkDrinks()) {
@@ -89,9 +85,7 @@ function Cart({ products, setUpdate, update }) {
     setClearCart(true);
   }
 
-  function drinksFilter(filter) {
-    dispatch(filterByCategoryAction(filter));
-  }
+
 
   return (
     <div className="cart-cont">
@@ -124,7 +118,6 @@ function Cart({ products, setUpdate, update }) {
           postOrder={postOrder}
           methodPayment={methodPayment}
           setMethodPayment={setMethodPayment}
-          df={drinksFilter}
           df={drinksFilter}
         />
       )}
