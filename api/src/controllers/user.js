@@ -31,7 +31,7 @@ const userCtrl = {
             const newUser = {
                 name, email, password: passwordHash
             }
-
+            console.log(newUser)
             const activation_token = createActivationToken(newUser)
 
             const url = `${CLIENT_URL}/user/activate/${activation_token}`
@@ -187,52 +187,30 @@ const userCtrl = {
     },
     googleLogin: async (req, res) => {
         try {
-            const {tokenId} = req.body
+            const { name, email, avatar } = req.body
 
-            const verify = await client.verifyIdToken({idToken: tokenId, audience: MAILING_SERVICE_CLIENT_ID})
+            if (!name || !email )
+                return res.status(400).json({ msg: "Please fill in all fields." })
 
-            const {email_verified, email, name, picture} = verify.payload
+            if (!validateEmail(email))
+                return res.status(400).json({ msg: "Invalid email." })
 
-            const password = email + GOOGLE_SECRET
+            const user = await User.findOne({ where: { email: email }})
+            if (user) return res.status(400).json({ msg: "This email already exists." })
+            
 
-            const passwordHash = await bcrypt.hash(password, 12)
+            const newUser = new User ({
+                name, email, avatar
+            })
 
-            if(!email_verified) return res.status(400).json({msg: "Email verification failed."})
+            await newUser.save()
 
-            const user = await User.findOne({email})
-
-            if(user){
-                const isMatch = await bcrypt.compare(password, user.password)
-                if(!isMatch) return res.status(400).json({msg: "Password is incorrect."})
-
-                const refresh_token = createRefreshToken({id: user.id})
-                res.cookie('refreshtoken', refresh_token, {
-                    httpOnly: true,
-                    path: '/users/refresh_token',
-                    maxAge: 7*24*60*60*1000 // 7 days
-                })
-
-                res.json({msg: "Login success!"})
-            }else{
-                const newUser = new User({
-                    name, email, password: passwordHash, avatar: picture
-                })
-
-                await newUser.save()
-
-                const refresh_token = createRefreshToken({id: newUser.id})
-                res.cookie('refreshtoken', refresh_token, {
-                    httpOnly: true,
-                    path: '/users/refresh_token',
-                    maxAge: 7*24*60*60*1000 // 7 days
-                })
-
-                res.json({msg: "Login success!"})
-            }
-
+            console.log(newUser)
+            res.json({ msg: "Google register Success!." })
         } catch (err) {
-            return res.status(500).json({msg: err.message})
+            return res.status(500).json({ msg: err.message })
         }
+
     }
 };
 

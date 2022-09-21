@@ -156,9 +156,14 @@ router.put("/addIncome", async (req, res) => {
 
 
     const id = results.rows[0].id
+
+    const cashFlowMovesDB = results.rows[0].cashFlowMoves
+
+    var cashFlowMovesToDB = cashFlowMovesDB.concat(income)
+
     const totalCashRegisterOut = parseInt(results.rows[0].totalCashRegister) + parseInt(income.amount)
     const incomeOut = parseInt(results.rows[0].income) + parseInt(income.amount)
-    await Cash.update({ income: incomeOut, totalCashRegister: totalCashRegisterOut }, { where: { id: id } })
+    await Cash.update({ income: incomeOut, totalCashRegister: totalCashRegisterOut, cashFlowMoves: cashFlowMovesToDB }, { where: { id: id } })
 
   }
   catch (error) {
@@ -179,9 +184,13 @@ router.put("/addExpense", async (req, res) => {
 
 
     const id = results.rows[0].id
+    const cashFlowMovesDB = results.rows[0].cashFlowMoves
+
+    var cashFlowMovesToDB = cashFlowMovesDB.concat(expenses)
+
     const totalCashRegisterOut = parseInt(results.rows[0].totalCashRegister) - parseInt(expenses.amount)
     const expensesOut = parseInt(results.rows[0].expenses) + parseInt(expenses.amount)
-    await Cash.update({ expenses: expensesOut, totalCashRegister: totalCashRegisterOut }, { where: { id: id } })
+    await Cash.update({ expenses: expensesOut, totalCashRegister: totalCashRegisterOut, cashFlowMoves: cashFlowMovesToDB }, { where: { id: id } })
 
   }
   catch (error) {
@@ -189,35 +198,57 @@ router.put("/addExpense", async (req, res) => {
   }
 });
 
-router.get("/showIncome/:id", async (req, res) => {
-  const { id } = req.params;
+router.put("/addReview", async (req, res) => {
+  const reviews = req.body;
+  console.log("esta es la review desde el back:", reviews)
   try {
-    let showIncome = await updatedIncome(id);
-    res.json({ totalIncome: showIncome });
+    results = await Cash.findAndCountAll(
+      {
+        order: [["id", "DESC"]],
+        limit: 1
+
+      }
+    )
+    const id = results.rows[0].id
+    const reviewsArray1 = results.rows[0].reviews
+
+    var reviewsArray = reviewsArray1.concat(reviews)
+
+    await Cash.update({ reviews: reviewsArray, closeCashFlow: true }, { where: { id: id } })
   } catch (error) {
-    res.josn(error);
+    res.json(error)
   }
 });
 
-router.get("/showExpense/:id", async (req, res) => {
-  const { id } = req.params;
-  try {
-    let showExpenses = await updatedExpenses(id);
-    res.json({ totalExpenses: showExpenses });
-  } catch (error) {
-    res.josn(error);
+router.put("/addOrderInfo", async (req, res) => {
+  const orderTotal = req.body;
+  const infoOrder = {
+    type: "Sales",
+    amount: orderTotal.totalOrder.toString(),
+    comment: orderTotal.methodPayment,
+    hour: new Date().toLocaleTimeString()
   }
-});
+  try {
+    results = await Cash.findAndCountAll(
+      {
+        order: [["id", "DESC"]],
+        limit: 1
+
+      }
+    )
 
 
-router.get('/test/:id', async (req, res) => {
-  const { id } = req.params;
-  let incomes = await Cash.findOne({
-    where: { id: id },
-    attributes: ["qtyIncome"]
-  });
-  console.log(JSON.stringify(incomes.qtyIncome[0].income)) //{"qtyIncome":[{"income":1000,"comments":"xxxxxxx"}]}
+    const id = results.rows[0].id
+    const cashFlowMovesDB = results.rows[0].cashFlowMoves
 
-  res.json(incomes)
+    var cashFlowMovesToDB = cashFlowMovesDB.concat(infoOrder)
+
+    await Cash.update({ cashFlowMoves: cashFlowMovesToDB }, { where: { id: id } })
+
+  }
+  catch (error) {
+    res.json(error);
+  }
 })
+
 module.exports = router;

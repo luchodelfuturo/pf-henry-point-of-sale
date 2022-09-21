@@ -28,9 +28,9 @@ module.exports = (sequelize) => {
         defaultValue: 0
       },
       cashFlowMoves: {
-        type: DataTypes.ARRAY(DataTypes.JSONB)
+        type: DataTypes.ARRAY(DataTypes.JSONB),
+        defaultValue: []
       },
-
       date: {
         type: DataTypes.DATEONLY,
         defaultValue: DataTypes.NOW,
@@ -47,6 +47,10 @@ module.exports = (sequelize) => {
       closeCashFlow: {
         type: DataTypes.BOOLEAN,
         defaultValue: true
+      },
+      reviews: {
+        type: DataTypes.ARRAY(DataTypes.JSONB),
+        defaultValue: []
       }
     },
     {

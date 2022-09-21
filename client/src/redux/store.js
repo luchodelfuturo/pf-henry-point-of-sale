@@ -7,7 +7,6 @@ import auth from './slices/authSlice'
 import token from './slices/tokenSlice'
 import users from './slices/usersSlice'
 
-
 export default configureStore({
   reducer: {
     orders: orders,

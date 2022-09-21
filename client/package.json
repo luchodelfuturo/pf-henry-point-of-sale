@@ -29,7 +29,6 @@
     "cross-env": "^7.0.3",
     "dotenv": "^8.2.0",
     "jwt-decode": "^3.1.2",
-    "process": "^0.11.10",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-icons": "^4.4.0",
@@ -67,8 +66,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:3001",
-  "devDependencies": {
-    "react-error-overlay": "^6.0.9"
-  }
+  "proxy": "http://localhost:3001"
 }
