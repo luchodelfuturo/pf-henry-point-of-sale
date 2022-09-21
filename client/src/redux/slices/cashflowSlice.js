@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const cashflowSlice = createSlice({
+export const cashFlowSlice = createSlice({
     name: "cashFlow",
     initialState: {
         lastCashFlow: [],
