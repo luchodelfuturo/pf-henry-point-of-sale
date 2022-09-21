@@ -15,11 +15,15 @@ const Modals = ({ lastCashFlow }) => {
     const [ingreso, setIngreso] = useState({
         amount: 0,
         comment: "",
+        type: "Income",
+        hour: new Date().toLocaleTimeString()
 
     });
     const [egreso, setEgreso] = useState({
         amount: 0,
         comment: "",
+        type: "Expenses",
+        hour: new Date().toLocaleTimeString()
     });
     const [iniciarButton, setIniciarButton] = useState(true)
     const [init, setInit] = useState(0);
@@ -167,7 +171,7 @@ const Modals = ({ lastCashFlow }) => {
             </Modal>
             {lastCashFlow && !lastCashFlow.closeCashFlow && <button onClick={openModalReviews}>Cerrar caja</button>}
             <Modal isOpen={isOpenModalReviews} closeModal={closeModalReviews}>
-                <Reviews/>
+                <Reviews />
             </Modal>
 
         </div>

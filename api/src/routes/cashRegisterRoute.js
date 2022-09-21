@@ -156,9 +156,14 @@ router.put("/addIncome", async (req, res) => {
 
 
     const id = results.rows[0].id
+
+    const cashFlowMovesDB = results.rows[0].cashFlowMoves
+
+    var cashFlowMovesToDB = cashFlowMovesDB.concat(income)
+
     const totalCashRegisterOut = parseInt(results.rows[0].totalCashRegister) + parseInt(income.amount)
     const incomeOut = parseInt(results.rows[0].income) + parseInt(income.amount)
-    await Cash.update({ income: incomeOut, totalCashRegister: totalCashRegisterOut }, { where: { id: id } })
+    await Cash.update({ income: incomeOut, totalCashRegister: totalCashRegisterOut, cashFlowMoves: cashFlowMovesToDB }, { where: { id: id } })
 
   }
   catch (error) {
@@ -179,9 +184,13 @@ router.put("/addExpense", async (req, res) => {
 
 
     const id = results.rows[0].id
+    const cashFlowMovesDB = results.rows[0].cashFlowMoves
+
+    var cashFlowMovesToDB = cashFlowMovesDB.concat(expenses)
+
     const totalCashRegisterOut = parseInt(results.rows[0].totalCashRegister) - parseInt(expenses.amount)
     const expensesOut = parseInt(results.rows[0].expenses) + parseInt(expenses.amount)
-    await Cash.update({ expenses: expensesOut, totalCashRegister: totalCashRegisterOut }, { where: { id: id } })
+    await Cash.update({ expenses: expensesOut, totalCashRegister: totalCashRegisterOut, cashFlowMoves: cashFlowMovesToDB }, { where: { id: id } })
 
   }
   catch (error) {
@@ -211,5 +220,35 @@ router.put("/addReview", async (req, res) => {
   }
 });
 
+router.put("/addOrderInfo", async (req, res) => {
+  const orderTotal = req.body;
+  const infoOrder = {
+    type: "Sales",
+    amount: orderTotal.totalOrder.toString(),
+    comment: orderTotal.methodPayment,
+    hour: new Date().toLocaleTimeString()
+  }
+  try {
+    results = await Cash.findAndCountAll(
+      {
+        order: [["id", "DESC"]],
+        limit: 1
+
+      }
+    )
+
+
+    const id = results.rows[0].id
+    const cashFlowMovesDB = results.rows[0].cashFlowMoves
+
+    var cashFlowMovesToDB = cashFlowMovesDB.concat(infoOrder)
+
+    await Cash.update({ cashFlowMoves: cashFlowMovesToDB }, { where: { id: id } })
+
+  }
+  catch (error) {
+    res.json(error);
+  }
+})
 
 module.exports = router;

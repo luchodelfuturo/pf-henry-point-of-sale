@@ -28,7 +28,8 @@ module.exports = (sequelize) => {
         defaultValue: 0
       },
       cashFlowMoves: {
-        type: DataTypes.ARRAY(DataTypes.JSONB)
+        type: DataTypes.ARRAY(DataTypes.JSONB),
+        defaultValue: []
       },
       date: {
         type: DataTypes.DATEONLY,
