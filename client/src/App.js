@@ -93,7 +93,7 @@ function App() {
       <Route
         exact
         path="/cashFlow/historialCashFlow"
-        component={HistorialsCashFlow}
+        component={isLogged ? HistorialsCashFlow : WelcomePage}
       />
     </div>
   );
