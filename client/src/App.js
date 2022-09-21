@@ -16,47 +16,15 @@ import CashFlow from "./Components/CashFlow/CashFlow";
 import HistorialsCashFlow from "./Components/CashFlow/HistorialsCashFlow";
 
 function App() {
-  const dispatch = useDispatch()
-  const token = useSelector(state => state.token)
-  const auth = useSelector(state => state.auth)
-  const {isLogged, isAdmin} = auth
-
-  const getToken = async () => {
-    const res = await axios.post('/users/refresh_token', null)
-    dispatch(dispatchGetToken(res.data.access_token))
-  }
-  const getUser = () => {
-    dispatch(dispatchLogin())
-
-    return fetchUser(token).then(res => {
-      dispatch(dispatchGetUser(res.data))
-
-    })
-  }
-
-  useEffect(() => {
-    const firstLogin = localStorage.getItem('firstLogin')
-    if(firstLogin){
-      getToken()
-    }
-  },[auth.isLogged, dispatch])
-
-  useEffect(() => {
-    if(token){
-      getUser()
-    }
-  },[token, dispatch])
   return (
     <div className="App">
       <GlobalStyle />
 
-      <Route exact path="/" component={LandingPage} />
+      <Route exact path="/" component={WelcomePage} />
 
-      <Route exact path="/login" component={isLogged ? NotFound : Login} />
+      <Route exact path="/login" component={Login} />
 
-      <Route exact path="/register" component={isLogged ? NotFound : Register} />
-
-      <Route path="/profile" component={isLogged ? Profile : NotFound} exact />
+      <Route exact path="/register" component={Register} />
 
       <Route
         exact

@@ -20,8 +20,7 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 function Store() {
   const dispatch = useDispatch();
   const { state, products, categories } = useContext(StoreContext);
-  const [update, setUpdate] = useState(false)
-
+  const [update, setUpdate] = useState(false);
 
   useEffect(() => {
     dispatch(getCategories());
@@ -96,6 +95,7 @@ function Store() {
                           filterCategory(categ.name.toLowerCase());
                         }}
                         key={index}
+                        s
                       >
                         {namer}
                       </BtnRounded>
@@ -108,7 +108,7 @@ function Store() {
             </div>
           </div>
         </div>
-        <div style={{ height: "10vh" }}>
+        <div style={{ height: "6vh" }}>
           <NavBarApp />
         </div>
       </div>

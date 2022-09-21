@@ -19,14 +19,8 @@ import AddDrinks from "../Modals/AddDrinks";
 import { infoCashFlowAction } from "../../redux/actions/cashFlowActions";
 
 function Cart({ products, setUpdate, update }) {
-  const {
-    deleteAll,
-    order,
-    totals,
-    setComments,
-    setMethodPayment,
-    setDiscounts,
-  } = useContext(StoreContext);
+  const { deleteAll, order, totals, setComments, methodPayment ,setMethodPayment } =
+    useContext(StoreContext);
   const [checkout, setCheckout] = useState(false);
   const [clearCart, setClearCart] = useState(false);
   const [addDrinks, setAddDrinks] = useState(false);
@@ -91,9 +85,9 @@ function Cart({ products, setUpdate, update }) {
           sch={setCheckout}
           setComments={setComments}
           postOrder={postOrder}
+          methodPayment={methodPayment}
           setMethodPayment={setMethodPayment}
           df={drinksFilter}
-          setDiscounts={setDiscounts}
         />
       )}
       <div className="cart">
@@ -145,8 +139,9 @@ const Checkout = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: absolute;
-  bottom: 80px;
+  margin-top: 10px;
+  padding: 10px 0px 10px 0px;
+  /* bottom: 80px; */
   background: #eaeaea;
   box-shadow: 4px 6px 9px -4px rgba(0, 0, 0, 0.25);
   border-radius: 0px 20px 20px 0px;

@@ -162,6 +162,7 @@ export function StoreProvider({ children }) {
         order,
         totals,
         setComments,
+        methodPayment,
         setMethodPayment,
         setDiscounts,
       }}

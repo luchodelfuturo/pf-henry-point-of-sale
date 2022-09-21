@@ -8,6 +8,8 @@ import {
   faCommentDots,
   faDeleteLeft,
   faMoneyBill,
+  faPercent,
+  faRug,
 } from "@fortawesome/free-solid-svg-icons";
 import { faPaypal } from "@fortawesome/free-brands-svg-icons";
 import Swal from "sweetalert2";
@@ -20,9 +22,9 @@ const Modal = ({
   comments,
   setComments,
   postOrder,
+  methodPayment,
   setMethodPayment,
   df,
-  setDiscounts,
 }) => {
   const [payment, setPayment] = useState("cash");
   const [cash, setCash] = useState("0");
@@ -31,20 +33,28 @@ const Modal = ({
   const [modalComments, setModalComments] = useState(false);
   const [cupon, setCupon] = useState(0);
 
-  const calcChange = useCallback(() => {
-    setChange(
-      (cash - total + (total * cupon) / 100 + (total * disc) / 100).toFixed(2)
-    );
-    setDiscounts(((total * cupon) / 100 + (total * disc) / 100).toFixed(2));
-  }, [cash, total, disc, cupon, setDiscounts]);
+  const calcChange = useCallback(
+    () =>
+      setChange(
+        (cash - total + (total * cupon) / 100 + (total * disc) / 100).toFixed(2)
+      ),
+    [cash, total, disc, cupon]
+  );
 
   useEffect(() => {
     if (cash === "") {
       setCash("0");
+      setPayment("cash");
+      setMethodPayment("cash");
     }
 
     calcChange();
-  }, [calcChange, cash]);
+  }, [calcChange, cash, setMethodPayment]);
+
+  useEffect(() => {
+    setPayment("cash");
+    setMethodPayment("cash");
+  }, []);
 
   function handlePayment(e) {
     setPayment(e.target.value);
@@ -441,6 +451,7 @@ const ModalContainer = styled.div`
   border-radius: 35px;
   font-family: "Lato";
   z-index: 7;
+  
   /* transform: scale(0.9);
   transition: all 0.3s ease;
   &:focus {
