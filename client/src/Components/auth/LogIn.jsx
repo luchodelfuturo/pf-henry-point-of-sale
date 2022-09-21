@@ -11,6 +11,8 @@ import jwt_decode from 'jwt-decode';
 const client_id = "58357792722-mar8g19eknd6f1cp4tkpmq37gcn231d7.apps.googleusercontent.com";
 
 const initialState = {
+  name: "",
+  avatar: "",
   email: "",
   password: "",
   err: "",
@@ -19,10 +21,9 @@ const initialState = {
 
 function Login() {
   const [user, setUser] = useState(initialState);
-  const { email, password, err, success } = user;
+  const { name,email, password, avatar, err, success } = user;
   const dispatch = useDispatch();
   const history = useHistory();
-
 
 
   const handleChangeInput = (e) => {
@@ -63,6 +64,29 @@ function Login() {
       setUser({...user, err: err.response.data.msg, success: ''})
     }
   }
+
+  // const responseGoogle = async (response) => {
+  //   try {
+  //     console.log("Encoded JWT ID token: " + response.credential);
+  //     var googleUser = jwt_decode(response.credential);
+  //     console.log(googleUser);
+
+  //     const res = await axios.post("/users/register", {
+  //       name: googleUser.name,
+  //       email: googleUser.email,
+  //       avatar: googleUser.picture
+  //     });
+    
+  //     setUser({ ...user, err: "", success: res.data.msg });
+  //     localStorage.setItem('firstLogin', true)
+    
+  //     dispatch(dispatchLogin())
+  //     history.push('/store')
+  //   } catch (err) {
+  //     err.response.data.msg && 
+  //     setUser({...user, err: err.response.data.msg, success: ''})
+  //   }
+  // }
 
   useEffect(()=>{
     /*global google*/
