@@ -67,9 +67,6 @@ export function StoreProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, reducer());
   const [comments, setComments] = useState("");
   const [methodPayment, setMethodPayment] = useState("cash");
-  const [discounts, setDiscounts] = useState(0);
-
-  console.log("%cStoreContext.js line:71 state", "color: #007acc;", state);
 
   console.log('%cStoreContext.js line:71 state', 'color: #007acc;', state);
 
@@ -131,7 +128,7 @@ export function StoreProvider({ children }) {
   let order = {
     comments: comments,
     productsOrder: productsOrder,
-    totalOrder: totals - discounts,
+    totalOrder: totals,
     methodPayment: methodPayment,
   };
 
@@ -165,9 +162,7 @@ export function StoreProvider({ children }) {
         order,
         totals,
         setComments,
-        methodPayment,
         setMethodPayment,
-        setDiscounts,
       }}
     >
       {children}

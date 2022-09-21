@@ -1,21 +1,18 @@
-.cart-cont {
+.cart-cont{
   background-color: #d4d4d4;
-  width: 620px;
-  height: 92vh;
+  height: 730px;
   margin-right: 20px;
-  
+  overflow-y: auto;
 }
 
 .cart {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 90vh;
 }
 .items {
   overflow-y: auto;
-  height: auto;
-  padding-bottom: 10px;
+  height: 619px;
 }
 .items-header {
   display: flex;

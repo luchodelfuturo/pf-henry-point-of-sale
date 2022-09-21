@@ -1,20 +1,27 @@
 import axios from "axios";
-import { getLastCashFlow } from "../slices/cashFlowSlice.js";
+import {
+  getLastCashFlow,
+  getAllCashFlow,
+  searchDateCashFlow
+} from "../slices/cashFlowSlice"
+
 
 export const getLastCashFlowAction = () => (dispatch) => {
   return axios
     .get("/cash/getLastCashFlow")
 
-    .then((res) => dispatch(getLastCashFlow(res.data[0])));
-};
+    .then((res) => dispatch(getLastCashFlow(res.data[0])))
+}
 
 export const infoCashFlowAction = (order) => (dispatch) => {
   return axios
     .put(`/cash/updateCashFlow/`, order)
-    .then(console.log("put exitoso!"));
-};
+    .then(console.log("put exitoso!"))
+}
 export const addIncomeAction = (income) => (dispatch) => {
-  return axios.put("/cash/addIncome", income).then((res) => console.log(res));
+  return axios
+    .put("/cash/addIncome", income)
+    .then((res) => console.log(res));
 };
 
 export const addExpenseAction = (expenses) => (dispatch) => {
@@ -24,56 +31,32 @@ export const addExpenseAction = (expenses) => (dispatch) => {
 };
 
 export const addCashInitAction = (init) => (dispatch) => {
-  // return dispatch(addCashInit(init));
-  return axios
-    .post(`/cash/newCashFlow/`, { initCash: init })
-    .then(console.log("post Init Cash exitoso xd!"));
+
+  return axios.post(`/cash/newCashFlow/`, { initCash: init })
+    .then(console.log("post Init Cash exitoso xd!"))
+
 };
 
-// export const getTotalIncomeAction = () => (dispatch) => {
-//   return axios
-//     .get("/cash/showIncome/1")
-//     .then((res) => dispatch(getTotalIncome(res.data)))
-//     .catch((e) => console.log(e));
-// };
+export const getAllCashFlowAction = () => (dispatch) => {
+  
+  return axios.get(`/cash/history`)
+    .then((res) => dispatch(getAllCashFlow(res.data)))
 
-// export const getTotalExpenseAction = () => (dispatch) => {
-//   return axios
-//     .get("/cash/showExpense/1")
-//     .then((res) => dispatch(getTotalExpense(res.data)))
-//     .catch((e) => console.log(e));
-// };
 
-// export const getTotalSalesAction = () => (dispatch) => {
-//   return axios
-//     .get("/cash//totalSales/1")
-//     .then((res) => dispatch(getTotalSales(res.data)))
-//     .catch((e) => console.log(e));
-// };
+};
 
-// export const getTotalCashAction = () => (dispatch) => {
-//   axios
-//     .get("/cash/payment-cash/1")
-//     .then((res) => dispatch(ordersFinishedCash(res.data)))
-//     .catch((e) => console.log(e));
-// };
+export const searchDateCashFlowAction = (date) => (dispatch) => {
 
-// export const getTotalPaypalAction = () => (dispatch) => {
-//   axios
-//     .get("cash/payment-paypal/1")
-//     .then((res) => dispatch(ordersFinishedPaypal(res.data)))
-//     .catch((e) => console.log(e));
-// };
 
-// export const getTotalAction = () => (dispatch) => {
-//   axios
-//     .get(`/cash/totalCash-register/1`)
-//     .then((res) => dispatch(getTotal(res.data)));
-// };
+  return dispatch(searchDateCashFlow(date))
 
-// export const cierreDeCaja = (obj) => (dispatch) => {
-//   axios
-//     .post(`/cash/close`, obj)
-//     .then((res) => console.log(res))
-//     .catch((e) => console.log(e));
-// };
+
+
+};
+
+export const addReviews = (review) => (dispatch) => {
+  console.log("review desde el front:", review);
+  
+  return axios.put("cash/addReview", review)
+    .then((res) => console.log(res))
+};

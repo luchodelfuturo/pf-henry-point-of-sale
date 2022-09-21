@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import { ButtonCart, Select } from "../../theme/styled-componets";
 import { colors } from "../../theme/variables";
@@ -8,6 +8,8 @@ import {
   faCommentDots,
   faDeleteLeft,
   faMoneyBill,
+  faPercent,
+  faRug,
 } from "@fortawesome/free-solid-svg-icons";
 import { faPaypal } from "@fortawesome/free-brands-svg-icons";
 import Swal from "sweetalert2";
@@ -20,7 +22,6 @@ const Modal = ({
   comments,
   setComments,
   postOrder,
-  methodPayment,
   setMethodPayment,
   df,
 }) => {
@@ -34,32 +35,20 @@ const Modal = ({
   const calcChange = useCallback(
     () =>
       setChange(
-        (
-          cash -
-          total +
-          (total * cupon) / 100 +
-          (total * disc) / 100 +
-          (total * cupon) / 100 +
-          (total * disc) / 100
-        ).toFixed(2)
+        (cash - total + (total * cupon) / 100 + (total * disc) / 100).toFixed(2)
       ),
-    [cash, total, disc, cupon, cupon]
+    [cash, total, disc, cupon]
   );
+
+  const inputEl = useRef();
 
   useEffect(() => {
     if (cash === "") {
       setCash("0");
-      setPayment("cash");
-      setMethodPayment("cash");
     }
 
     calcChange();
-  }, [calcChange, cash, setMethodPayment]);
-
-  useEffect(() => {
-    setPayment("cash");
-    setMethodPayment("cash");
-  }, []);
+  }, [calcChange, cash]);
 
   function handlePayment(e) {
     setPayment(e.target.value);
@@ -94,12 +83,13 @@ const Modal = ({
     if (e.target.id === "overlay") {
       sch(false);
     }
-    df("all products");
+    df("all products")
   }
 
   function handleComments() {
     setModalComments(true);
   }
+
 
   const postToast = () => {
     Swal.fire({
@@ -108,10 +98,9 @@ const Modal = ({
       title: "Order placed",
       showConfirmButton: false,
       timer: 1000,
-      showConfirmButton: false,
-      timer: 1000,
     });
   };
+
 
   // const postToast = () => {
   //   const Toast = Swal.mixin({
@@ -159,13 +148,6 @@ const Modal = ({
   return (
     <>
       <Overlay id="overlay" onClick={(e) => handleClose(e)}>
-        {modalComments && (
-          <Comments
-            closeModal={setModalComments}
-            comments={comments}
-            setComments={setComments}
-          />
-        )}
         {modalComments && (
           <Comments
             closeModal={setModalComments}
@@ -338,13 +320,6 @@ const Modal = ({
                   />
                 </ButtonCart>
 
-                <ButtonCart className="desc" onClick={() => handleComments()}>
-                  <FontAwesomeIcon
-                    icon={faCommentDots}
-                    style={{ width: 35, height: 35 }}
-                  />
-                </ButtonCart>
-
                 <ButtonCart
                   className="close"
                   value="close"
@@ -359,99 +334,10 @@ const Modal = ({
             </PaymentBody>
           ) : (
             <PaymentBody className="paypal-body">
-              <div className="operations">
-                <div className="display-sum">
-                  <Sum>
-                    <div className="titles">
-                      <div>Total</div>
-
-                      <div>Cupon</div>
-                      <div>Discount</div>
-                    </div>
-
-                    <div className="vulues-cont">
-                      <div className="signs">
-                        <div>$</div>
-
-                        <div className="cupon-sing">-</div>
-                        <div>%</div>
-                      </div>
-                      <div className="totals">
-                        <div className="total">{total.toFixed(2)}</div>
-
-                        <Select
-                          className="select"
-                          defaultValue="Select"
-                          id="select"
-                          onClick={(e) => handleCupons(e)}
-                        >
-                          {/* <option
-                              disabled
-                              hidden
-                              value="Select"
-                              className="option-select"
-                            >
-                              Cupons
-                            </option> */}
-                          <option value="none" className="option-select">
-                            ----
-                          </option>
-                          {cupons &&
-                            cupons.map((b) => {
-                              return (
-                                <option
-                                  // onClick={(e) => handleDisc(e)}
-                                  className="select-items"
-                                  value={b.value}
-                                  key={b.name}
-                                >
-                                  {b.name}
-                                </option>
-                              );
-                            })}
-                        </Select>
-
-                        <Select
-                          className="select"
-                          defaultValue="Select"
-                          name=""
-                          id="select"
-                          onClick={(e) => handleDisc(e)}
-                        >
-                          <option value="none" className="option-select">
-                            ----
-                          </option>
-                          {discounts &&
-                            discounts.map((b) => {
-                              return (
-                                <option
-                                  className="select-items"
-                                  value={b}
-                                  key={b}
-                                >
-                                  {b}
-                                </option>
-                              );
-                            })}
-                        </Select>
-                      </div>
-                    </div>
-                  </Sum>
-                </div>
-                <div className="paypal-cont">
-                  <div className="clicto">Clic to pay with</div>
-                  <PayPal />
-                </div>
+              <div className="paypal-cont">
+                <PayPal />
               </div>
-
               <div className="footer-buttons">
-                <ButtonCart className="desc-relative">
-                  <FontAwesomeIcon
-                    onClick={() => handleComments()}
-                    icon={faCommentDots}
-                    style={{ width: 35, height: 35 }}
-                  />
-                </ButtonCart>
                 <ButtonCart className="desc-relative">
                   <FontAwesomeIcon
                     onClick={() => handleComments()}
@@ -498,7 +384,6 @@ const ModalContainer = styled.div`
   border-radius: 35px;
   font-family: "Lato";
   z-index: 7;
-
   /* transform: scale(0.9);
   transition: all 0.3s ease;
   &:focus {
@@ -568,32 +453,10 @@ const PaymentBody = styled.div`
 
   .paypal-cont {
     margin: auto;
-    padding-left: 90px;
-  }
-  .clicto {
-    text-align: center;
-    padding-bottom: 10px;
   }
 
   .desc {
     background-color: ${colors.blue};
-    width: 83px;
-    height: 71px;
-
-    color: white;
-  }
-  .cupon {
-    background-color: ${colors.orange};
-    color: black;
-    width: 83px;
-    height: 71px;
-    position: absolute;
-    bottom: 10px;
-    left: 110px;
-  }
-  .discount {
-    background-color: ${colors.yellow};
-    color: black;
     width: 83px;
     height: 71px;
 
@@ -809,11 +672,6 @@ const NumBtn = styled.button`
   border-radius: 50%;
   background-color: #f6f6f6;
   color: #9c9c9c;
-  &:active {
-    transition: all 0.1s ease;
-    transform: scale(0.8);
-    background: rgba(33, 33, 33, 0.15);
-  }
   &:active {
     transition: all 0.1s ease;
     transform: scale(0.8);
