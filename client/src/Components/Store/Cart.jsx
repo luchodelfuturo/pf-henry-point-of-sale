@@ -6,7 +6,8 @@ import "./cart.css";
 import { filterByCategoryAction } from "../../redux/actions/productsActions";
 import { postOrdersAction } from "../../redux/actions/ordersActions";
 import { useDispatch } from "react-redux";
-import Modal from "../Modals/Modal";
+import Modal from '../Modals/Modal'
+//import Modal from "../Modals/Modals/Modal";
 import { colors } from "../../theme/variables";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -19,10 +20,17 @@ import AddDrinks from "../Modals/AddDrinks";
 import { infoCashFlowAction } from "../../redux/actions/cashFlowActions";
 
 function Cart({ products, setUpdate, update }) {
-  const { deleteAll, order, totals, setComments, setMethodPayment } =
-    useContext(StoreContext);
+  const {
+    deleteAll,
+    order,
+    totals,
+    setComments,
+    methodPayment,
+    setMethodPayment,
+  } = useContext(StoreContext);
   const [checkout, setCheckout] = useState(false);
   const [clearCart, setClearCart] = useState(false);
+
   const [addDrinks, setAddDrinks] = useState(false);
 
   useEffect(() => {}, [products]);
@@ -34,9 +42,18 @@ function Cart({ products, setUpdate, update }) {
     return foundDrinks !== undefined ? true : false;
   }
 
+  function checkDrinks() {
+    let foundDrinks = products.find((d) => d.product.categories === "Drinks");
+    return foundDrinks !== undefined ? true : false;
+  }
+
   function handleCheckoutModal() {
     if (checkDrinks()) {
-      setCheckout(true);
+      if (checkDrinks()) {
+        setCheckout(true);
+      } else {
+        setAddDrinks(true);
+      }
     } else {
       setAddDrinks(true);
     }
@@ -49,7 +66,11 @@ function Cart({ products, setUpdate, update }) {
       // Dispachar info para cashflow
       dispatch(infoCashFlowAction(order));
       setUpdate(update ? false : true);
+      // Dispachar info para cashflow
+      dispatch(infoCashFlowAction(order));
+      setUpdate(update ? false : true);
       deleteAll();
+      dispatch(filterByCategoryAction("all"));
       dispatch(filterByCategoryAction("all"));
     } catch (error) {
       console.error(error);
@@ -57,7 +78,13 @@ function Cart({ products, setUpdate, update }) {
   }
 
   function handleDeleteAll() {
-    //deleteAll();
+    ////deleteAll();
+    //sureDelete();
+    setClearCart(true);
+  }
+
+  function drinksFilter(filter) {
+    dispatch(filterByCategoryAction(filter));
     //sureDelete();
     setClearCart(true);
   }
@@ -78,6 +105,16 @@ function Cart({ products, setUpdate, update }) {
       {clearCart ? (
         <ClearCart setClearCart={setClearCart} deleteAll={deleteAll} />
       ) : null}
+      {addDrinks ? (
+        <AddDrinks
+          setModalState={setAddDrinks}
+          setCheckout={setCheckout}
+          df={drinksFilter}
+        />
+      ) : null}
+      {clearCart ? (
+        <ClearCart setClearCart={setClearCart} deleteAll={deleteAll} />
+      ) : null}
       {checkout && (
         <Modal
           total={totals}
@@ -85,7 +122,9 @@ function Cart({ products, setUpdate, update }) {
           sch={setCheckout}
           setComments={setComments}
           postOrder={postOrder}
+          methodPayment={methodPayment}
           setMethodPayment={setMethodPayment}
+          df={drinksFilter}
           df={drinksFilter}
         />
       )}
@@ -138,8 +177,9 @@ const Checkout = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: absolute;
-  bottom: 80px;
+  margin-top: 10px;
+  padding: 10px 0px 10px 0px;
+  /* bottom: 80px; */
   background: #eaeaea;
   box-shadow: 4px 6px 9px -4px rgba(0, 0, 0, 0.25);
   border-radius: 0px 20px 20px 0px;
