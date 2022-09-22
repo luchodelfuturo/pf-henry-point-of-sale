@@ -137,11 +137,11 @@ function Profile() {
                 <h2>{isAdmin ? "Admin Profile" : "User Profile"}</h2>
                 <div className="avatar">
                     <img src={avatar ? avatar : user.avatar} alt=""/>
-                    <span>
+                    {/* <span>
                         <i className="fas fa-camera"></i>
                         <p>Change</p>
                         <input type="file" name="file" id="file_up" onChange={changeAvatar} />
-                    </span>
+                    </span> */}
                 </div>
                 <div className="form-group">
                     <label htmlFor="name">Name</label>
