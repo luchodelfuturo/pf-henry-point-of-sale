@@ -34,9 +34,9 @@ function App() {
 
   const getToken = async () => {
     //const res = 
-    await axios.post('/users/refresh_token').then(res =>{
-      console.log("resdata;",res.data)
-      dispatch(dispatchGetToken(res.data.access_token))})
+    await axios.post('/users/refresh_token')
+      .then(res => dispatch(dispatchGetToken(res.data.access_token)))
+      .catch(err => console.log("error:", err));
 
   }
 
@@ -59,9 +59,9 @@ function App() {
   useEffect(() => {
     getUser()
     // if (token) {
-      
+
     // }
-  }, [ dispatch])
+  }, [dispatch])
 
   return (
     <div className="App">
