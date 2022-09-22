@@ -24,7 +24,8 @@ function Store() {
   const history = useHistory();
   // const { lastCashFlow } = useSelector((state) => state.cashFlow);
 
-  const { state, products, categories } = useContext(StoreContext);
+  const { state, products, categories, lastCashFlow } =
+    useContext(StoreContext);
 
   const [update, setUpdate] = useState(false);
 
@@ -40,40 +41,32 @@ function Store() {
   function handleInput(e) {
     dispatch(searchProductsName(e.target.value));
   }
+
+  // function verifyCashFlow() {
+  //   if(lastCashFlow && lastCashFlow.closeCashFlow){
+  //     if (lastCashFlow && lastCashFlow.closeCashFlow === false) {
+  //     console.log("Hola Si hay caja");
+  //   } else if (lastCashFlow && lastCashFlow.closeCashFlow === true) {
+  //     console.log("Caja Cerrada");
+
+  //     history.push("/cashFlow");
+  //   }
+  //   }
+  // }
+
+
   useEffect(() => {
-    // dispatch(getLastCashFlowAction());
-    // if (lastCashFlow && lastCashFlow.closeCashFlow === false) {
-    //   console.log("Hola Si hay caja");
-    // } else if (lastCashFlow && lastCashFlow.closeCashFlow === true) {
-    //   console.log("Caja Cerrada");
-
-    //   history.push("/cashFlow");
-    // } else if (
-    //   lastCashFlow &&
-    //   lastCashFlow === "No se encontraron resultados"
-    // ) {
-    //   console.log("no existe caja aun");
-
-    //   history.push("/cashFlow");
-    // } else {
-    //   console.log("HOLAPUTAMDR");
-    // }
+    dispatch(getLastCashFlowAction());
     dispatch(getCategories());
     dispatch(getProducts());
   }, [dispatch, update]);
   return (
-    <>
-      <div className="container">
+    <> {lastCashFlow && !lastCashFlow.closeCashFlow ? <div className="container">
         <div className="store-component">
           {/* <div className="clients-tabs">Clients</div> */}
           <div className="store-container">
             <div className="cart-container">
-              <Cart
-                products={state}
-                update={update}
-                setUpdate={setUpdate}
-                
-              />
+              <Cart products={state} update={update} setUpdate={setUpdate} />
             </div>
             <div className="products-container">
               <div className="searchnsort">
@@ -129,13 +122,7 @@ function Store() {
                   })}
               </div>
               <div className="cards-container">
-                {
-                  <Cards
-                    products={products}
-                    allProducts={state}
-                    
-                  />
-                }
+                {<Cards products={products} allProducts={state} />}
               </div>
             </div>
           </div>
@@ -143,7 +130,8 @@ function Store() {
         <div style={{ height: "6vh" }}>
           <NavBarApp />
         </div>
-      </div>
+      </div> : history.push("/cashFlow") }
+      
     </>
   );
 }

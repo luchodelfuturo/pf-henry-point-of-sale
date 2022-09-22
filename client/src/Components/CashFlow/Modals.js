@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import {
     addExpenseAction,
@@ -41,14 +42,18 @@ const Modals = ({ lastCashFlow }) => {
         closeModalIncome();
     };
     const handleSubmitExpense = (e) => {
-        // e.preventDefault();
         if (lastCashFlow.totalCashRegister - egreso.amount >= 0) {
             dispatch(addExpenseAction(egreso));
+            //   closeModalExpense();
+        } else {
+            e.preventDefault();
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "No se puede hacer un egreso mayor a lo que hay en el total de caja!",
+            });
+            closeModalExpense();
         }
-        else {
-            alert("no se puede xd")
-        }
-        // closeModalExpense();
     };
 
     const handleSubmitInicioDeCaja = (e) => {

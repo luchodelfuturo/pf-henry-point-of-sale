@@ -96,7 +96,7 @@ function Register() {
               <label htmlFor="name">Name</label>
               <Textinput
                 type="text"
-                placeholder="Enter your name"
+                placeholder="Henry"
                 id="name"
                 value={name}
                 name="name"
@@ -108,7 +108,7 @@ function Register() {
               <label htmlFor="email">Email Address</label>
               <Textinput
                 type="text"
-                placeholder="Enter email address"
+                placeholder="example@henrybar.com"
                 id="email"
                 value={email}
                 name="email"
@@ -120,7 +120,7 @@ function Register() {
               <label htmlFor="password">Password</label>
               <Textinput
                 type="password"
-                placeholder="Enter password"
+                placeholder="******"
                 id="password"
                 value={password}
                 name="password"
@@ -132,7 +132,7 @@ function Register() {
               <label htmlFor="cf_password">Confirm Password</label>
               <Textinput
                 type="password"
-                placeholder="Confirm password"
+                placeholder="******"
                 id="cf_password"
                 value={cf_password}
                 name="cf_password"
