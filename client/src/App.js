@@ -63,7 +63,7 @@ function App() {
     <div className="App">
       <GlobalStyle />
 
-      {!isLogged ? <UserNavBar /> : <NavBarApp/>}
+      {!isLogged ? <UserNavBar /> : <NavBarApp />}
 
       <Route exact path="/" component={WelcomePage} />
 
@@ -71,28 +71,28 @@ function App() {
 
       <Route exact path="/register" component={isLogged ? NotFound : Register} />
 
-      <Route exact path="/profile" component={isLogged ? Profile : WelcomePage} />
+      <Route path="/profile" component={isLogged ? Profile : WelcomePage} />
 
-      <Route exact path="/user/activate/:activation_token" component={ActivationEmail} />
+      <Route path="/user/activate/:activation_token" component={ActivationEmail} />
 
-      <Route exact path="/edit_user/:id" component={isAdmin ? EditUser : NotFound} />
+      <Route path="/edit_user/:id" component={isAdmin ? EditUser : NotFound} />
 
-      <Route exact path="/kitchen" component={isLogged ? Kitchen : WelcomePage} />
+      <Route path="/kitchen" component={isLogged ? Kitchen : WelcomePage} />
 
       <StoreProvider>
-        <Route exact path="/store" component={isLogged ? Store : WelcomePage} />
+        <Route path="/store" component={isLogged ? Store : WelcomePage} />
       </StoreProvider>
 
-      <Route exact path="/counter" component={isLogged ? Counter : WelcomePage} />
+      <Route path="/counter" component={isLogged ? Counter : WelcomePage} />
 
-      <Route exact path="/adminProducts" component={isLogged ? AdminProducts : WelcomePage} />
+      <Route path="/adminProducts" component={isLogged ? AdminProducts : WelcomePage} />
 
-      <Route exact path="/historialPedidos" component={isLogged ? HistorialPedidos : WelcomePage} />
+      <Route path="/historialPedidos" component={isLogged ? HistorialPedidos : WelcomePage} />
 
 
-      <Route exact path="/cashFlow" component={isLogged ? CashFlow : WelcomePage} />
+      <Route path="/cashFlow" component={isLogged ? CashFlow : WelcomePage} />
       <Route
-        exact
+
         path="/cashFlow/historialCashFlow"
         component={isLogged ? HistorialsCashFlow : WelcomePage}
       />
