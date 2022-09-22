@@ -57,11 +57,11 @@ function App() {
   }, [auth.isLogged, dispatch])
 
   useEffect(() => {
-    getUser()
-    // if (token) {
 
-    // }
-  }, [dispatch])
+    if (token) {
+      getUser()
+    }
+  }, [token, dispatch])
 
   return (
     <div className="App">
@@ -75,31 +75,27 @@ function App() {
 
       <Route exact path="/register" component={isLogged ? NotFound : Register} />
 
-      <Route path="/profile" component={isLogged ? Profile : WelcomePage} />
+      <Route exact path="/profile" component={isLogged ? Profile : WelcomePage} />
 
-      <Route path="/user/activate/:activation_token" component={ActivationEmail} />
+      <Route exact path="/user/activate/:activation_token" component={ActivationEmail} />
 
-      <Route path="/edit_user/:id" component={isAdmin ? EditUser : NotFound} />
+      <Route exact path="/edit_user/:id" component={isAdmin ? EditUser : NotFound} />
 
-      <Route path="/kitchen" component={Kitchen} />
+      <Route exact path="/kitchen" component={Kitchen} />
 
       <StoreProvider>
         <Route path="/store" component={Store} />
       </StoreProvider>
 
-      <Route path="/counter" component={Counter} />
+      <Route exact path="/counter" component={Counter} />
 
-      <Route path="/adminProducts" component={AdminProducts} />
+      <Route exact path="/adminProducts" component={AdminProducts} />
 
-      <Route path="/historialPedidos" component={HistorialPedidos} />
+      <Route exact path="/historialPedidos" component={HistorialPedidos} />
 
+      <Route exact path="/cashFlow/historialCashFlow" component={HistorialsCashFlow} />
+      <Route exact path="/cashFlow" component={CashFlow} />
 
-      <Route path="/cashFlow" component={CashFlow} />
-      <Route
-
-        path="/cashFlow/historialCashFlow"
-        component={HistorialsCashFlow}
-      />
     </div>
   );
 }
