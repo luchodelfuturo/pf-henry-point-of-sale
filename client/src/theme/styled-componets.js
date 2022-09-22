@@ -5,7 +5,7 @@ export const Button = styled.button`
   background-color: ${colors.violet};
   border-radius: 0.3rem;
   border-style: none;
-  width: 60rem;
+  width: 30rem;
   height: 3rem;
   font-family: "Century Gothic";
   font-weight: bold;
@@ -114,6 +114,42 @@ export const ButtonCart = styled.button`
   } */
 `;
 
+export const MainButton = styled.button`
+  transition: all 0.2s ease;
+  color: white;
+  background-color: #7f5af0;
+  /* transform: translateY(-0.2em);
+ transition: transform 0.1s ease; */
+  //transition: transform 0.2s ease;
+  border-radius: 0.3rem;
+  border-style: none;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.25));
+  font-family: "Lato";
+  //font-weight: bold;
+  font-size: 14px;
+  padding: 0.5em;
+  margin: 0.5rem;
+  cursor: pointer;
+  //transition: all 0.5s ease;
+
+  &:hover {
+    //transition: all 0.3s ease;
+    //filter: drop-shadow(3px 3px 5px rgba(0, 0, 0, 0.25));
+    //transform: scale(1.01);
+    //transform: translateY(-0.33em);
+  }
+
+  &:active {
+    transition: all 0.1s ease;
+    transform: scale(0.9);
+  }
+
+  /* &:focus {
+    transition: all 0.3s ease;
+    transform: translateY(-0.33em);
+  } */
+`;
+
 export const NavBar = styled.nav`
   background-color: ${colors.grey2};
   position: fixed;
@@ -194,6 +230,16 @@ export const SearchInput = styled.input`
   margin-top: 10px;
   font-size: 16px;
   width: 250px;
+  height: 40px;
+  border-radius: 10px;
+  margin-left: 10px;
+  box-shadow: 4px 6px 9px -4px rgba(0, 0, 0, 0.25);
+  border: none;
+`;
+export const Textinput = styled.input`
+  padding-left: 15px;
+  margin-top: 10px;
+  font-size: 16px;
   height: 40px;
   border-radius: 10px;
   margin-left: 10px;

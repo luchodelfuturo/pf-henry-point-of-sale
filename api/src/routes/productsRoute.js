@@ -39,7 +39,9 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/add", async (req, res) => {
-  let { name, price, image, description, active, stock, idcategory, id } = req.body;
+
+  let { name, price, image, description, active, idcategory, id, stock } = req.body;
+
 
   let searchProduct = []
 
@@ -58,6 +60,7 @@ router.post("/add", async (req, res) => {
           active: active,
           stock: stock,
           idcategory: idcategory,
+          stock: stock
         },
       });
 
@@ -84,8 +87,8 @@ router.post("/add", async (req, res) => {
       image: image, 
       description: description,
       active: active,
-      stock: stock,
-      idcategory: idcategory
+      idcategory: idcategory,
+      stock: stock
     }, {where: {id: id}})
     res.status(200).send("Producto editado")
     } catch(error){

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import NavBarApp from "../NavbarApp/NavBarApp";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAllOrdersAction,
@@ -229,7 +228,6 @@ export default function HistorialPedidos() {
       </div>
       {/* navbar */}
       <div style={{ width: "100%", height: "10vh" }}>
-        <NavBarApp />
       </div>
 
       {/*Modal Editar   */}

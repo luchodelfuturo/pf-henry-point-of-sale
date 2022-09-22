@@ -1,29 +1,30 @@
 import React, { useEffect } from "react";
-import NavBarApp from "../NavbarApp/NavBarApp";
 import BoxesCashFlow from "./BoxesCashFlow";
 import { useHistory } from "react-router-dom";
-import {
-  getTotalCashAction,
-  getTotalPaypalAction,
-  getTotalIncomeAction,
-} from "../../redux/actions/ordersActions";
+import { getLastCashFlowAction } from "../../redux/actions/cashFlowActions";
 import { useDispatch, useSelector } from "react-redux";
-import Modal from "./Modal";
 import Modals from "./Modals";
+import { useState } from "react";
 
 export default function CashFlow() {
   const history = useHistory();
   const dispatch = useDispatch();
-  const { totalCash, totalPaypal, totalIncome } = useSelector(
-    (state) => state.orders
-  );
+  const { lastCashFlow } = useSelector((state) => state.cashFlow);
+  const [closeModal, setCloseModal] = useState(false);
+
+  const colores = {
+    Sales: "green",
+    Income: "yellow",
+    Expenses: "red",
+  };
 
   useEffect(() => {
-    dispatch(getTotalCashAction());
-    dispatch(getTotalPaypalAction());
-    dispatch(getTotalIncomeAction());
+    dispatch(getLastCashFlowAction());
+    console.log("despachando cashflowAction");
   }, [dispatch]);
-
+  {
+    lastCashFlow && console.log(lastCashFlow.cashFlowMoves);
+  }
   return (
     <div style={{ width: "100%", height: "100vh", backgroundColor: "gray" }}>
       <div style={{ height: "90vh", backgroundColor: "white", width: "100%" }}>
@@ -40,51 +41,112 @@ export default function CashFlow() {
             }}
           >
             Resumen de Caja{" "}
+            <button onClick={() => history.push("/cashFlow/historialCashFlow")}>
+              Historial De Cierres
+            </button>
           </div>
-          <div
-            style={{
-              width: "90%",
-              margin: "0 auto",
-
-              height: "80%",
-              backgroundColor: "pink",
-              display: "flex",
-              flexWrap: "wrap",
-              gap: "4px",
-              justifyContent: "space-around",
-              alignContent: "space-around",
-              padding: "4px",
-              boxSizing: "border-box",
-            }}
-          >
-            <BoxesCashFlow title={"Inicio de Caja"} value={0} />
-            <BoxesCashFlow
-              title={"Ventas Efectivo"}
-              value={totalCash.totalCash}
-            />
-            <BoxesCashFlow
-              title={"Ventas Tarjeta"}
-              value={totalPaypal.totalPaypal}
-            />
-            <BoxesCashFlow
-              title={"Total de Ventas"}
-              value={
-                totalCash.totalCash + totalPaypal.totalPaypal < 1
-                  ? 0
-                  : totalCash.totalCash + totalPaypal.totalPaypal
-              }
-            />
-            <BoxesCashFlow title={"Ingresos"} value={totalIncome.totalIncome} />
-            <BoxesCashFlow title={"Egresos"} value={0} />
-            <BoxesCashFlow title={"Total de Efectivo"} value={0} />
-          </div>
+          {lastCashFlow && !lastCashFlow.closeCashFlow && (
+            <div>
+              <div
+                style={{
+                  width: "90%",
+                  margin: "0 auto",
+                  backgroundColor: "lightgray",
+                  height: "50%",
+                  border: "2px solid gray",
+                  borderRadius: "20px",
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: "10px",
+                  justifyContent: "space-around",
+                  alignContent: "start",
+                  padding: "20px",
+                  boxSizing: "border-box",
+                }}
+              >
+                <BoxesCashFlow
+                  title={"Inicio de Caja"}
+                  value={lastCashFlow ? lastCashFlow.initialCash : 0}
+                />
+                <BoxesCashFlow
+                  title={"Ventas Efectivo"}
+                  value={lastCashFlow ? lastCashFlow.cashPayment : 0}
+                />
+                <BoxesCashFlow
+                  title={"Ventas Tarjeta"}
+                  value={lastCashFlow ? lastCashFlow.paypalPayment : 0}
+                />
+                <BoxesCashFlow
+                  title={"Total de Ventas"}
+                  value={lastCashFlow ? lastCashFlow.totalSales : 0}
+                />
+                <BoxesCashFlow
+                  title={"Ingresos"}
+                  value={lastCashFlow ? lastCashFlow.income : 0}
+                />
+                <BoxesCashFlow
+                  title={"Egresos"}
+                  value={lastCashFlow ? lastCashFlow.expenses : 0}
+                />
+                <BoxesCashFlow
+                  title={"Total de Efectivo"}
+                  value={lastCashFlow ? lastCashFlow.totalCashRegister : 0}
+                />
+              </div>
+              <div
+                style={{
+                  width: "90%",
+                  margin: "0 auto",
+                  backgroundColor: "lightgray",
+                  height: "60%",
+                  border: "2px solid gray",
+                  borderRadius: "20px",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "4px",
+                  justifyContent: "space-around",
+                  alignContent: "start",
+                  padding: "20px",
+                  boxSizing: "border-box",
+                  overflowY: "scroll",
+                }}
+              >
+                {lastCashFlow && lastCashFlow.cashFlowMoves
+                  ? lastCashFlow.cashFlowMoves.map((move) => {
+                      return (
+                        <div
+                          style={{
+                            width: "90%",
+                            margin: "0 auto",
+                            padding: "0 20px",
+                            justifyContent: "start",
+                            alignContent: "center",
+                            backgroundColor: colores[move.type],
+                            border: "2px solid black",
+                            borderRadius: "20px",
+                            display: "grid",
+                            textAlign: "center",
+                            gridTemplateColumns: "20% 20% 20% 20%",
+                          }}
+                        >
+                          <span>Hour: {move.hour}</span>
+                          <span>Type: {move.type}</span>
+                          <span>Amount: {move.amount}</span>
+                          <span>Comment: {move.comment}</span>
+                        </div>
+                      );
+                    })
+                  : "hola"}
+              </div>
+            </div>
+          )}
           <div
             style={{
               width: "90%",
               margin: "0 auto",
 
               height: "10%",
-              backgroundColor: "blue",
+
               display: "flex",
               flexWrap: "wrap",
               gap: "10px",
@@ -92,16 +154,14 @@ export default function CashFlow() {
               alignContent: "start",
             }}
           >
-            <Modals />
-            <button onClick={() => history.push("/cashFlow/historialCashFlow")}>
-              Historial De Cierres
-            </button>
-            <button>Cerrar Caja</button>
+            <Modals lastCashFlow={lastCashFlow} />
+
+            {/* <button onClick={()=> setCloseModal(true)}> Cerrar Caja </button>
+             */}
           </div>
         </div>
       </div>
       <div>
-        <NavBarApp />
       </div>
     </div>
   );

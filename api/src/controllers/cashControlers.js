@@ -8,7 +8,8 @@ const paymentCash = async (id) => {
   });
   // cash = cash.filter((o) => o.status === "finished");
   // console.log(cash)
-  if (cash.length === 1) {
+  let updateIncome = await updatedIncome(id) //nos traemos lo que haya en el atributo income de la tabla 
+  if(updateIncome && cash.length === 1){
     let totalCash = 0;
     let result = cash.map((e) => e.totalOrder);
     for (let value of result) {
@@ -17,15 +18,35 @@ const paymentCash = async (id) => {
     console.log(result);
     let update = await cashUpdated(id);
     update = totalCash;
-    await Cash.create(
+    update+=updateIncome
+    await Cash.update(
+      { cashPayment: totalCash, totalCashRegister: update },
+      { where: { id: id } }
+    );
+    console.log("Entro en el 1er if")
+    return { totalCash: totalCash };
+
+  }
+  else if (!updateIncome && cash.length === 1) {
+    let totalCash = 0;
+    let result = cash.map((e) => e.totalOrder);
+    for (let value of result) {
+      totalCash += value;
+    }
+    console.log(result);
+    let update = await cashUpdated(id);
+    update = totalCash;
+    await Cash.update(
       { cashPayment: totalCash, totalCashRegister: update },
       { where: { id: id } }
     );
     // const cash = Cash.build({ cashPayment: result });
     // await cash.save();
-    console.log(update);
-    console.log(totalCash);
+    // console.log(update);
+    // console.log(totalCash);
+    console.log("Entro en el 2do if");
     return { totalCash: totalCash };
+
   } else if (cash.length > 1) {
     // let update = await cashUpdated(id)
     let totalCash = 0;
@@ -45,7 +66,7 @@ const paymentCash = async (id) => {
       { where: { id: id } }
     );
 
-    // return totalCash;
+    console.log("Entro en el 3er if")
     return { totalCash: totalCash };
   } else {
     return { totalCash: 0 };
@@ -63,7 +84,7 @@ const paymentPayPal = async (id) => {
     for (let value of result) {
       totalPayment += value;
     }
-    await Cash.update({ paypalPayment: totalPayment }, { where: { id: id } });
+    await Cash.update({ paypalPayment: totalPayment }, { where: { id: id} });
 
     return { totalPaypal: totalPayment };
   } else if (paypal.length > 1) {
@@ -90,7 +111,7 @@ const cashUpdated = async (id) => {
   });
   // console.log(result)
   if (result.length) {
-    let resultCash = result.map((e) => parseInt(e.totalCashRegister));
+    let resultCash = result.map((e) => parseInt(e.totalCashRegister)); //
     // console.log(resultCash)
     return resultCash[0];
   } else {
@@ -127,7 +148,8 @@ const totalPaypal = async (id) => {
   }
 };
 
-const addIncome = async (id, income) => {
+const addIncome = async (id, income) => { //el income del 2do param se sustituira por el/los del objeto del array que se almacena en 
+                                          //el atributo qtyIncome de la tabla 
   let result = await cashUpdated(id);
   let updateIncome = await updatedIncome(id)
   if(!updateIncome && result > 0){
@@ -145,13 +167,14 @@ const addIncome = async (id, income) => {
     { totalCashRegister: ingresos, income: updateIncome },
     { where: { id: id } }
   );
-  return { income: ingresos };
+  return { income: ingresos }
   }
   else{
-    // await Cash.create(
-    //   { totalCashRegister: income, income:income},
-    //   { where: {id: id}}
-    // )
+    await Cash.update(
+      { totalCashRegister: income, income:income},
+      { where: {id: id}}
+    )
+    console.log(income)
     return { income: income };
   }
 };
@@ -175,8 +198,14 @@ const addExpense = async (id, expenses) => {
   );
   return { expenses: retiros }; 
   }
+  // else if(result === 0){
+  //   await Cash.update(
+  //     { income: 0 },
+  //     { where: { id: id } }
+  //   );
+  // }
   else{
-    return {expenses: retiros}
+    return {expenses: retiros};
   }
 };
 
@@ -185,6 +214,7 @@ const updatedIncome = async (id) => {
     where: { id: id },
     attributes: ["income"],
   });
+  // console.log(JSON.stringify(income))  //[{"income":"1000"}]
   if (income.length) {
     let totalIncome = income.map((e) => parseInt(e.income));
     // console.log(totalIncome)
@@ -208,6 +238,11 @@ const updatedExpenses = async (id) => {
   }
 };
 
+const initialCash = async(id, initCash) => {
+  await Cash.create({initialCash: initCash}, {where:{id:id}})
+  console.log(initCash)
+  return {initCash: initCash}
+}
 module.exports = {
   paymentCash,
   paymentPayPal,
@@ -217,7 +252,8 @@ module.exports = {
   totalCash,
   totalPaypal,
   updatedIncome,
-  updatedExpenses
+  updatedExpenses,
+  initialCash
 };
 
 // let cash = await Order.findAll({
