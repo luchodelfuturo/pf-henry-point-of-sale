@@ -10,7 +10,6 @@ import {
 import { useModal } from "../Hooks/useModal";
 import Modal from "./Modal";
 import Reviews from "./Reviews.jsx";
-import Swal from "sweetalert2";
 
 const Modals = ({ lastCashFlow }) => {
   const dispatch = useDispatch();
@@ -191,7 +190,6 @@ const Modals = ({ lastCashFlow }) => {
       </Modal>
     </div>
   );
-
 };
 
 export default Modals;
