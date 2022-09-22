@@ -4,8 +4,9 @@ const jwt = require('jsonwebtoken');
 const sendMail = require('./sendMail');
 const { google } = require('googleapis')
 const { OAuth2 } = google.auth;
+const process = require('process');
 
-const { ACTIVATION_TOKEN_SECRET, ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET, CLIENT_URL, MAILING_SERVICE_CLIENT_ID, GOOGLE_SECRET,  } = process.env;
+const { ACTIVATION_TOKEN_SECRET, ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET, CLIENT_URL, MAILING_SERVICE_CLIENT_ID, GOOGLE_SECRET, } = process.env;
 
 const client = new OAuth2(MAILING_SERVICE_CLIENT_ID);
 
@@ -20,9 +21,9 @@ const userCtrl = {
             if (!validateEmail(email))
                 return res.status(400).json({ msg: "Invalid emails." })
 
-            const user = await User.findOne({ where: { email: email }})
+            const user = await User.findOne({ where: { email: email } })
             if (user) return res.status(400).json({ msg: "This email already exists." })
-            
+
             if (password.length < 6)
                 return res.status(400).json({ msg: "Password must be at least 6 characters." })
 
@@ -50,7 +51,7 @@ const userCtrl = {
 
             const { name, email, password } = user
 
-            const check = await User.findOne({ where: { email: email }})
+            const check = await User.findOne({ where: { email: email } })
             if (check) return res.status(400).json({ msg: "This email already exists." })
 
             const newUser = new User({
@@ -68,7 +69,7 @@ const userCtrl = {
     login: async (req, res) => {
         try {
             const { email, password } = req.body
-            const user = await User.findOne({ where: { email: email }})
+            const user = await User.findOne({ where: { email: email } })
             if (!user) return res.status(400).json({ msg: "This email does not exist." })
 
             const isMatch = await bcrypt.compare(password, user.password)
@@ -89,7 +90,7 @@ const userCtrl = {
     getAccessToken: (req, res) => {
         try {
             const rf_token = req.cookies.refreshtoken
-            
+
             if (!rf_token) return res.status(400).json({ msg: "Please login now!" })
 
             jwt.verify(rf_token, REFRESH_TOKEN_SECRET, (err, user) => {
@@ -105,7 +106,7 @@ const userCtrl = {
     forgotPassword: async (req, res) => {
         try {
             const { email } = req.body
-            const user = await User.findOne({ where: { email: email }})
+            const user = await User.findOne({ where: { email: email } })
             if (!user) return res.status(400).json({ msg: "This email does not exist." })
 
             const access_token = createAccessToken({ id: user.id })
@@ -119,11 +120,11 @@ const userCtrl = {
     },
     resetPassword: async (req, res) => {
         try {
-            const {  email, password } = req.body;
+            const { email, password } = req.body;
             console.log(email, password)
             const passwordHash = await bcrypt.hash(password, 12)
 
-            await User.update({password: passwordHash}, {where: {email: email}})
+            await User.update({ password: passwordHash }, { where: { email: email } })
 
             res.json({ msg: "Password successfully changed!" })
         } catch (err) {
@@ -132,74 +133,74 @@ const userCtrl = {
 
     },
     getUserInfor: async (req, res) => {
-            try {
-                const user = await User.findByPk(req.user.id)
-            
-                res.json(user)
-            } catch (err) {
-                return res.status(500).json({msg: err.message})
-            }
-        },
+        try {
+            const user = await User.findByPk(req.user.id)
+
+            res.json(user)
+        } catch (err) {
+            return res.status(500).json({ msg: err.message })
+        }
+    },
     getUsersAllInfor: async (req, res) => {
         try {
             const users = await User.findAll()
 
             res.json(users)
         } catch (err) {
-            return res.status(500).json({msg: err.message})
+            return res.status(500).json({ msg: err.message })
         }
     },
     logout: async (req, res) => {
         try {
-            res.clearCookie('refreshtoken', {path: '/users/refresh_token'})
-            return res.json({msg: "Logged out."})
+            res.clearCookie('refreshtoken', { path: '/users/refresh_token' })
+            return res.json({ msg: "Logged out." })
         } catch (err) {
-            return res.status(500).json({msg: err.message})
+            return res.status(500).json({ msg: err.message })
         }
     },
     updateUser: async (req, res) => {
-            try {
-                const {name, avatar} = req.body
-                await User.update({name:name, avatar: avatar}, {where: {id: req.user.id}})
-                res.json({msg: "Update Success!"})
-            } catch (err) {
-                return res.status(500).json({msg: err.message})
-            }
-        },
+        try {
+            const { name, avatar } = req.body
+            await User.update({ name: name, avatar: avatar }, { where: { id: req.user.id } })
+            res.json({ msg: "Update Success!" })
+        } catch (err) {
+            return res.status(500).json({ msg: err.message })
+        }
+    },
     updateUsersRole: async (req, res) => {
         try {
-            const {role} = req.body
+            const { role } = req.body
 
-            await User.update({role: role}, {where: {id: req.params.id}})
+            await User.update({ role: role }, { where: { id: req.params.id } })
 
-            res.json({msg: "Update Success!"})
+            res.json({ msg: "Update Success!" })
         } catch (err) {
-            return res.status(500).json({msg: err.message})
+            return res.status(500).json({ msg: err.message })
         }
     },
     deleteUser: async (req, res) => {
         try {
-            await User.destoy({where: {id: req.params.id}})
-            res.json({msg: "Deleted Success!"})
+            await User.destoy({ where: { id: req.params.id } })
+            res.json({ msg: "Deleted Success!" })
         } catch (err) {
-            return res.status(500).json({msg: err.message})
+            return res.status(500).json({ msg: err.message })
         }
     },
     googleLogin: async (req, res) => {
         try {
             const { name, email, avatar } = req.body
 
-            if (!name || !email )
+            if (!name || !email)
                 return res.status(400).json({ msg: "Please fill in all fields." })
 
             if (!validateEmail(email))
                 return res.status(400).json({ msg: "Invalid email." })
 
-            const user = await User.findOne({ where: { email: email }})
+            const user = await User.findOne({ where: { email: email } })
             if (user) return res.status(400).json({ msg: "This email already exists." })
-            
 
-            const newUser = new User ({
+
+            const newUser = new User({
                 name, email, avatar
             })
 

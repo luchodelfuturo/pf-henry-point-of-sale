@@ -1,5 +1,6 @@
 const server = require("./src/app.js");
 const { conn, Category, Product } = require("./src/db.js");
+const process = require('process');
 
 async function precarga() {
   const category = [
