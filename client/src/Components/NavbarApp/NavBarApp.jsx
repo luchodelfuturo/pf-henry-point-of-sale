@@ -40,17 +40,17 @@ export default function NavBarApp() {
       </Button>
       <Button onClick={() => history.push("/cashFlow")}>Cash Flow</Button>
       <div className="user-menu">
-        <Link to="/profile" className="register-link">
-          <img
+        <Link to="/profile" className="profile">
+          <img 
             id="avatar"
-            style={{ width: "30px", height: "30px" }}
+            style={{ width: "30px", height: "30px", marginBottom: "10px" }}
             src={user.avatar}
             alt=""
           />{" "}
           {user.name}
         </Link>
 
-        <Link to="/" onClick={handleLogout} className="register-link">
+        <Link to="/" onClick={handleLogout} className="logout">
           <p>Logout</p>
         </Link>
       </div>
