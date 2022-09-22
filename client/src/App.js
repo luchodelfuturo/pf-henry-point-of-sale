@@ -21,8 +21,9 @@ import Profile from "./Components/Profile/Profile";
 import EditUser from "./Components/Profile/EditUser";
 import UserNavBar from "./Components/UserNavbar/UserNavBar.jsx";
 import HistorialsCashFlow from "./Components/CashFlow/HistorialsCashFlow.jsx"
+import NavBarApp from "./Components/NavbarApp/NavBarApp.jsx";
 
-//MAIN BARBI FUNCIONANDO
+
 
 function App() {
 
@@ -62,7 +63,7 @@ function App() {
     <div className="App">
       <GlobalStyle />
 
-      {!isLogged ? <UserNavBar /> : ""}
+      {!isLogged ? <UserNavBar /> : <NavBarApp/>}
 
       <Route exact path="/" component={WelcomePage} />
 

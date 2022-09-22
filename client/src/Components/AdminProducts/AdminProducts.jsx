@@ -8,7 +8,6 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { getCategories } from "../../redux/actions/categoriesActions";
 import axios from "axios";
-import NavBarApp from "../NavbarApp/NavBarApp";
 import { ButtonSave } from "../../theme/styled-componets";
 import SearchNav from "../SearchNav/SearchNav.jsx";
 
@@ -382,7 +381,6 @@ export default function AdminProducts() {
         </div>
       </div>
 
-      <NavBarApp />
     </div>
   );
 }
