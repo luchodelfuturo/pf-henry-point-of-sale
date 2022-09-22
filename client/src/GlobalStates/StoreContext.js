@@ -63,12 +63,12 @@ function reducer(state = initialState, action = {}) {
 export function StoreProvider({ children }) {
   const { products } = useSelector((state) => state.products);
   const { categories } = useSelector((state) => state.categories);
-
+  const { lastCashFlow } = useSelector((state) => state.cashFlow);
   const [state, dispatch] = useReducer(reducer, reducer());
   const [comments, setComments] = useState("");
   const [methodPayment, setMethodPayment] = useState("cash");
 
-  console.log('%cStoreContext.js line:71 state', 'color: #007acc;', state);
+  console.log("%cStoreContext.js line:71 state", "color: #007acc;", state);
 
   function qtyIncr(id) {
     dispatch({ type: "INCREMENT", payload: id });
@@ -132,7 +132,6 @@ export function StoreProvider({ children }) {
     methodPayment: methodPayment,
   };
 
-  
   const ls = JSON.parse(window.localStorage.getItem("items"));
   useEffect(() => {
     if (state.length > 0) {
@@ -163,6 +162,7 @@ export function StoreProvider({ children }) {
         totals,
         setComments,
         setMethodPayment,
+        lastCashFlow,
       }}
     >
       {children}
