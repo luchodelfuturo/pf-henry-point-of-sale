@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import {
   addExpenseAction,
@@ -190,6 +191,7 @@ const Modals = ({ lastCashFlow }) => {
       </Modal>
     </div>
   );
+
 };
 
 export default Modals;

@@ -24,7 +24,7 @@ function Store() {
   const history = useHistory();
   // const { lastCashFlow } = useSelector((state) => state.cashFlow);
 
-  const { state, products, categories } = useContext(StoreContext);
+  const { state, products, categories, lastCashFlow } = useContext(StoreContext);
 
   const [update, setUpdate] = useState(false);
 
@@ -41,13 +41,13 @@ function Store() {
     dispatch(searchProductsName(e.target.value));
   }
   useEffect(() => {
-    // dispatch(getLastCashFlowAction());
-    // if (lastCashFlow && lastCashFlow.closeCashFlow === false) {
-    //   console.log("Hola Si hay caja");
-    // } else if (lastCashFlow && lastCashFlow.closeCashFlow === true) {
-    //   console.log("Caja Cerrada");
+    dispatch(getLastCashFlowAction());
+    if (lastCashFlow && lastCashFlow.closeCashFlow === false) {
+      console.log("Hola Si hay caja");
+    } else if (lastCashFlow && lastCashFlow.closeCashFlow === true) {
+      console.log("Caja Cerrada");
 
-    //   history.push("/cashFlow");
+      history.push("/cashFlow");}
     // } else if (
     //   lastCashFlow &&
     //   lastCashFlow === "No se encontraron resultados"
@@ -60,7 +60,7 @@ function Store() {
     // }
     dispatch(getCategories());
     dispatch(getProducts());
-  }, [dispatch, update]);
+  }, [dispatch, update, lastCashFlow.closeCashFlow]);
   return (
     <>
       <div className="container">
