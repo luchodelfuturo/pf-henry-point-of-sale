@@ -128,7 +128,7 @@ function Login() {
               <label htmlFor="email">Email Address</label>
               <Textinput
                 type="text"
-                placeholder="Enter email address"
+                placeholder="example@henrybar.com"
                 id="email"
                 value={email}
                 name="email"
