@@ -7,7 +7,7 @@ import { MainButton } from "../../theme/styled-componets.js";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 
 export default function NavBarApp() {
   const history = useHistory();
@@ -54,7 +54,7 @@ export default function NavBarApp() {
 
         <Link to="/" onClick={handleLogout} className="logout">
         <FontAwesomeIcon className="logout-icon"
-                icon={faRightFromBracket}
+                icon={faArrowRightFromBracket}
                 style={{ width: 30, height: 30 }}
               />
           <div>Logout</div>
