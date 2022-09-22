@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { NavBar, Button, Time } from "../../theme/styled-componets";
 import { Link } from "react-router-dom";
-
+import "./navbar.css";
 import { MainButton } from "../../theme/styled-componets.js";
 import { useSelector } from "react-redux";
 import axios from "axios";
@@ -39,16 +39,7 @@ export default function NavBarApp() {
         Historial
       </Button>
       <Button onClick={() => history.push("/cashFlow")}>Cash Flow</Button>
-      <div
-        style={{
-          display: "flex",
-          width: "30rem",
-          
-          height: "100%",
-          boxSizing: "border-box",
-          margin: "auto",
-        }}
-      >
+      <div className="user-menu">
         <Link to="/profile" className="register-link">
           <img
             id="avatar"
