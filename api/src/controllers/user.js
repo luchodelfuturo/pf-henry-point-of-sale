@@ -78,7 +78,7 @@ const userCtrl = {
 
             const refresh_token = createRefreshToken({ id: user.id })
             res.cookie('refreshtoken', refresh_token, {
-                httpOnly: true,
+                httpOnly: false,
                 path: '/users/refresh_token',
                 maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
             })

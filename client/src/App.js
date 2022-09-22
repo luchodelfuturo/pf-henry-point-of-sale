@@ -34,7 +34,9 @@ function App() {
 
   const getToken = async () => {
     //const res = 
-    await axios.post('/users/refresh_token').then(res => dispatch(dispatchGetToken(res.data.access_token)))
+    await axios.post('/users/refresh_token').then(res =>{
+      console.log("resdata;",res.data)
+      dispatch(dispatchGetToken(res.data.access_token))})
 
   }
 
