@@ -96,7 +96,7 @@ function Register() {
               <label htmlFor="name">Name</label>
               <Textinput
                 type="text"
-                placeholder="Your name"
+                placeholder="Henry"
                 id="name"
                 value={name}
                 name="name"
@@ -108,7 +108,7 @@ function Register() {
               <label htmlFor="email">Email Address</label>
               <Textinput
                 type="text"
-                placeholder="your_email@example.com"
+                placeholder="example@henrybar.com"
                 id="email"
                 value={email}
                 name="email"

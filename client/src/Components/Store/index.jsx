@@ -42,33 +42,21 @@ function Store() {
     dispatch(searchProductsName(e.target.value));
   }
 
-  function verifyCashFlow() {
-    if(lastCashFlow && lastCashFlow.closeCashFlow){
-      if (lastCashFlow && lastCashFlow.closeCashFlow === false) {
-      console.log("Hola Si hay caja");
-    } else if (lastCashFlow && lastCashFlow.closeCashFlow === true) {
-      console.log("Caja Cerrada");
+  // function verifyCashFlow() {
+  //   if(lastCashFlow && lastCashFlow.closeCashFlow){
+  //     if (lastCashFlow && lastCashFlow.closeCashFlow === false) {
+  //     console.log("Hola Si hay caja");
+  //   } else if (lastCashFlow && lastCashFlow.closeCashFlow === true) {
+  //     console.log("Caja Cerrada");
 
-      history.push("/cashFlow");
-    }
-    }
-  }
+  //     history.push("/cashFlow");
+  //   }
+  //   }
+  // }
 
 
   useEffect(() => {
     dispatch(getLastCashFlowAction());
-    //verifyCashFlow();
-    
-    // } else if (
-    //   lastCashFlow &&
-    //   lastCashFlow === "No se encontraron resultados"
-    // ) {
-    //   console.log("no existe caja aun");
-
-    //   history.push("/cashFlow");
-    // } else {
-    //   console.log("HOLAPUTAMDR");
-    // }
     dispatch(getCategories());
     dispatch(getProducts());
   }, [dispatch, update]);
