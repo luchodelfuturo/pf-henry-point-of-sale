@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import NavBarApp from "../NavbarApp/NavBarApp";
 import BoxesCashFlow from "./BoxesCashFlow";
 import { useHistory } from "react-router-dom";
 import { getLastCashFlowAction } from "../../redux/actions/cashFlowActions";
@@ -163,7 +162,6 @@ export default function CashFlow() {
         </div>
       </div>
       <div>
-        <NavBarApp />
       </div>
     </div>
   );

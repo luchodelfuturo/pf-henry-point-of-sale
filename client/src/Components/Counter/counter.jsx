@@ -6,7 +6,6 @@ import {
   ordersReadyAction,
   updateStatusFinished,
 } from "../../redux/actions/ordersActions";
-import NavBarApp from "../NavbarApp/NavBarApp";
 import s from "../Counter/counter.module.css";
 import Swal from "sweetalert2";
 
@@ -106,7 +105,6 @@ function Counter() {
             })}
         </div>
       </div>
-      <NavBarApp />
     </div>
   );
 }

@@ -4,7 +4,6 @@ import {useSelector, useDispatch} from 'react-redux'
 import axios from 'axios'
 import {showSuccessMsg, showErrMsg} from '../Utils/Notifications/Notifications'
 import {dispatchGetAllUsers, fetchAllUsers} from '../../redux/slices/usersSlice'
-import NavBarApp from "../NavbarApp/NavBarApp";
 
 const initialState = {
     role: '',
@@ -90,7 +89,6 @@ function EditUser() {
                 {err && showErrMsg(err)}
                 {success && showSuccessMsg(success)}
             </div>
-            <NavBarApp />
         </div>
     )
 }

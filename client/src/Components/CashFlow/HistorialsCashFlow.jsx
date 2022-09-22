@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import NavBarApp from "../NavbarApp/NavBarApp";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
@@ -182,7 +181,6 @@ export default function HistorialsCashFlow() {
       </div>
       {/* navbar */}
       <div style={{ width: "100%", height: "10vh" }}>
-        <NavBarApp />
       </div>
     </div>
   );

@@ -6,7 +6,6 @@ import {isLength, isMatch} from '../Utils/Validations/Validations'
 import {showSuccessMsg, showErrMsg} from '../Utils/Notifications/Notifications'
 import {dispatchGetAllUsers, fetchAllUsers} from '../../redux/slices/usersSlice'
 import "./profile.css"
-import NavBarApp from "../NavbarApp/NavBarApp";
 
 const initialState = {
     name: '',
@@ -204,7 +203,6 @@ function Profile() {
                 </table>
             </div>
             : ""}
-            <NavBarApp />
         </div>
         </>
     )
