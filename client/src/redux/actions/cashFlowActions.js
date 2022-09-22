@@ -2,7 +2,7 @@ import axios from "axios";
 import {
   getLastCashFlow,
   getAllCashFlow,
-  searchDateCashFlow
+  searchDateCashFlow, ratingCashFlow,
 } from "../slices/cashFlowSlice"
 
 
@@ -38,7 +38,7 @@ export const addCashInitAction = (init) => (dispatch) => {
 };
 
 export const getAllCashFlowAction = () => (dispatch) => {
-  
+
   return axios.get(`/cash/history`)
     .then((res) => dispatch(getAllCashFlow(res.data)))
 
@@ -56,7 +56,11 @@ export const searchDateCashFlowAction = (date) => (dispatch) => {
 
 export const addReviews = (review) => (dispatch) => {
   console.log("review desde el front:", review);
-  
+
   return axios.put("cash/addReview", review)
     .then((res) => console.log(res))
 };
+
+export const filterRatingAction = (rating) => (dispatch) => {
+  return dispatch(ratingCashFlow(rating))
+}

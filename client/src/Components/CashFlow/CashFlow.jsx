@@ -18,6 +18,8 @@ export default function CashFlow() {
     Expenses: "red",
   };
 
+ 
+
   useEffect(() => {
     dispatch(getLastCashFlowAction());
     console.log("despachando cashflowAction");

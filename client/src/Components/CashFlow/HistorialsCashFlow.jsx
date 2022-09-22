@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   searchDateCashFlowAction,
   getAllCashFlowAction,
+  filterRatingAction,
 } from "../../redux/actions/cashFlowActions";
 
 export default function HistorialsCashFlow() {
@@ -13,6 +14,11 @@ export default function HistorialsCashFlow() {
   const handleSearchDate = (e) => {
     e.preventDefault();
     dispatch(searchDateCashFlowAction(e.target.value));
+  };
+
+  const handleFilterRating = (e) => {
+    e.preventDefault();
+    dispatch(filterRatingAction(e.target.value));
   };
 
   useEffect(() => {
@@ -55,13 +61,19 @@ export default function HistorialsCashFlow() {
 
         <label>Filtrar por Estrella:</label>
 
-        <select name="" id="">
-          <option value="All Orders">All Orders</option>
-          <option value="pending">1 Estrella</option>
-          <option value="doing">2 Estrellas</option>
-          <option value="ready">3 Estrellas</option>
-          <option value="finished">4 Estrellas</option>
-          <option value="finished">5 Estrellas</option>
+        <select
+          onChange={(e) => {
+            handleFilterRating(e);
+          }}
+          name=""
+          id=""
+        >
+          <option value="All Stars">All Stars</option>
+          <option value="1">1 Estrella</option>
+          <option value="2">2 Estrellas</option>
+          <option value="3">3 Estrellas</option>
+          <option value="4">4 Estrellas</option>
+          <option value="5">5 Estrellas</option>
         </select>
       </div>
       {/* CashFlow List */}
@@ -180,8 +192,7 @@ export default function HistorialsCashFlow() {
         </div>
       </div>
       {/* navbar */}
-      <div style={{ width: "100%", height: "10vh" }}>
-      </div>
+      <div style={{ width: "100%", height: "10vh" }}></div>
     </div>
   );
 }

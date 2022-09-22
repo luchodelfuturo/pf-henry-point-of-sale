@@ -21,13 +21,22 @@ export const cashFlowSlice = createSlice({
             const filtro = state.filteredCashFlow;
 
             state.allCashFlow = filtro.filter(cash => cash.date === action.payload)
+        },
+        ratingCashFlow: (state, action) => {
+            const rating = state.filteredCashFlow;
+            let filterRating = action.payload === "All Stars"
+                ? rating
+                : rating.filter((star) => star.reviews[0].rating === parseInt(action.payload))
+            state.allCashFlow = filterRating
         }
     },
+
+
 });
 
 export const {
     getLastCashFlow,
     getAllCashFlow,
-    searchDateCashFlow } = cashFlowSlice.actions;
+    searchDateCashFlow, ratingCashFlow } = cashFlowSlice.actions;
 
 export default cashFlowSlice.reducer; 
