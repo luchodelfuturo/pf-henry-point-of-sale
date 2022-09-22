@@ -6,6 +6,8 @@ import "./navbar.css";
 import { MainButton } from "../../theme/styled-componets.js";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 
 export default function NavBarApp() {
   const history = useHistory();
@@ -40,18 +42,22 @@ export default function NavBarApp() {
       </Button>
       <Button onClick={() => history.push("/cashFlow")}>Cash Flow</Button>
       <div className="user-menu">
-        <Link to="/profile" className="register-link">
-          <img
+        <Link to="/profile" className="profile">
+          <img 
             id="avatar"
-            style={{ width: "30px", height: "30px" }}
+            style={{ width: "30px", height: "30px", marginBottom: "10px" }}
             src={user.avatar}
             alt=""
           />{" "}
           {user.name}
         </Link>
 
-        <Link to="/" onClick={handleLogout} className="register-link">
-          <p>Logout</p>
+        <Link to="/" onClick={handleLogout} className="logout">
+        <FontAwesomeIcon className="logout-icon"
+                icon={faArrowRightFromBracket}
+                style={{ width: 30, height: 30 }}
+              />
+          <div>Logout</div>
         </Link>
       </div>
       <Time>{time}</Time>
