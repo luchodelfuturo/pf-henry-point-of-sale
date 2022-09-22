@@ -57,10 +57,11 @@ function App() {
   }, [auth.isLogged, dispatch])
 
   useEffect(() => {
-    if (token) {
-      getUser()
-    }
-  }, [token, dispatch])
+    getUser()
+    // if (token) {
+      
+    // }
+  }, [ dispatch])
 
   return (
     <div className="App">
