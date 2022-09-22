@@ -71,10 +71,13 @@
 
 #empty {
     color: #16161a;
-    border-style: none;
+    border-radius: 2px;
     height: 40vh;
     width: 30vw;
-    padding-top: 60px;
+    /* padding-top: 60px; */
+    margin-top:60%;
+    margin-left: 10%;
+    display: flex;
 }
 
 .button{
