@@ -54,7 +54,6 @@ const Modals = ({ lastCashFlow }) => {
       });
       closeModalExpense();
     }
-    // closeModalExpense();
   };
 
   const handleSubmitInicioDeCaja = (e) => {
