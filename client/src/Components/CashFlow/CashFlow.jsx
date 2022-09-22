@@ -134,6 +134,7 @@ export default function CashFlow() {
                           <span>Type: {move.type}</span>
                           <span>Amount: {move.amount}</span>
                           <span>Comment: {move.comment}</span>
+                          hola
                         </div>
                       );
                     })
