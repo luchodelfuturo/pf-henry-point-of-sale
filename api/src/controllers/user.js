@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const sendMail = require('./sendMail');
 const { google } = require('googleapis')
 const { OAuth2 } = google.auth;
-const process = require('process');
+;
 
 const { ACTIVATION_TOKEN_SECRET, ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET, CLIENT_URL, MAILING_SERVICE_CLIENT_ID, GOOGLE_SECRET, } = process.env;
 
@@ -42,7 +42,7 @@ const userCtrl = {
             res.json({ msg: "Register Success! Please activate your email to start." })
         } catch (err) {
             console.log("HOLApeee")
-            return res.status(500).json({  msg: err.message })
+            return res.status(500).json({ msg: err.message })
         }
     },
     activateEmail: async (req, res) => {
