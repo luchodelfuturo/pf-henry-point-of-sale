@@ -39,11 +39,17 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/add", async (req, res) => {
+
   let { name, price, image, description, active, idcategory, id, stock } = req.body;
 
-  const searchProduct = await Product.findOne({where: {id: id}})
+
+  let searchProduct = []
+
+  if(id){
+    searchProduct = await Product.findOne({where: {id: id}})
+  }
   
-  if(searchProduct === null) { //en caso de que no exista
+  if(searchProduct.length === 0) { //en caso de que no exista
     try {
       const newProduct = await Product.findOrCreate({
         where: {
@@ -52,6 +58,7 @@ router.post("/add", async (req, res) => {
           image: image,
           description: description,
           active: active,
+          stock: stock,
           idcategory: idcategory,
           stock: stock
         },
