@@ -75,13 +75,14 @@ const userCtrl = {
 
             const isMatch = await bcrypt.compare(password, user.password)
             if (!isMatch) return res.status(400).json({ msg: "Password is incorrect." })
-        //   (newUser) createRefreshToken
+            //   (newUser) createRefreshToken
             const refresh_token = createActivationToken({ id: user.id })
-            // res.cookie('refreshtoken', refresh_token, {
-            //     httpOnly: false,
-            //     path: '/users/refresh_token',
-            //     maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
-            // })
+            console.log("refreshtoken:", refresh_token)
+            res.cookie('refreshtoken', refresh_token, {
+                httpOnly: true,
+                path: '/users/refresh_token',
+                maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+            })
 
             res.json({ msg: "Login success!" })
         } catch (err) {
