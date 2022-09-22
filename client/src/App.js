@@ -33,7 +33,7 @@ function App() {
   const { isLogged, isAdmin } = auth
 
   const getToken = async () => {
-    const res = await axios.post('/users/refresh_token', {})
+    const res = await axios.post('/users/refresh_token')
     dispatch(dispatchGetToken(res.data.access_token))
   }
 
