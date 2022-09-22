@@ -41,7 +41,8 @@ const userCtrl = {
 
             res.json({ msg: "Register Success! Please activate your email to start." })
         } catch (err) {
-            return res.status(500).json({ msg: err.message })
+            console.log("HOLApeee")
+            return res.status(500).json({  msg: err.message })
         }
     },
     activateEmail: async (req, res) => {
