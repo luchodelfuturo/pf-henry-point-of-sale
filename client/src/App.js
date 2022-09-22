@@ -1,5 +1,5 @@
 import { Route } from "react-router-dom";
-import React, { useEffect } from "react"
+import React, { useEffect } from "react";
 import Kitchen from "./Components/Kitchen";
 import Store from "./Components/Store";
 import HistorialPedidos from "./Components/HistorialPedidos/HistorialPedidos";
@@ -12,84 +12,121 @@ import Register from "./Components/auth/Register";
 import ActivationEmail from "./Components/auth/ActivationEmail";
 import GlobalStyle from "./theme/globalStyle.js";
 import CashFlow from "./Components/CashFlow/CashFlow";
-import { useDispatch, useSelector } from 'react-redux'
-import axios from 'axios';
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 import { dispatchGetToken } from "./redux/slices/tokenSlice";
-import { dispatchLogin, fetchUser, dispatchGetUser } from "./redux/slices/authSlice";
-import NotFound from './Components/Utils/NotFound/NotFound';
+import {
+  dispatchLogin,
+  fetchUser,
+  dispatchGetUser,
+} from "./redux/slices/authSlice";
+import NotFound from "./Components/Utils/NotFound/NotFound";
 import Profile from "./Components/Profile/Profile";
 import EditUser from "./Components/Profile/EditUser";
 import UserNavBar from "./Components/UserNavbar/UserNavBar.jsx";
-import HistorialsCashFlow from "./Components/CashFlow/HistorialsCashFlow.jsx"
+import HistorialsCashFlow from "./Components/CashFlow/HistorialsCashFlow.jsx";
 
 //MAIN BARBI FUNCIONANDO
 
 function App() {
-
-  const dispatch = useDispatch()
-  const token = useSelector(state => state.token)
-  const auth = useSelector(state => state.auth)
-  const { isLogged, isAdmin } = auth
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.token);
+  const auth = useSelector((state) => state.auth);
+  const { isLogged, isAdmin } = auth;
 
   const getToken = async () => {
-    const res = await axios.post('/users/refresh_token', {})
-    dispatch(dispatchGetToken(res.data.access_token))
-  }
+    const res = await axios.post("/users/refresh_token", {});
+    dispatch(dispatchGetToken(res.data.access_token));
+  };
 
   const getUser = () => {
-    dispatch(dispatchLogin())
+    dispatch(dispatchLogin());
 
-    return fetchUser(token).then(res => {
-      dispatch(dispatchGetUser(res.data))
-
-    })
-  }
+    return fetchUser(token).then((res) => {
+      dispatch(dispatchGetUser(res.data));
+    });
+  };
 
   useEffect(() => {
-    const firstLogin = localStorage.getItem('firstLogin')
+    const firstLogin = localStorage.getItem("firstLogin");
     if (firstLogin) {
-      getToken()
+      getToken();
     }
-  }, [auth.isLogged, dispatch])
+  }, [auth.isLogged, dispatch]);
 
   useEffect(() => {
     if (token) {
-      getUser()
+      getUser();
     }
-  }, [token, dispatch])
+  }, [token, dispatch]);
 
   return (
     <div className="App">
       <GlobalStyle />
 
-      <UserNavBar />
+      {!isLogged ? <UserNavBar /> : ""}
 
       <Route exact path="/" component={WelcomePage} />
 
       <Route exact path="/login" component={isLogged ? NotFound : Login} />
 
-      <Route exact path="/register" component={isLogged ? NotFound : Register} />
+      <Route
+        exact
+        path="/register"
+        component={isLogged ? NotFound : Register}
+      />
 
-      <Route exact path="/profile" component={isLogged ? Profile : WelcomePage} />
+      <Route
+        exact
+        path="/profile"
+        component={isLogged ? Profile : WelcomePage}
+      />
 
-      <Route exact path="/user/activate/:activation_token" component={ActivationEmail} />
+      <Route
+        exact
+        path="/user/activate/:activation_token"
+        component={ActivationEmail}
+      />
 
-      <Route exact path="/edit_user/:id" component={isAdmin ? EditUser : NotFound} />
+      <Route
+        exact
+        path="/edit_user/:id"
+        component={isAdmin ? EditUser : NotFound}
+      />
 
-      <Route exact path="/kitchen" component={isLogged ? Kitchen : WelcomePage} />
+      <Route
+        exact
+        path="/kitchen"
+        component={isLogged ? Kitchen : WelcomePage}
+      />
 
       <StoreProvider>
         <Route exact path="/store" component={isLogged ? Store : WelcomePage} />
       </StoreProvider>
 
-      <Route exact path="/counter" component={isLogged ? Counter : WelcomePage} />
+      <Route
+        exact
+        path="/counter"
+        component={isLogged ? Counter : WelcomePage}
+      />
 
-      <Route exact path="/adminProducts" component={isLogged ? AdminProducts : WelcomePage} />
+      <Route
+        exact
+        path="/adminProducts"
+        component={isLogged ? AdminProducts : WelcomePage}
+      />
 
-      <Route exact path="/historialPedidos" component={isLogged ? HistorialPedidos : WelcomePage} />
+      <Route
+        exact
+        path="/historialPedidos"
+        component={isLogged ? HistorialPedidos : WelcomePage}
+      />
 
-
-      <Route exact path="/cashFlow" component={isLogged ? CashFlow : WelcomePage} />
+      <Route
+        exact
+        path="/cashFlow"
+        component={isLogged ? CashFlow : WelcomePage}
+      />
       <Route
         exact
         path="/cashFlow/historialCashFlow"

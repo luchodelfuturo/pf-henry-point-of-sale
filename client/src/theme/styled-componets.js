@@ -5,7 +5,7 @@ export const Button = styled.button`
   background-color: ${colors.violet};
   border-radius: 0.3rem;
   border-style: none;
-  width: 60rem;
+  width: 30rem;
   height: 3rem;
   font-family: "Century Gothic";
   font-weight: bold;

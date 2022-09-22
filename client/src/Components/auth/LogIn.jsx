@@ -1,14 +1,18 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
-import { showErrMsg, showSuccessMsg } from "../Utils/Notifications/Notifications.jsx";
+import {
+  showErrMsg,
+  showSuccessMsg,
+} from "../Utils/Notifications/Notifications.jsx";
 import "./auth.css";
-import { dispatchLogin } from '../../redux/slices/authSlice';
+import { dispatchLogin } from "../../redux/slices/authSlice";
 import { useDispatch } from "react-redux";
 import { Textinput, MainButton } from "../../theme/styled-componets";
-import jwt_decode from 'jwt-decode';
+import jwt_decode from "jwt-decode";
 
-const client_id = "58357792722-mar8g19eknd6f1cp4tkpmq37gcn231d7.apps.googleusercontent.com";
+const client_id =
+  "58357792722-mar8g19eknd6f1cp4tkpmq37gcn231d7.apps.googleusercontent.com";
 
 const initialState = {
   name: "",
@@ -21,10 +25,9 @@ const initialState = {
 
 function Login() {
   const [user, setUser] = useState(initialState);
-  const { name,email, password, avatar, err, success } = user;
+  const { name, email, password, avatar, err, success } = user;
   const dispatch = useDispatch();
   const history = useHistory();
-
 
   const handleChangeInput = (e) => {
     const { name, value } = e.target;
@@ -53,17 +56,17 @@ function Login() {
       var userObject = jwt_decode(response.credential);
       console.log(userObject);
       // const res = await axios.post('/users/google_login', {tokenId: response.id_token})
-    
-      setUser(userObject)
-      localStorage.setItem('firstLogin', true)
-    
-      dispatch(dispatchLogin())
-      history.push('/store')
+
+      setUser(userObject);
+      localStorage.setItem("firstLogin", true);
+
+      dispatch(dispatchLogin());
+      history.push("/store");
     } catch (err) {
-      err.response.data.msg && 
-      setUser({...user, err: err.response.data.msg, success: ''})
+      err.response.data.msg &&
+        setUser({ ...user, err: err.response.data.msg, success: "" });
     }
-  }
+  };
 
   // const responseGoogle = async (response) => {
   //   try {
@@ -76,30 +79,29 @@ function Login() {
   //       email: googleUser.email,
   //       avatar: googleUser.picture
   //     });
-    
+
   //     setUser({ ...user, err: "", success: res.data.msg });
   //     localStorage.setItem('firstLogin', true)
-    
+
   //     dispatch(dispatchLogin())
   //     history.push('/store')
   //   } catch (err) {
-  //     err.response.data.msg && 
+  //     err.response.data.msg &&
   //     setUser({...user, err: err.response.data.msg, success: ''})
   //   }
   // }
 
-  useEffect(()=>{
+  useEffect(() => {
     /*global google*/
     google.accounts.id.initialize({
       client_id: client_id,
-      callback: responseGoogle
-    })
-    google.accounts.id.renderButton(
-      document.getElementById("signInDiv"),
-      {theme: "outline", size:"large"}
-    );
+      callback: responseGoogle,
+    });
+    google.accounts.id.renderButton(document.getElementById("signInDiv"), {
+      theme: "outline",
+      size: "large",
+    });
   }, []);
-
 
   return (
     <div id="contenedor">
@@ -158,7 +160,10 @@ function Login() {
         </div>
       </div>
       <div className="register">
-        New to Point of Sale? <Link className="register-link" to="/register">Register</Link>
+        New to Point of Sale?{" "}
+        <Link className="register-link" to="/register">
+          Register
+        </Link>
       </div>
     </div>
   );
