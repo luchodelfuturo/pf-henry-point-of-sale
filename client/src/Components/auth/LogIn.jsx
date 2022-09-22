@@ -147,9 +147,9 @@ function Login() {
                 onChange={handleChangeInput}
               />
             </div>
-            <div id="forgot">
+            {/* <div id="forgot">
               <Link to="/forgot_password">Forgot your password?</Link>
-            </div>
+            </div> */}
             <div className="row">
               <div id="signInDiv" className="social"></div>
               <MainButton type="submit">Log in</MainButton>
@@ -158,7 +158,7 @@ function Login() {
         </div>
       </div>
       <div className="register">
-        New to Point of Sale? <Link className="register-link" to="/register">Register</Link>
+        New to Point of Sale? <Link className="register_" to="/register">Register</Link>
       </div>
     </div>
   );
