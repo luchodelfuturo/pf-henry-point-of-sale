@@ -91,7 +91,7 @@ const userCtrl = {
     },
     getAccessToken: (req, res) => {
         try {
-            const rf_token = req.cookies.refreshtoken
+            const rf_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoic2QiLCJlbWFpbCI6ImxmY2FzdHJvMjkxMUBnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYiQxMiRUQTJzLzRWTjBHQVB1RWRna2tBMFh1aHdSbTc2cnNjN2gxRGRHTGZOdzF4dXJIcWZXN0I1RyIsImlhdCI6MTY2Mzg2MTQyMSwiZXhwIjoxNjYzODYxNzIxfQ.iTaEZb5Hak0E8sdGkEHTc5wKNAUxH1KXzcL4gM_OyEA"
             console.log("ref token", rf_token)
             if (!rf_token) return res.status(400).json({ msg: "Please login now HOLA!!" })
 
