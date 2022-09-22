@@ -120,7 +120,7 @@ function Register() {
               <label htmlFor="password">Password</label>
               <Textinput
                 type="password"
-                placeholder="Enter new password"
+                placeholder="******"
                 id="password"
                 value={password}
                 name="password"
@@ -132,7 +132,7 @@ function Register() {
               <label htmlFor="cf_password">Confirm Password</label>
               <Textinput
                 type="password"
-                placeholder="Re-enter password"
+                placeholder="******"
                 id="cf_password"
                 value={cf_password}
                 name="cf_password"
