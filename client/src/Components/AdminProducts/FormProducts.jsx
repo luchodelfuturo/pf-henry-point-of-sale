@@ -35,7 +35,7 @@ export default function FormProducts({
           id: productEdit.id
         }
   );
-  console.log("STATE edit:", state);
+  console.log("STATE edit:", state.idcategory);
   const imagenes = {
     3: "https://www.laespanolaaceites.com/wp-content/uploads/2019/06/pizza-con-chorizo-jamon-y-queso-1080x671.jpg",
     2: "https://media.istockphoto.com/photos/hamburger-with-cheese-and-french-fries-picture-id1188412964?k=20&m=1188412964&s=612x612&w=0&h=Ow-uMeygg90_1sxoCz-vh60SQDssmjP06uGXcZ2MzPY=",
@@ -55,7 +55,7 @@ export default function FormProducts({
   const handleCategoria = (e) => {
     const value = e.target.value;
 
-    setState({ ...state, idcategory: value });
+    setState({ ...state, idcategory: value, image: imagenes[value] });
   };
 
   const deleteAlert = (e) => {
@@ -370,4 +370,3 @@ export default function FormProducts({
     </div>
   );
 }
-
